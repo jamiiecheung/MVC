@@ -1,0 +1,103 @@
+﻿@model WebApplication2.Models.Todo
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css" rel="stylesheet">
+
+
+
+
+<script>
+    $(function () {
+        $(".datepicker").datepicker();
+    });
+
+</script>
+
+
+
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Todo</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Task, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Task, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Task, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.Status, "Status", "Text"), "--Select--", new { id = "Type", @class = "form-control" })
+                
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+              
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FollowUp, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                <input name="FollowUp" id="datepicker" type="date" class="form-control" />
+                @*@Html.TextBoxFor(model => model.FollowUp, new { htmlAttributes = new { @class = "datepicker form-control" } })*@
+                @Html.ValidationMessageFor(model => model.FollowUp, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Group, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Group, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Group, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

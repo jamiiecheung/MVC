@@ -1,0 +1,1 @@
+﻿SELECT TOP 1000 [ID],[Description],[CreatedDate],[Task],[Status],[FollowUp],[Group] FROM [dbo].[Todoes]
