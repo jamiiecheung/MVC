@@ -39,37 +39,37 @@ namespace WebApplication2.Controllers
 
         [HttpPost]
         //public ActionResult Register(UserAccount account, EmailList emailList)
-        public ActionResult Register(string email)
+        public ActionResult Register(string email, [Bind(Include = "UserID,Description,FirstName,LastName,Email,Password,Username,ConfirmPassword")] UserAccount account)
         {
             if (ModelState.IsValid)
             {
                 //TEST
+                var emailtocheck = email;
                 var exist = db.UserAccounts.Any(x => x.Email == email);
                 var reg = db.EmailLists.Any(x => x.Email == email);
-                //if (!exists)
-                //{
+                if (exist == false)
+                {
 
-                //    if (reg == true)
-                //    {
+                    if (reg == true)
+                    {
 
-                //        db.userAccount.Add(account);
-                //        db.SaveChanges();
-                //        ModelState.Clear();
-                //        ViewBag.Message = account.FirstName + " " + account.LastName + " successfully registered.";
+                        db.UserAccounts.Add(account);
+                        db.SaveChanges();
+                        ModelState.Clear();
+                        ViewBag.Message = account.FirstName + " " + account.LastName + " successfully registered.";
 
-
-                //    }
-                //    else
-                //    {
-                //        ViewBag.Message = "You are not authorized to use this site. Please contact SJ Associates.";
-                //    }
-                //}
-                //else
-                //{
-                //    //ModelState.AddModelError("", "Email already exist.");
-                //    //return RedirectToAction("Register");
-                //    ViewBag.Message = "The email " + account.Email + " already exists.";
-                //}
+                    }
+                    else
+                    {
+                        ViewBag.Message = "You are not authorized to use this site. Please contact SJ Associates.";
+                    }
+                }
+                else
+                {
+                    //ModelState.AddModelError("", "Email already exist.");
+                    //return RedirectToAction("Register");
+                    ViewBag.Message = "The email " + account.Email + " already exists.";
+                }
 
 
 
@@ -121,11 +121,10 @@ namespace WebApplication2.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(UserAccount user)
+        public ActionResult Login(UserAccount user, string username, string password)
         {
-            using (OurDbContext db = new OurDbContext())
-            {
-                var usr = db.userAccount.Where(u => u.Username == user.Username && u.Password == user.Password).FirstOrDefault();
+
+                var usr = db.UserAccounts.Where(u => u.Username == username && u.Password == password).FirstOrDefault();
                 if (usr != null)
                 {
                     Session["UserID"] = usr.UserID.ToString();
@@ -136,8 +135,26 @@ namespace WebApplication2.Controllers
                 {
                     ModelState.AddModelError("", "Username or Password is incorrect");
                 }
-            }
+
             return View();
+
+
+
+            //using (OurDbContext db = new OurDbContext())
+            //{
+            //    var usr = db.userAccount.Where(u => u.Username == user.Username && u.Password == user.Password).FirstOrDefault();
+            //    if (usr != null)
+            //    {
+            //        Session["UserID"] = usr.UserID.ToString();
+            //        Session["Username"] = usr.Username.ToString();
+            //        return RedirectToAction("LoggedIn");
+            //    }
+            //    else
+            //    {
+            //        ModelState.AddModelError("", "Username or Password is incorrect");
+            //    }
+            //}
+            //return View();
 
         }
 
