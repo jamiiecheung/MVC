@@ -43,7 +43,7 @@ namespace WebApplication2.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                //TEST
                 var exist = db.UserAccounts.Any(x => x.Email == email);
                 var reg = db.EmailLists.Any(x => x.Email == email);
                 //if (!exists)
