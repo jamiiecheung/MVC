@@ -11,14 +11,21 @@ namespace WebApplication2.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Todo
     {
         public int ID { get; set; }
         public string Description { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public System.DateTime CreatedDate { get; set; }
+        public Todo()
+        {
+            CreatedDate = DateTime.Now;
+        }
         public string Task { get; set; }
         public string Status { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public Nullable<System.DateTime> FollowUp { get; set; }
         public string Group { get; set; }
         public string Text { get; internal set; }

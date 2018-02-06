@@ -4,44 +4,45 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="sjassoc_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="EmailLists">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Todoes">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="Task" Type="nvarchar(max)" />
-          <Property Name="Status" Type="nvarchar" MaxLength="50" />
-          <Property Name="FollowUp" Type="datetime" />
-          <Property Name="Group" Type="nvarchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="UserAccounts">
-          <Key>
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ConfirmPassword" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityContainer Name="sjassoc_dbModelStoreContainer">
-          <EntitySet Name="EmailLists" EntityType="Self.EmailLists" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Todoes" EntityType="Self.Todoes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserAccounts" EntityType="Self.UserAccounts" Schema="dbo" store:Type="Tables" />
-        </EntityContainer>
-      </Schema></edmx:StorageModels>
+    <Schema Namespace="sjassoc_dbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="sjassoc_dbModelStoreContainer">
+    <EntitySet Name="Todoes" EntityType="sjassoc_dbModel.Store.Todoes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserAccounts" EntityType="sjassoc_dbModel.Store.UserAccounts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EmailLists" EntityType="sjassoc_dbModel.Store.EmailLists" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="Todoes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="Task" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Status" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="FollowUp" Type="datetime" Nullable="true" />
+    <Property Name="Group" Type="nvarchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="UserAccounts">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ConfirmPassword" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="EmailLists">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Group" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="sjassoc_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -80,6 +81,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Group" Type="String" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -118,6 +120,7 @@
         <MappingFragment StoreEntitySet="EmailLists">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Group" ColumnName="Group" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

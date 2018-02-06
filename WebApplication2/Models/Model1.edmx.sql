@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 02/02/2018 12:06:56
+-- Date Created: 02/06/2018 14:50:55
 -- Generated from EDMX file: C:\Users\jamii\source\repos\WebApplication2\WebApplication2\Models\Model1.edmx
 -- --------------------------------------------------
 
@@ -22,8 +22,14 @@ GO
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[EmailLists]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[EmailLists];
+GO
 IF OBJECT_ID(N'[dbo].[Todoes]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Todoes];
+GO
+IF OBJECT_ID(N'[dbo].[UserAccounts]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserAccounts];
 GO
 
 -- --------------------------------------------------
@@ -44,20 +50,21 @@ GO
 
 -- Creating table 'UserAccounts'
 CREATE TABLE [dbo].[UserAccounts] (
-    [UserID] nvarchar(max)  NOT NULL,
+    [UserID] int IDENTITY(1,1) NOT NULL,
     [FirstName] nvarchar(max)  NOT NULL,
     [LastName] nvarchar(max)  NOT NULL,
     [Email] nvarchar(max)  NOT NULL,
     [Password] nvarchar(max)  NOT NULL,
     [Username] nvarchar(max)  NOT NULL,
-    [ConfirmPassword] nvarchar(max)  NOT NULL
+    [ConfirmPassword] nvarchar(max)  NULL
 );
 GO
 
 -- Creating table 'EmailLists'
 CREATE TABLE [dbo].[EmailLists] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Email] nvarchar(max)  NOT NULL
+    [Email] nvarchar(max)  NOT NULL,
+    [Group] nvarchar(max)  NOT NULL
 );
 GO
 

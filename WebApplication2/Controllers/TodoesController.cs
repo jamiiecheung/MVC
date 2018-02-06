@@ -22,7 +22,32 @@ namespace WebApplication2.Controllers
 
             if (Session["UserId"] != null)
             {
-                return View(db.Todoes.ToList());
+                // Get the user id from the session
+                int id = Int32.Parse(Session["UserId"].ToString());
+                // Use the id to get the associated email address
+                String em = db.UserAccounts.Find(id).Email.ToString();
+                // Use the email address to get the associated emaillist object which holds the group
+                EmailList emailListItem = db.EmailLists.First(x => x.Email == em);
+
+                if (emailListItem.Group.Equals("ZZMMWW")) {
+                    return View(db.Todoes.ToList());
+                }
+
+                // Create a list to hold the Todos which we will end up showing
+                List<Todo> list = new List<Todo>();
+
+                // this is a foreach loop, it goes through all the Todos returned from db.Todoes.ToList()
+                foreach (Todo td in db.Todoes.ToList()) {
+                    // makes sure that the group of a todo isn't null (empty)
+                    if (!String.IsNullOrEmpty(td.Group)) {
+                        // checks if the group of the user is equal to the group of the post. if so it adds the todo to the list.
+                        if (emailListItem.Group.Equals(td.Group))
+                        {
+                            list.Add(td);
+                        }
+                    }
+                }
+                return View(list);
             }
             else
             {
