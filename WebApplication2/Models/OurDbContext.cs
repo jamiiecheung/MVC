@@ -10,6 +10,8 @@ namespace WebApplication2.Models
     {
         public DbSet<UserAccount> userAccount { get; set; }
         public DbSet<EmailList> emailList { get; set; }
+
+        public System.Data.Entity.DbSet<WebApplication2.Models.Strategy> Strategies { get; set; }
     }
 
     //protected override void OnModelCreating(DbModelBuilder modelBuilder)

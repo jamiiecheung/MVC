@@ -28,5 +28,6 @@ namespace WebApplication2.Models
         public virtual DbSet<Todo> Todoes { get; set; }
         public virtual DbSet<UserAccount> UserAccounts { get; set; }
         public virtual DbSet<EmailList> EmailLists { get; set; }
+        public virtual DbSet<Strategy> Strategies { get; set; }
     }
 }

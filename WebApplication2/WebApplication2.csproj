@@ -160,6 +160,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\StrategyController.cs" />
     <Compile Include="Controllers\TodoesController.cs" />
     <Compile Include="ErrorHandler\AiHandleErrorAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -184,6 +185,9 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\OurDbContext.cs" />
+    <Compile Include="Models\Strategy.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Todo.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -261,6 +265,10 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\LoggedIn.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Strategy\Index.cshtml" />
+    <Content Include="Views\Strategy\Details.cshtml" />
+    <Content Include="Views\Strategy\Edit.cshtml" />
+    <Content Include="Views\Strategy\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

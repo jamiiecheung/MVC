@@ -6,8 +6,9 @@
     <edmx:Diagrams>
       <Diagram DiagramId="037812deb1604cf1a4d1434d400ed8ad" Name="Diagram1">
         <EntityTypeShape EntityType="sjassoc_dbModel.Todo" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="sjassoc_dbModel.UserAccount" Width="1.5" PointX="3" PointY="2" />
-        <EntityTypeShape EntityType="sjassoc_dbModel.EmailList" Width="1.5" PointX="7.25" PointY="1.5" />
+        <EntityTypeShape EntityType="sjassoc_dbModel.UserAccount" Width="1.5" PointX="2.375" PointY="1.125" />
+        <EntityTypeShape EntityType="sjassoc_dbModel.EmailList" Width="1.5" PointX="4" PointY="1.125" />
+        <EntityTypeShape EntityType="sjassoc_dbModel.Strategy" Width="1.5" PointX="5.75" PointY="1.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

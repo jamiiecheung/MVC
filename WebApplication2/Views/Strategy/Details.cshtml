@@ -1,0 +1,130 @@
+﻿@model WebApplication2.Models.Strategy
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Strategy</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndProduct)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndProduct)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NextAction)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NextAction)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.History)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.History)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Updated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Updated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FollowUpDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FollowUpDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ManagerComment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ManagerComment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OSR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OSR)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Principal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Principal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Value)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Value)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Group)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Group)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StrategyId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
