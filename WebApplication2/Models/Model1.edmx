@@ -24,7 +24,7 @@
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="NextAction" Type="nvarchar" MaxLength="500" />
           <Property Name="History" Type="nvarchar(max)" />
-          <Property Name="CreateDate" Type="date" Nullable="false" />
+          <Property Name="CreateDate" Type="date" />
           <Property Name="Updated" Type="date" />
           <Property Name="FollowUpDate" Type="date" />
           <Property Name="ManagerComment" Type="nvarchar" MaxLength="500" />
@@ -39,7 +39,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
           <Property Name="Task" Type="nvarchar(max)" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="FollowUp" Type="datetime" />
@@ -73,11 +73,11 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Task" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FollowUp" Type="DateTime" Precision="3" />
           <Property Name="Group" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityContainer Name="sjassoc_dbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Todoes" EntityType="Self.Todo" />
@@ -116,7 +116,7 @@
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NextAction" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="History" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreateDate" Type="DateTime" Precision="0" />
           <Property Name="Updated" Type="DateTime" Precision="0" />
           <Property Name="FollowUpDate" Type="DateTime" Precision="0" />
           <Property Name="ManagerComment" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -134,9 +134,9 @@
     <EntitySetMapping Name="Todoes">
       <EntityTypeMapping TypeName="IsTypeOf(sjassoc_dbModel.Todo)">
         <MappingFragment StoreEntitySet="Todoes">
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="Task" ColumnName="Task" />
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="FollowUp" ColumnName="FollowUp" />

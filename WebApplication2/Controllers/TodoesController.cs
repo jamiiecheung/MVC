@@ -87,7 +87,7 @@ namespace WebApplication2.Controllers
             if (Session["UserId"] != null)
             {
                 var model = new Todo();
-                model.CreatedDate = DateTime.Now;
+                model.CreateDate = DateTime.Now;
 
                 var options = new List<Todo>();
                 options.Add(new Todo() { Status = "New Request", Text = "New Request" });

@@ -10,16 +10,17 @@ using WebApplication2.Models;
 
 namespace WebApplication2.Controllers
 {
-    public class StrategyController:Controller
+    public class StrategyController : Controller
     {
         private sjassoc_dbEntities db = new sjassoc_dbEntities();
 
         // GET: Todoes
-        public ActionResult Index()
+        public ActionResult Index(string grouptemp, string group, string groupnew, string stratvar)
         {
 
             if (Session["UserId"] != null)
             {
+                Strategy strat = new Strategy();
 
                 // Get the user id from the session
                 int id = Int32.Parse(Session["UserId"].ToString());
@@ -30,7 +31,34 @@ namespace WebApplication2.Controllers
 
                 if (emailListItem.Group.Equals("ZZMMWW"))
                 {
-                    return View(db.Strategies.ToList());
+                    var groups = from g in db.Strategies
+                                 select g;
+
+                    ViewBag.Group = (from g in db.Strategies
+                                     select g.Group).Distinct();
+
+                    groups = groups.Where(g => g.Group.Contains(group));
+
+
+
+                    if (group == null && stratvar ==null)
+                    {
+                        return View(db.Strategies.ToList());
+                    }
+
+                    else if (stratvar != null && group ==null)
+                    {
+                       
+                        group = stratvar;
+                        groups = groups.Where(g => g.Group.Contains(group));
+                        //  return View(group.ToList());
+                    };
+                    stratvar = null;
+                    //return View(db.Strategies.ToList());
+                    return View(groups.ToList());
+
+
+
                 }
 
                 // Create a list to hold the Todos which we will end up showing
@@ -69,6 +97,10 @@ namespace WebApplication2.Controllers
             }
 
         }
+
+
+
+
 
         public ActionResult Details(int? id)
         {
@@ -153,7 +185,7 @@ namespace WebApplication2.Controllers
 
 
 
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, string groupflt)
         {
 
             if (Session["UserId"] != null)
@@ -192,20 +224,25 @@ namespace WebApplication2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "StrategyId,Customer,EndProduct,Product,Status,NextAction,History,CreateDate,Updated,FollowUpDate,ManagerComment,OSR,Principal,Value,Group")] Strategy strat)
+        public ActionResult Edit([Bind(Include = "StrategyId,Customer,EndProduct,Product,Status,NextAction,History,CreateDate,Updated,FollowUpDate,ManagerComment,OSR,Principal,Value,Group")] Strategy strat, string stratvar)
         {
 
             if (Session["UserId"] != null)
             {
-
+                var stratvariable = from s in db.Strategies
+                                    select s;
+                stratvar = strat.ToString();
+                stratvariable = stratvariable.Where(s => s.Group.Contains(stratvar));
                 //document.getElementById('FollowUp').value=
                 if (ModelState.IsValid)
                 {
                     db.Entry(strat).State = EntityState.Modified;
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { stratvar = strat.Group});
+                    //return View("Index", stratvar);
                 }
-                return View(strat);
+
+                return View(stratvar, stratvar);
             }
             else
             {

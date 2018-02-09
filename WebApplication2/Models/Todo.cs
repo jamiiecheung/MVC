@@ -17,17 +17,19 @@ namespace WebApplication2.Models
     {
         public int ID { get; set; }
         public string Description { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public System.DateTime CreatedDate { get; set; }
-        public Todo()
-        {
-            CreatedDate = DateTime.Now;
-        }
         public string Task { get; set; }
         public string Status { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy}")]
         public Nullable<System.DateTime> FollowUp { get; set; }
         public string Group { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy}")]
+        public Nullable<System.DateTime> CreateDate { get; set; }
         public string Text { get; internal set; }
+
+        public Todo()
+        {
+            CreateDate = DateTime.Now;
+        }
+
     }
 }

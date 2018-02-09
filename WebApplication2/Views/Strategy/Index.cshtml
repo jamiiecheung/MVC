@@ -6,17 +6,34 @@
 
 <h2>Index</h2>
 
-<p>
+@*<p>*@
+<div class="col-md-6">
     @Html.ActionLink("Create New", "Create")
-</p>
+</div>
+<div class="col-md-6">
+    @*@Html.LabelFor(model => model.Group, htmlAttributes: new { @class = "control-label col-md-2" })*@
+    @*@Html.DropDownListFor(m => m.Group, new SelectList(ViewBag.Status, "Status", "Text"), "--Select--", new { id = "Type", @class = "form-control" })
+    @Html.DropDownListFor(m => m.Group, new SelectList(Model.Group, "Value", "Text"), new { @class = "form-control", id = "Group" })*@
+    @*@Html.DropDownList("Grouplist", Model , "--Select--")*@
+@using (Html.BeginForm())
+{
+    <p>
+        @*Group: @Html.TextBox("SearchString")*@
+        <text>Group</text>@Html.DropDownList("group", new SelectList(ViewBag.Group),"--Select--")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+</div>
+@*</p>*@
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Customer)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.EndProduct)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Product)
         </th>
@@ -26,21 +43,21 @@
         <th>
             @Html.DisplayNameFor(model => model.NextAction)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.History)
-        </th>
-        <th>
+        </th>*@
+        @*<th>
             @Html.DisplayNameFor(model => model.CreateDate)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Updated)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FollowUpDate)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.ManagerComment)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.OSR)
         </th>
@@ -50,9 +67,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Value)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Group)
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
@@ -61,9 +78,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.Customer)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.EndProduct)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Product)
         </td>
@@ -73,21 +90,21 @@
         <td>
             @Html.DisplayFor(modelItem => item.NextAction)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.History)
-        </td>
-        <td>
+        </td>*@
+        @*<td>
             @Html.DisplayFor(modelItem => item.CreateDate)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Updated)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.FollowUpDate)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.ManagerComment)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.OSR)
         </td>
@@ -97,11 +114,11 @@
         <td>
             @Html.DisplayFor(modelItem => item.Value)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Group)
-        </td>
+        </td>*@
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.StrategyId }) |
+            @Html.ActionLink("Edit", "Edit", new { id=item.StrategyId, group=item.Group }) |
             @Html.ActionLink("Details", "Details", new { id=item.StrategyId }) 
             @*|*@
             @*@Html.ActionLink("Delete", "Delete", new { id=item.StrategyId })*@

@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
@@ -35,10 +35,10 @@
     .labelleft {
         text-align: left;
     }
-    .formwhole{
+
+    .formwhole {
         margin: 0 !important
     }
-
 </style>
 
 <script>
@@ -47,24 +47,100 @@
     $(document).ready(function () {
 
         $('#txt_datepicker').datetimepicker({
-            format: 'MM/DD/YYYY'
+            format: 'MM/DD/YY'
         });
     });
 
 </script>
 
+@*<div>
+    <div class="col-xs-1">
+        <h2><span>Edit</span></h2>
+    </div>
 
+    <div class="col-xs-2">
+        <div class="col-xs-2">
+            <h2><input type="submit" value="Save" class="btn btn-default" /></h2>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="col-sm-2">
+        @Html.LabelFor(model => model.OSR, htmlAttributes: new { @class = "control-label col-xs-5" })
+        <div class="col-xs-8 nomargin nopadding">
+            <h2>@Html.EditorFor(model => model.OSR, new { htmlAttributes = new { @class = "form-control nomargin" } })</h2>
+            <h2>@Html.ValidationMessageFor(model => model.OSR, "", new { @class = "text-danger" })</h2>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        @Html.LabelFor(model => model.CreateDate, htmlAttributes: new { @class = "control-label col-xs-5" })
+        <div class="col-xs-8 nomargin nopadding">
+            <h2>@Html.EditorFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control nomargin" } })</h2>
+            <h2>@Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })</h2>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        @Html.LabelFor(model => model.Updated, htmlAttributes: new { @class = "control-label col-xs-5" })
+        <div class="col-xs-8 nomargin nopadding">
+            <h2>@Html.EditorFor(model => model.Updated, new { htmlAttributes = new { @class = "form-control nomargin" } })</h2>
+            <h2>@Html.ValidationMessageFor(model => model.Updated, "", new { @class = "text-danger" })</h2>
+        </div>
+    </div>
+</div>*@
+@*</div>*@
 
-
+<br />
 @using (Html.BeginForm())
 {
+
+    <div>
+        <div class="col-xs-1">
+            <h2><span>Edit</span></h2>
+        </div>
+
+        <div class="col-xs-2">
+            <div class="col-xs-2">
+                <h2><input type="submit" value="Save" class="btn btn-default" /></h2>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="col-sm-2">
+            @Html.LabelFor(model => model.OSR, htmlAttributes: new { @class = "control-label col-xs-5" })
+            <div class="col-xs-8 nomargin nopadding">
+                <h2>@Html.EditorFor(model => model.OSR, new { htmlAttributes = new { @class = "form-control nomargin" } })</h2>
+                <h2>@Html.ValidationMessageFor(model => model.OSR, "", new { @class = "text-danger" })</h2>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            @Html.LabelFor(model => model.CreateDate, htmlAttributes: new { @class = "control-label col-xs-5" })
+            <div class="col-xs-8 nomargin nopadding">
+                <h2>@Html.EditorFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control nomargin" } })</h2>
+                <h2>@Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })</h2>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            @Html.LabelFor(model => model.Updated, htmlAttributes: new { @class = "control-label col-xs-5" })
+            <div class="col-xs-8 nomargin nopadding">
+                <h2>@Html.EditorFor(model => model.Updated, new { htmlAttributes = new { @class = "form-control nomargin" } })</h2>
+                <h2>@Html.ValidationMessageFor(model => model.Updated, "", new { @class = "text-danger" })</h2>
+            </div>
+        </div>
+    </div>
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal formwhole">
-        <h4>Strategy</h4>
-        <hr />
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.StrategyId)
+
+        <div class="form-group">
+
+            <h4>Strategy</h4>
+            <hr />
+
+        </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.Customer, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -72,27 +148,27 @@
                 @Html.EditorFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control nomargin" } })
                 @Html.ValidationMessageFor(model => model.Customer, "", new { @class = "text-danger" })
             </div>
-            <div class="col-md-2 noleftpadding nomargin">
-                @Html.LabelFor(model => model.OSR, htmlAttributes: new { @class = "control-label col-md-4 noleftpadding" })
-                <div class="col-md-8 nomargin nopadding">
-                    @Html.EditorFor(model => model.OSR, new { htmlAttributes = new { @class = "form-control nomargin" } })
-                    @Html.ValidationMessageFor(model => model.OSR, "", new { @class = "text-danger" })
+            @*<div class="col-md-2">
+                    @Html.LabelFor(model => model.OSR, htmlAttributes: new { @class = "control-label col-md-4 noleftpadding" })
+                    <div class="col-md-8 nomargin nopadding">
+                        @Html.EditorFor(model => model.OSR, new { htmlAttributes = new { @class = "form-control nomargin" } })
+                        @Html.ValidationMessageFor(model => model.OSR, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-2 nomargin noleftpadding">
-                @Html.LabelFor(model => model.CreateDate, htmlAttributes: new { @class = "control-label col-md-4 noleftpadding" })
-                <div class="col-md-8 nomargin nopadding">
-                    @Html.EditorFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control nomargin" } })
-                    @Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.CreateDate, htmlAttributes: new { @class = "control-label col-md-4 noleftpadding" })
+                    <div class="col-md-8 nomargin nopadding">
+                        @Html.EditorFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control nomargin" } })
+                        @Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-2 noleftpadding nomargin">
-                @Html.LabelFor(model => model.Updated, htmlAttributes: new { @class = "control-label col-md-4 noleftpadding" })
-                <div class="col-md-8 nomargin nopadding">
-                    @Html.EditorFor(model => model.Updated, new { htmlAttributes = new { @class = "form-control nomargin" } })
-                    @Html.ValidationMessageFor(model => model.Updated, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Updated, htmlAttributes: new { @class = "control-label col-md-4 noleftpadding" })
+                    <div class="col-md-8 nomargin nopadding">
+                        @Html.EditorFor(model => model.Updated, new { htmlAttributes = new { @class = "form-control nomargin" } })
+                        @Html.ValidationMessageFor(model => model.Updated, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
         </div>
 
         <div class="form-group">
@@ -126,7 +202,7 @@
                     <div>
                         <div class="input-group date" data-provide="datepicker">
                             @*<input type="text" id="txt_datepicker" class="form-control" />*@
-                                @Html.EditorFor(model => model.FollowUpDate, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.FollowUpDate, new { htmlAttributes = new { @class = "form-control" } })
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </div>
@@ -176,13 +252,13 @@
                 @Html.ValidationMessageFor(model => model.History, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-3">
-                
-                <div class="col-md-3">
-                    @Html.LabelFor(model => model.ManagerComment, htmlAttributes: new { @class = "control-label col-md-2" })
-                                @*@Html.EditorFor(model => model.ManagerComment, new { htmlAttributes = new { @class = "form-control" } })*@
-                                @Html.TextAreaFor(model => model.ManagerComment, 5, 33, null)
-                                @Html.ValidationMessageFor(model => model.ManagerComment, "", new { @class = "text-danger" })
-                            </div>
+                @Html.LabelFor(model => model.ManagerComment, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3 nopadding">
+
+                    @*@Html.EditorFor(model => model.ManagerComment, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.TextAreaFor(model => model.ManagerComment, 7, 33, null)
+                    @Html.ValidationMessageFor(model => model.ManagerComment, "", new { @class = "text-danger" })
+                </div>
                 @*<div class="col-md-9"></div>*@
             </div>
             <div class="col-md-3"></div>
@@ -208,13 +284,13 @@
 
 
         @*<div class="form-group">
-            @Html.LabelFor(model => model.ManagerComment, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-                @Html.EditorFor(model => model.ManagerComment, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ManagerComment, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-9"></div>
-        </div>*@
+                @Html.LabelFor(model => model.ManagerComment, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.ManagerComment, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ManagerComment, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-9"></div>
+            </div>*@
 
         @*<div class="form-group">
                 @Html.LabelFor(model => model.OSR, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -237,11 +313,6 @@
             <div class="col-md-9"></div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
     </div>
 }
 

@@ -25,12 +25,12 @@ namespace WebApplication2.Models
         public string NextAction { get; set; }
         public string History { get; set; }
         [DisplayName("Created")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy}")]
         public System.DateTime CreateDate { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy}")]
         public Nullable<System.DateTime> Updated { get; set; }
         [DisplayName("F/U")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy}")]
         public Nullable<System.DateTime> FollowUpDate { get; set; }
         public string ManagerComment { get; set; }
         public string OSR { get; set; }
