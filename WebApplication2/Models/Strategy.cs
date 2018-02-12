@@ -37,6 +37,30 @@ namespace WebApplication2.Models
         public string Principal { get; set; }
         public Nullable<decimal> Value { get; set; }
         public string Group { get; set; }
+        //   public IEnumerable<SelectListItem> Groupddl { get; set; }
         public string Text { get; internal set; }
+        public string Perm { get; set; }
+
+
+
+
+
+        //public int StrategyId { get; set; }
+        //public string Customer { get; set; }
+        //public string EndProduct { get; set; }
+        //public string Product { get; set; }
+        //public string Status { get; set; }
+        //public string NextAction { get; set; }
+        //public string History { get; set; }
+        //public Nullable<System.DateTime> CreateDate { get; set; }
+        //public Nullable<System.DateTime> Updated { get; set; }
+        //public Nullable<System.DateTime> FollowUpDate { get; set; }
+        //public string ManagerComment { get; set; }
+        //public string OSR { get; set; }
+        //public string Principal { get; set; }
+        //public Nullable<decimal> Value { get; set; }
+        //public string Group { get; set; }
+        //public string Perm { get; set; }
+        //public string Text { get; internal set; }
     }
 }

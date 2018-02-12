@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication2.Models;
+using System.Text;
 
 namespace WebApplication2.Controllers
 {
@@ -22,15 +23,15 @@ namespace WebApplication2.Controllers
             {
                 Strategy strat = new Strategy();
 
-                // Get the user id from the session
-                int id = Int32.Parse(Session["UserId"].ToString());
-                // Use the id to get the associated email address
-                String em = db.UserAccounts.Find(id).Email.ToString();
-                // Use the email address to get the associated emaillist object which holds the group
-                EmailList emailListItem = db.EmailLists.First(x => x.Email == em);
+                
+                int id = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
+                String em = db.UserAccounts.Find(id).Email.ToString(); // Use the id to get the associated email address
+                EmailList emailListItem = db.EmailLists.First(x => x.Email == em); // Use the email address to get the associated emaillist object which holds the group
 
-                if (emailListItem.Group.Equals("ZZMMWW"))
+                // if external
+                if (!emailListItem.IntExt)
                 {
+
                     var groups = from g in db.Strategies
                                  select g;
 
@@ -41,55 +42,64 @@ namespace WebApplication2.Controllers
 
 
 
-                    if (group == null && stratvar ==null)
+
+
+                    //if (group == null && stratvar == null)
+                    //{
+                    //    return View(db.Strategies.ToList());
+                    //}
+
+                    //else if (stratvar != null && group == null)
+                    //{
+                    //    group = stratvar;
+                    //    groups = groups.Where(g => g.Group.Contains(group));
+                    //    //  return View(group.ToList());
+                    //};
+                    //stratvar = null;
+                    ////return View(db.Strategies.ToList());
+
+
+
+            
+
+                    // Create a list to hold the Todos which we will end up showing
+                    List<Strategy> list = new List<Strategy>();
+
+                    // this is a foreach loop, it goes through all the Todos returned from db.Todoes.ToList()
+                    foreach (Strategy s in db.Strategies.ToList())
                     {
-                        return View(db.Strategies.ToList());
-                    }
-
-                    else if (stratvar != null && group ==null)
-                    {
-                       
-                        group = stratvar;
-                        groups = groups.Where(g => g.Group.Contains(group));
-                        //  return View(group.ToList());
-                    };
-                    stratvar = null;
-                    //return View(db.Strategies.ToList());
-                    return View(groups.ToList());
-
-
-
-                }
-
-                // Create a list to hold the Todos which we will end up showing
-                List<Strategy> list = new List<Strategy>();
-
-                // this is a foreach loop, it goes through all the Todos returned from db.Todoes.ToList()
-                foreach (Strategy s in db.Strategies.ToList())
-                {
-                    // makes sure that the group of a todo isn't null (empty)
-                    if (!String.IsNullOrEmpty(s.Group))
-                    {
-                        // checks if the group of the user is equal to the group of the post. if so it adds the todo to the list.
-                        if (emailListItem.Group.Equals(s.Group))
+                        // makes sure that the group of a todo isn't null (empty)
+                        if (!String.IsNullOrEmpty(s.Group))
                         {
-                            list.Add(s);
+                            // checks if the group of the user is equal to the group of the post. if so it adds the todo to the list.
+                            if (emailListItem.Group.Equals(s.Group))
+                            {
+                                list.Add(s);
+                            }
                         }
                     }
+
+                    return View(list);
+
                 }
-                return View(list);
+                else
+                {
+                    // This is the query building code. 
+                    string p = emailListItem.Perm;
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("SELECT * FROM dbo.Strategy WHERE "); //change table name for whatever you need returned
+                    foreach (char c in p.ToCharArray()) {
+                        sb.Append("Perm LIKE '%");
+                        sb.Append(c);
+                        sb.Append("%' OR ");
+                    }
+                    sb.Length = sb.Length - 4;
 
+                    List<Strategy> list = db.Strategies.SqlQuery(sb.ToString()).ToList(); //change table name
 
+                    return View(list);
+                }
 
-
-
-
-
-
-
-
-
-                //return View(db.Strategies.ToList());
             }
             else
             {

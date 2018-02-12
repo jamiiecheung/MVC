@@ -12,6 +12,8 @@
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Group" Type="nvarchar" MaxLength="50" />
+          <Property Name="IntExt" Type="bit" />
+          <Property Name="Perm" Type="nchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Strategy">
           <Key>
@@ -32,6 +34,7 @@
           <Property Name="Principal" Type="nvarchar" MaxLength="50" />
           <Property Name="Value" Type="money" />
           <Property Name="Group" Type="nvarchar" MaxLength="50" />
+          <Property Name="Perm" Type="nchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Todoes">
           <Key>
@@ -104,6 +107,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Group" Type="String" Unicode="true" FixedLength="false" MaxLength="50" />
+          <Property Name="IntExt" Type="Boolean" />
+          <Property Name="Perm" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="Strategy">
           <Key>
@@ -124,6 +129,7 @@
           <Property Name="Principal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Value" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Group" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Perm" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -160,7 +166,9 @@
     <EntitySetMapping Name="EmailLists">
       <EntityTypeMapping TypeName="IsTypeOf(sjassoc_dbModel.EmailList)">
         <MappingFragment StoreEntitySet="EmailLists">
-          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Perm" ColumnName="Perm" />
+                <ScalarProperty Name="IntExt" ColumnName="IntExt" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Group" ColumnName="Group" />
         </MappingFragment>
@@ -169,6 +177,7 @@
           <EntitySetMapping Name="Strategies">
             <EntityTypeMapping TypeName="sjassoc_dbModel.Strategy">
               <MappingFragment StoreEntitySet="Strategy">
+                <ScalarProperty Name="Perm" ColumnName="Perm" />
                 <ScalarProperty Name="Group" ColumnName="Group" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="Principal" ColumnName="Principal" />
