@@ -23,7 +23,19 @@ namespace WebApplication2.Controllers
             {
                 Strategy strat = new Strategy();
 
-                
+
+
+                var groups = from g in db.Strategies
+                             select g;
+
+                ViewBag.Group = (from g in db.Strategies
+                                 select g.Group).Distinct();
+
+                groups = groups.Where(g => g.Group.Contains(group));
+
+
+
+
                 int id = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
                 String em = db.UserAccounts.Find(id).Email.ToString(); // Use the id to get the associated email address
                 EmailList emailListItem = db.EmailLists.First(x => x.Email == em); // Use the email address to get the associated emaillist object which holds the group
@@ -32,13 +44,13 @@ namespace WebApplication2.Controllers
                 if (!emailListItem.IntExt)
                 {
 
-                    var groups = from g in db.Strategies
-                                 select g;
+                    //var groups = from g in db.Strategies
+                                 //select g;
 
-                    ViewBag.Group = (from g in db.Strategies
-                                     select g.Group).Distinct();
+                    //ViewBag.Group = (from g in db.Strategies
+                                     //select g.Group).Distinct();
 
-                    groups = groups.Where(g => g.Group.Contains(group));
+                    //groups = groups.Where(g => g.Group.Contains(group));
 
 
 
@@ -84,6 +96,28 @@ namespace WebApplication2.Controllers
                 }
                 else
                 {
+
+
+
+
+                    if (group == null && stratvar == null)
+                    {
+                        return View(db.Strategies.ToList());
+                    }
+
+                    else if (stratvar != null && group == null)
+                    {
+                        group = stratvar;
+                        groups = groups.Where(g => g.Group.Contains(group));
+                        //  return View(group.ToList());
+                    };
+                    stratvar = null;
+                    //return View(db.Strategies.ToList());
+
+
+
+
+
                     // This is the query building code. 
                     string p = emailListItem.Perm;
                     StringBuilder sb = new StringBuilder();

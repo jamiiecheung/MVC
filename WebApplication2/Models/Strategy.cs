@@ -13,6 +13,7 @@ namespace WebApplication2.Models
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
 
     public partial class Strategy
     {
@@ -32,6 +33,7 @@ namespace WebApplication2.Models
         [DisplayName("F/U")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy}")]
         public Nullable<System.DateTime> FollowUpDate { get; set; }
+        [DisplayName("Latest Comments")]
         public string ManagerComment { get; set; }
         public string OSR { get; set; }
         public string Principal { get; set; }
@@ -40,6 +42,7 @@ namespace WebApplication2.Models
         //   public IEnumerable<SelectListItem> Groupddl { get; set; }
         public string Text { get; internal set; }
         public string Perm { get; set; }
+        public IEnumerable<SelectListItem> Groupddl { get; set; }
 
 
 

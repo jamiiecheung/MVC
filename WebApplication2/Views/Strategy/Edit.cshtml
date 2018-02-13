@@ -16,16 +16,14 @@
         margin: 0 !important;
         margin-left: 0 !important;
         margin-right: 0 !important;
-        /*padding-left: 0 !important;
-        padding-right: 0 !important;*/
     }
 
     .nopadding {
         padding: 0 !important;
     }
 
-    .norightpadding {
-        padding-right: 0 !important;
+    .rightmargin {
+        margin-right: 20px;
     }
 
     .noleftpadding {
@@ -38,6 +36,14 @@
 
     .formwhole {
         margin: 0 !important
+    }
+    .right {
+        text-align: right;
+    }
+
+    textarea {
+        width: 400px;
+        height: 200px;
     }
 </style>
 
@@ -53,80 +59,45 @@
 
 </script>
 
-@*<div>
-    <div class="col-xs-1">
-        <h2><span>Edit</span></h2>
-    </div>
-
-    <div class="col-xs-2">
-        <div class="col-xs-2">
-            <h2><input type="submit" value="Save" class="btn btn-default" /></h2>
-        </div>
-    </div>
-</div>
-<div>
-    <div class="col-sm-2">
-        @Html.LabelFor(model => model.OSR, htmlAttributes: new { @class = "control-label col-xs-5" })
-        <div class="col-xs-8 nomargin nopadding">
-            <h2>@Html.EditorFor(model => model.OSR, new { htmlAttributes = new { @class = "form-control nomargin" } })</h2>
-            <h2>@Html.ValidationMessageFor(model => model.OSR, "", new { @class = "text-danger" })</h2>
-        </div>
-    </div>
-    <div class="col-sm-2">
-        @Html.LabelFor(model => model.CreateDate, htmlAttributes: new { @class = "control-label col-xs-5" })
-        <div class="col-xs-8 nomargin nopadding">
-            <h2>@Html.EditorFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control nomargin" } })</h2>
-            <h2>@Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })</h2>
-        </div>
-    </div>
-    <div class="col-sm-2">
-        @Html.LabelFor(model => model.Updated, htmlAttributes: new { @class = "control-label col-xs-5" })
-        <div class="col-xs-8 nomargin nopadding">
-            <h2>@Html.EditorFor(model => model.Updated, new { htmlAttributes = new { @class = "form-control nomargin" } })</h2>
-            <h2>@Html.ValidationMessageFor(model => model.Updated, "", new { @class = "text-danger" })</h2>
-        </div>
-    </div>
-</div>*@
-@*</div>*@
-
 <br />
 @using (Html.BeginForm())
 {
+    <table>
+        <tr>
+            <td class="col-md-2"><h4><span>Strategy-Edit</span></h4></td>
+            <td class="col-md-1 right"><h5><input type="submit" value="Save" class="btn btn-default" /></h5></td>
+            <td>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.OSR, htmlAttributes: new { @class = "control-label col-md-5 right" })
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.OSR, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.OSR, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CreateDate, htmlAttributes: new { @class = "control-label col-md-5 right" })
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Updated, htmlAttributes: new { @class = "control-label col-md-5 right" })
+                    <div class="col-md-5">
+                        @Html.EditorFor(model => model.Updated, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Updated, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </td>
+        </tr>
 
-    <div>
-        <div class="col-xs-1">
-            <h2><span>Edit</span></h2>
-        </div>
 
-        <div class="col-xs-2">
-            <div class="col-xs-2">
-                <h2><input type="submit" value="Save" class="btn btn-default" /></h2>
-            </div>
-        </div>
-    </div>
-    <div>
-        <div class="col-sm-2">
-            @Html.LabelFor(model => model.OSR, htmlAttributes: new { @class = "control-label col-xs-5" })
-            <div class="col-xs-8 nomargin nopadding">
-                <h2>@Html.EditorFor(model => model.OSR, new { htmlAttributes = new { @class = "form-control nomargin" } })</h2>
-                <h2>@Html.ValidationMessageFor(model => model.OSR, "", new { @class = "text-danger" })</h2>
-            </div>
-        </div>
-        <div class="col-sm-2">
-            @Html.LabelFor(model => model.CreateDate, htmlAttributes: new { @class = "control-label col-xs-5" })
-            <div class="col-xs-8 nomargin nopadding">
-                <h2>@Html.EditorFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control nomargin" } })</h2>
-                <h2>@Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })</h2>
-            </div>
-        </div>
-        <div class="col-sm-2">
-            @Html.LabelFor(model => model.Updated, htmlAttributes: new { @class = "control-label col-xs-5" })
-            <div class="col-xs-8 nomargin nopadding">
-                <h2>@Html.EditorFor(model => model.Updated, new { htmlAttributes = new { @class = "form-control nomargin" } })</h2>
-                <h2>@Html.ValidationMessageFor(model => model.Updated, "", new { @class = "text-danger" })</h2>
-            </div>
-        </div>
-    </div>
+    </table>
+
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal formwhole">
@@ -136,8 +107,8 @@
 
         <div class="form-group">
 
-            <h4>Strategy</h4>
             <hr />
+
 
         </div>
 
@@ -148,27 +119,6 @@
                 @Html.EditorFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control nomargin" } })
                 @Html.ValidationMessageFor(model => model.Customer, "", new { @class = "text-danger" })
             </div>
-            @*<div class="col-md-2">
-                    @Html.LabelFor(model => model.OSR, htmlAttributes: new { @class = "control-label col-md-4 noleftpadding" })
-                    <div class="col-md-8 nomargin nopadding">
-                        @Html.EditorFor(model => model.OSR, new { htmlAttributes = new { @class = "form-control nomargin" } })
-                        @Html.ValidationMessageFor(model => model.OSR, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    @Html.LabelFor(model => model.CreateDate, htmlAttributes: new { @class = "control-label col-md-4 noleftpadding" })
-                    <div class="col-md-8 nomargin nopadding">
-                        @Html.EditorFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control nomargin" } })
-                        @Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    @Html.LabelFor(model => model.Updated, htmlAttributes: new { @class = "control-label col-md-4 noleftpadding" })
-                    <div class="col-md-8 nomargin nopadding">
-                        @Html.EditorFor(model => model.Updated, new { htmlAttributes = new { @class = "form-control nomargin" } })
-                        @Html.ValidationMessageFor(model => model.Updated, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
         </div>
 
         <div class="form-group">
@@ -244,63 +194,59 @@
             <div class="col-md-9"></div>
         </div>
 
+
+        @*<table>
+            <tr>
+                <td>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.History, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-3">
+                            @Html.TextAreaFor(model => model.History, 7, 33, null)
+                            @Html.ValidationMessageFor(model => model.History, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ManagerComment, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-3">
+                            @Html.TextAreaFor(model => model.ManagerComment, 7, 33, null)
+                            @Html.ValidationMessageFor(model => model.ManagerComment, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                    </div>
+                </td>
+
+
+            </tr>
+        </table>*@
+
+
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ManagerComment, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @*<textarea class="form-control" rows="5" id="comment">@Html.TextAreaFor(model => model.ManagerComment, 7, 33, null)</textarea>*@
+                @*<textarea class="form-control" rows="7">@Html.TextAreaFor(model => model.ManagerComment, null) </textarea>*@
+                @Html.TextAreaFor(model => model.ManagerComment, new { htmlAttributes = new { @class = "form-control" } })
+
+                @Html.ValidationMessageFor(model => model.ManagerComment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
         <div class="form-group">
             @Html.LabelFor(model => model.History, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
                 @Html.TextAreaFor(model => model.History, 7, 33, null)
-                @*@Html.EditorFor(model => model.History, 5, 1, null, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.History, "", new { @class = "text-danger" })
             </div>
-            <div class="col-md-3">
-                @Html.LabelFor(model => model.ManagerComment, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-3 nopadding">
-
-                    @*@Html.EditorFor(model => model.ManagerComment, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.TextAreaFor(model => model.ManagerComment, 7, 33, null)
-                    @Html.ValidationMessageFor(model => model.ManagerComment, "", new { @class = "text-danger" })
-                </div>
-                @*<div class="col-md-9"></div>*@
-            </div>
-            <div class="col-md-3"></div>
-            <div class="col-md-3"></div>
         </div>
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.CreateDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Updated, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Updated, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Updated, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.ManagerComment, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-3">
-                    @Html.EditorFor(model => model.ManagerComment, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ManagerComment, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-9"></div>
-            </div>*@
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.OSR, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.OSR, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.OSR, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-
 
 
 
