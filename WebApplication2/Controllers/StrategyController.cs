@@ -16,64 +16,28 @@ namespace WebApplication2.Controllers
         private sjassoc_dbEntities db = new sjassoc_dbEntities();
 
         // GET: Todoes
-        public ActionResult Index(string grouptemp, string group, string groupnew, string stratvar)
+        public ActionResult Index(string group, string groupnew, string stratvar, Strategy selg, FormCollection form)
         {
 
             if (Session["UserId"] != null)
             {
                 Strategy strat = new Strategy();
 
-
-
-                var groups = from g in db.Strategies
-                             select g;
-
-                ViewBag.Group = (from g in db.Strategies
-                                 select g.Group).Distinct();
-
-                groups = groups.Where(g => g.Group.Contains(group));
-
-
-
-
                 int id = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
                 String em = db.UserAccounts.Find(id).Email.ToString(); // Use the id to get the associated email address
                 EmailList emailListItem = db.EmailLists.First(x => x.Email == em); // Use the email address to get the associated emaillist object which holds the group
 
+                string perm = emailListItem.Perm;
+
+                if(perm == null)
+                {
+                    perm = "0";
+                }
+                ViewData["perm"] = perm;
+
                 // if external
                 if (!emailListItem.IntExt)
                 {
-
-                    //var groups = from g in db.Strategies
-                                 //select g;
-
-                    //ViewBag.Group = (from g in db.Strategies
-                                     //select g.Group).Distinct();
-
-                    //groups = groups.Where(g => g.Group.Contains(group));
-
-
-
-
-
-                    //if (group == null && stratvar == null)
-                    //{
-                    //    return View(db.Strategies.ToList());
-                    //}
-
-                    //else if (stratvar != null && group == null)
-                    //{
-                    //    group = stratvar;
-                    //    groups = groups.Where(g => g.Group.Contains(group));
-                    //    //  return View(group.ToList());
-                    //};
-                    //stratvar = null;
-                    ////return View(db.Strategies.ToList());
-
-
-
-            
-
                     // Create a list to hold the Todos which we will end up showing
                     List<Strategy> list = new List<Strategy>();
 
@@ -96,42 +60,62 @@ namespace WebApplication2.Controllers
                 }
                 else
                 {
-
-
-
-
-                    if (group == null && stratvar == null)
-                    {
-                        return View(db.Strategies.ToList());
-                    }
-
-                    else if (stratvar != null && group == null)
-                    {
-                        group = stratvar;
-                        groups = groups.Where(g => g.Group.Contains(group));
-                        //  return View(group.ToList());
-                    };
-                    stratvar = null;
-                    //return View(db.Strategies.ToList());
-
-
-
-
-
                     // This is the query building code. 
                     string p = emailListItem.Perm;
+                    string gr = emailListItem.Group;
                     StringBuilder sb = new StringBuilder();
                     sb.Append("SELECT * FROM dbo.Strategy WHERE "); //change table name for whatever you need returned
-                    foreach (char c in p.ToCharArray()) {
-                        sb.Append("Perm LIKE '%");
-                        sb.Append(c);
-                        sb.Append("%' OR ");
+                    foreach (char c in p.ToCharArray())
+                    {
+                        if (group == null)
+                        {
+                            sb.Append("Perm LIKE '%");
+                            sb.Append(c);
+                            sb.Append("%' OR ");
+                        }
+
                     }
                     sb.Length = sb.Length - 4;
 
-                    List<Strategy> list = db.Strategies.SqlQuery(sb.ToString()).ToList(); //change table name
 
-                    return View(list);
+                    if (selg == null)
+                    {
+
+                        List<Strategy> list = db.Strategies.SqlQuery(sb.ToString()).ToList(); //change table name
+                        return View(list);
+                    }
+
+                    else
+                    {
+                        var selectedval = form["group"];
+
+                        var groups = from g in db.Strategies
+                                     select g;
+
+                        ViewBag.Group = (from g in db.Strategies.Include(p)
+                                         select g.Group).Distinct();
+
+                        groups = groups.Where(g => g.Group.Contains(group));
+
+
+                        if (group == null && stratvar == null)
+                        {
+                            return View(db.Strategies.ToList());
+                        }
+
+                        else if (stratvar != null && group == null)
+                        {
+
+                            group = stratvar;
+                            groups = groups.Where(g => g.Group.Contains(group));
+                            //  return View(group.ToList());
+                        };
+                        stratvar = null;
+                        //return View(db.Strategies.ToList());
+                        return View(groups.ToList());
+
+                    }
+
                 }
 
             }
@@ -282,7 +266,7 @@ namespace WebApplication2.Controllers
                 {
                     db.Entry(strat).State = EntityState.Modified;
                     db.SaveChanges();
-                    return RedirectToAction("Index", new { stratvar = strat.Group});
+                    return RedirectToAction("Index", new { stratvar = strat.Group });
                     //return View("Index", stratvar);
                 }
 

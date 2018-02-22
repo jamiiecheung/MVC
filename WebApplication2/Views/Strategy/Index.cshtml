@@ -10,14 +10,40 @@
 <div class="col-md-6">
     @Html.ActionLink("Create New", "Create")
 </div>
-@*@Html.DropDownListFor(m => m.Group, new SelectList(ViewBag.Status, "Status", "Text"), "--Select--", new { id = "Type", @class = "form-control" })*@
-<div class="col-md-6">
-    @*@Html.LabelFor(model => model.Group, htmlAttributes: new { @class = "control-label col-md-2" })
 
-    @Html.DropDownListFor(m => m.Group, new SelectList(Model.Group, "Value", "Text"), new { @class = "form-control", id = "Group" })
-    @Html.DropDownList("Grouplist", Model.Group, "--Select--")*@
+
+@*@if (!string.IsNullOrWhiteSpace((ViewData["perm"]).ToString()))*@
+@if ((ViewData["perm"]).ToString() != "0")
+{
+
+    <div class="col-md-6">
+
+        @using (Html.BeginForm())
+        {
+            <h5>Group</h5>
+            <span>
+                @Html.DropDownList("group", new SelectList(ViewBag.Group), "--Select--")
+            </span>
+                        <input type="submit" value="Search" onclick="location.href='@Url.Action("Index", "Strategy")'" />
+                        }
 
 </div>
+}
+else if ((ViewData["perm"]).ToString() == "0")
+{
+    <div class="col-md-6 hide">
+
+        @using (Html.BeginForm())
+        {
+            @*<h5>Group</h5>
+            <div class="hide">@Html.DropDownList("group", new SelectList(ViewBag.Group), "--Select--")</div>
+            <div class="hide">
+                <input type="submit" value="Search" onclick="location.href='@Url.Action("Index", "Strategy")'" />
+            </div>*@
+
+        }
+    </div>
+}
 @*</p>*@
 <table class="table">
     <tr>
@@ -72,7 +98,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.FollowUpDate)
             </td>
-
             <td>
                 @Html.DisplayFor(modelItem => item.OSR)
             </td>
