@@ -1,0 +1,141 @@
+﻿@model IEnumerable<WebApplication2.Models.Opptys>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Engineer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone_Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Program)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Application)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Part_Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EAU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Units_Per_Board)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Decision_Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Production_Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CM)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CM_Location)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Distributor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Disty_Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Disty_Phone_Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Factory_Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Factory_Phone_Number)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Engineer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone_Number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Program)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Application)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Part_Number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EAU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Units_Per_Board)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Decision_Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Production_Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CM)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CM_Location)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Distributor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Disty_Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Disty_Phone_Number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Factory_Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Factory_Phone_Number)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -15,6 +15,31 @@
           <Property Name="IntExt" Type="bit" />
           <Property Name="Perm" Type="nchar" MaxLength="10" />
         </EntityType>
+        <EntityType Name="Opptys">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Customer" Type="nvarchar" MaxLength="50" />
+          <Property Name="Engineer" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone Number" Type="nvarchar" MaxLength="20" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Program" Type="nvarchar" MaxLength="50" />
+          <Property Name="Application" Type="nvarchar" MaxLength="50" />
+          <Property Name="Part Number" Type="nchar" MaxLength="20" />
+          <Property Name="EAU" Type="nvarchar" MaxLength="50" />
+          <Property Name="Price" Type="money" />
+          <Property Name="Units Per Board" Type="int" />
+          <Property Name="Decision Date" Type="date" />
+          <Property Name="Production Date" Type="date" />
+          <Property Name="CM" Type="nvarchar" MaxLength="50" />
+          <Property Name="CM Location" Type="nvarchar" MaxLength="50" />
+          <Property Name="Distributor" Type="nvarchar" MaxLength="50" />
+          <Property Name="Disty Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Disty Phone Number" Type="nchar" MaxLength="20" />
+          <Property Name="Factory Email" Type="nchar" MaxLength="50" />
+          <Property Name="Factory Phone Number" Type="nchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="Strategy">
           <Key>
             <PropertyRef Name="StrategyId" />
@@ -62,6 +87,7 @@
         </EntityType>
         <EntityContainer Name="sjassoc_dbModelStoreContainer">
           <EntitySet Name="EmailLists" EntityType="Self.EmailLists" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Opptys" EntityType="Self.Opptys" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Strategy" EntityType="Self.Strategy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Todoes" EntityType="Self.Todoes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccounts" EntityType="Self.UserAccounts" Schema="dbo" store:Type="Tables" />
@@ -87,6 +113,7 @@
           <EntitySet Name="UserAccounts" EntityType="sjassoc_dbModel.UserAccount" />
           <EntitySet Name="EmailLists" EntityType="sjassoc_dbModel.EmailList" />
           <EntitySet Name="Strategies" EntityType="sjassoc_dbModel.Strategy" />
+          <EntitySet Name="Opptys1" EntityType="sjassoc_dbModel.Opptys" />
         </EntityContainer>
         <EntityType Name="UserAccount">
           <Key>
@@ -130,6 +157,31 @@
           <Property Name="Value" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Group" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Perm" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Opptys">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Customer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Engineer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone_Number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Program" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Application" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Part_Number" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="EAU" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Units_Per_Board" Type="Int32" />
+          <Property Name="Decision_Date" Type="DateTime" Precision="0" />
+          <Property Name="Production_Date" Type="DateTime" Precision="0" />
+          <Property Name="CM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CM_Location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Distributor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Disty_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Disty_Phone_Number" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Factory_Email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Factory_Phone_Number" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -193,6 +245,32 @@
                 <ScalarProperty Name="EndProduct" ColumnName="EndProduct" />
                 <ScalarProperty Name="Customer" ColumnName="Customer" />
                 <ScalarProperty Name="StrategyId" ColumnName="StrategyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Opptys1">
+            <EntityTypeMapping TypeName="sjassoc_dbModel.Opptys">
+              <MappingFragment StoreEntitySet="Opptys">
+                <ScalarProperty Name="Factory_Phone_Number" ColumnName="Factory Phone Number" />
+                <ScalarProperty Name="Factory_Email" ColumnName="Factory Email" />
+                <ScalarProperty Name="Disty_Phone_Number" ColumnName="Disty Phone Number" />
+                <ScalarProperty Name="Disty_Email" ColumnName="Disty Email" />
+                <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+                <ScalarProperty Name="CM_Location" ColumnName="CM Location" />
+                <ScalarProperty Name="CM" ColumnName="CM" />
+                <ScalarProperty Name="Production_Date" ColumnName="Production Date" />
+                <ScalarProperty Name="Decision_Date" ColumnName="Decision Date" />
+                <ScalarProperty Name="Units_Per_Board" ColumnName="Units Per Board" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="EAU" ColumnName="EAU" />
+                <ScalarProperty Name="Part_Number" ColumnName="Part Number" />
+                <ScalarProperty Name="Application" ColumnName="Application" />
+                <ScalarProperty Name="Program" ColumnName="Program" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone Number" />
+                <ScalarProperty Name="Engineer" ColumnName="Engineer" />
+                <ScalarProperty Name="Customer" ColumnName="Customer" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

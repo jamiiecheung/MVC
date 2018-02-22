@@ -29,5 +29,6 @@ namespace WebApplication2.Models
         public virtual DbSet<UserAccount> UserAccounts { get; set; }
         public virtual DbSet<EmailList> EmailLists { get; set; }
         public virtual DbSet<Strategy> Strategies { get; set; }
+        public virtual DbSet<Opptys> Opptys1 { get; set; }
     }
 }

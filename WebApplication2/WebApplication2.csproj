@@ -184,6 +184,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Opptys.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\OpptysController.cs" />
     <Compile Include="Models\OurDbContext.cs" />
     <Compile Include="Models\Strategy.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -269,6 +273,10 @@
     <Content Include="Views\Strategy\Details.cshtml" />
     <Content Include="Views\Strategy\Edit.cshtml" />
     <Content Include="Views\Strategy\Create.cshtml" />
+    <Content Include="Views\Opptys\Index.cshtml" />
+    <Content Include="Views\Opptys\Create.cshtml" />
+    <Content Include="Views\Opptys\Edit.cshtml" />
+    <Content Include="Views\Opptys\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
