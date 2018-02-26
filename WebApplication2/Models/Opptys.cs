@@ -18,6 +18,7 @@ namespace WebApplication2.Models
     {
         public int Id { get; set; }
         public string Customer { get; set; }
+        public string Principal { get; set; }
         public string Engineer { get; set; }
         [DisplayName("Phone Number")]
         public string Phone_Number { get; set; }
@@ -48,5 +49,8 @@ namespace WebApplication2.Models
         public string Factory_Email { get; set; }
         [DisplayName("Factory Phone Number")]
         public string Factory_Phone_Number { get; set; }
+        public string Status { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy}")]
+        public Nullable<System.DateTime> Updated { get; set; }
     }
 }

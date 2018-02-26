@@ -44,7 +44,7 @@ namespace WebApplication2.Models
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Customer,Engineer,Phone_Number,Email,Program,Application,Part_Number,EAU,Price,Units_Per_Board,Decision_Date,Production_Date,CM,CM_Location,Distributor,Disty_Email,Disty_Phone_Number,Factory_Email,Factory_Phone_Number")] Opptys oppt)
+        public ActionResult Create([Bind(Include = "Customer,Principal,Engineer,Status,Updated,Phone_Number,Email,Program,Application,Part_Number,EAU,Price,Units_Per_Board,Decision_Date,Production_Date,CM,CM_Location,Distributor,Disty_Email,Disty_Phone_Number,Factory_Email,Factory_Phone_Number")] Opptys oppt)
         {
 
             if (Session["UserId"] != null)
@@ -101,7 +101,7 @@ namespace WebApplication2.Models
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Customer,Engineer,Phone_Number,Email,Program,Application,Part_Number,EAU,Price,Units_Per_Board,Decision_Date,Production_Date,CM,CM_Location,Distributor,Disty_Email,Disty_Phone_Number,Factory_Email,Factory_Phone_Number")] Opptys oppt)
+        public ActionResult Edit([Bind(Include = "Id,Customer,Principal,Engineer,Status,Updated,Phone_Number,Email,Program,Application,Part_Number,EAU,Price,Units_Per_Board,Decision_Date,Production_Date,CM,CM_Location,Distributor,Disty_Email,Disty_Phone_Number,Factory_Email,Factory_Phone_Number")] Opptys oppt)
         {
 
             if (Session["UserId"] != null)
