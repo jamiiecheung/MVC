@@ -16,7 +16,7 @@ namespace WebApplication2.Controllers
         private sjassoc_dbEntities db = new sjassoc_dbEntities();
 
         // GET: Todoes
-        public ActionResult Index(string group, string groupnew, string stratvar, Strategy selg, FormCollection form)
+        public ActionResult Index(string group, string prin, string osr, string status, string groupnew, string stratvar, string fltstring, Strategy selg, FormCollection form)
         {
 
             if (Session["UserId"] != null)
@@ -29,7 +29,7 @@ namespace WebApplication2.Controllers
 
                 string perm = emailListItem.Perm;
 
-                if(perm == null)
+                if (perm == null)
                 {
                     perm = "0";
                 }
@@ -89,31 +89,100 @@ namespace WebApplication2.Controllers
                     {
                         var selectedval = form["group"];
 
+                        var selectedvalpr = form["prin"];
+
+                        var selectedvalosr = form["osr"];
+
+                        var selectedvalstatus = form["status"];
+
+
                         var groups = from g in db.Strategies
                                      select g;
+                        var prins = from pr in db.Strategies
+                                    select pr;
+                        var osrs = from o in db.Strategies
+                                   select o;
+                        var statuss = from s in db.Strategies
+                                      select s;
 
                         ViewBag.Group = (from g in db.Strategies.Include(p)
                                          select g.Group).Distinct();
 
-                        groups = groups.Where(g => g.Group.Contains(group));
 
+                        ViewBag.Principal = (from pr in db.Strategies.Include(p)
+                                             select pr.Principal).Distinct();
 
-                        if (group == null && stratvar == null)
+                        ViewBag.OSR = (from o in db.Strategies.Include(p)
+                                       select o.OSR).Distinct();
+
+                        ViewBag.Status = (from s in db.Strategies.Include(p)
+                                          select s.Status).Distinct();
+
+                        //groups = groups.Where(g => g.Group.Contains(group));
+                        //prins = groups.Where(pr => pr.Principal.Contains(prin));
+
+                        //if all filters are null
+                        if (group == null && stratvar == null && prin == null && osr == null && status == null)
                         {
                             return View(db.Strategies.ToList());
                         }
 
-                        else if (stratvar != null && group == null)
+                        //returns same search filter for group if edit 
+                        if (stratvar != null && group == null)
                         {
 
                             group = stratvar;
                             groups = groups.Where(g => g.Group.Contains(group));
                             //  return View(group.ToList());
                         };
-                        stratvar = null;
-                        //return View(db.Strategies.ToList());
-                        return View(groups.ToList());
 
+
+
+                        //if (prin != null && group != null && osr != null && status != null)
+                        if (group != null)
+                        {
+                            //prins = prins.Where(gpr => gpr.Principal.Contains(prin) && gpr.Group.Contains(group) && gpr.OSR.Contains(osr) && gpr.Status.Contains(status));
+                            fltstring = "gpr.Group.Contains(group)";
+                            prins = prins.Where(gpr => gpr.Group.Contains(group));
+                            //  prins = prins.Where(gpr => gpr.Group.Contains(group));
+                            stratvar = null;
+                            //return View(db.Strategies.ToList());
+                            return View(prins.ToList());
+                        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              
+
+
+                        return View(db.Strategies.ToList());
                     }
 
                 }
