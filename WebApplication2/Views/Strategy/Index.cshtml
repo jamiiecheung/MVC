@@ -21,21 +21,24 @@
     <table>
         <tr>
             <td>Group</td>
-            <td>@Html.DropDownList("group", new SelectList(ViewBag.Group), "--Select--")</td>
-        </tr>
-        <tr>
+            <td>@Html.DropDownList("group", new SelectList(ViewBag.Groupcmb), "--Select--")</td>
+
             <td>Principal</td>
-            <td>@Html.DropDownList("prin", new SelectList(ViewBag.Principal), "--Select--")</td>
-        </tr>
-        <tr>
+            <td>@Html.DropDownList("prin", new SelectList(ViewBag.Principalcmb), "--Select--")</td>
+
             <td>OSR</td>
-            <td>@Html.DropDownList("osr", new SelectList(ViewBag.OSR), "--Select--")</td>
-        </tr>
-        <tr>
+            <td>@Html.DropDownList("osr", new SelectList(ViewBag.OSRcmb), "--Select--")</td>
+
+            <td>OSR</td>
+            <td>@Html.DropDownList("OSRcmb", null, "Select OSR", htmlAttributes: new
+           {
+               @class = "form-control",
+               @required = "required"
+           }))</td>
+
             <td>Status</td>
-            <td>@Html.DropDownList("status", new SelectList(ViewBag.Status), "--Select--")</td>
-        </tr>
-        <tr>
+            <td>@Html.DropDownList("status", new SelectList(ViewBag.Statuscmb), "--Select--")</td>
+
             <td>
                 <input type="submit" value="Search" onclick="location.href='@Url.Action("Index", "Strategy")'" />
             </td>

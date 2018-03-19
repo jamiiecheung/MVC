@@ -16,7 +16,7 @@ namespace WebApplication2.Controllers
         private sjassoc_dbEntities db = new sjassoc_dbEntities();
 
         // GET: Todoes
-        public ActionResult Index(string group, string prin, string osr, string status, string groupnew, string stratvar, string fltstring, Strategy selg, FormCollection form)
+        public ActionResult Index(string group, string prin, string osr, string status, string groupnew, string stratvar, string fltstring, Strategy selg, FormCollection form, string OSRcmb = null)
         {
 
             if (Session["UserId"] != null)
@@ -87,13 +87,13 @@ namespace WebApplication2.Controllers
 
                     else
                     {
-                        var selectedval = form["group"];
+                        //var selectedval = form["group"];
 
-                        var selectedvalpr = form["prin"];
+                        //var selectedvalpr = form["prin"];
 
-                        var selectedvalosr = form["osr"];
+                        //var selectedvalosr = form["osr"];
 
-                        var selectedvalstatus = form["status"];
+                        //var selectedvalstatus = form["status"];
 
 
                         var groups = from g in db.Strategies
@@ -105,18 +105,22 @@ namespace WebApplication2.Controllers
                         var statuss = from s in db.Strategies
                                       select s;
 
-                        ViewBag.Group = (from g in db.Strategies.Include(p)
-                                         select g.Group).Distinct();
+                        ViewBag.Groupcmb = (from g in db.Strategies.Include(p)
+                                            where g.Group != null
+                                            select g.Group).Distinct();
 
 
-                        ViewBag.Principal = (from pr in db.Strategies.Include(p)
-                                             select pr.Principal).Distinct();
+                        ViewBag.Principalcmb = (from pr in db.Strategies.Include(p)
+                                                where pr.Principal != null
+                                                select pr.Principal).Distinct();
 
-                        ViewBag.OSR = (from o in db.Strategies.Include(p)
-                                       select o.OSR).Distinct();
+                        ViewBag.OSRcmb = (from o in db.Strategies.Include(p)
+                                          where o.OSR != null
+                                          select o.OSR).Distinct();
 
-                        ViewBag.Status = (from s in db.Strategies.Include(p)
-                                          select s.Status).Distinct();
+                        ViewBag.Statuscmb = (from s in db.Strategies.Include(p)
+                                             where s.Status != null
+                                             select s.Status).Distinct();
 
                         //groups = groups.Where(g => g.Group.Contains(group));
                         //prins = groups.Where(pr => pr.Principal.Contains(prin));
@@ -139,11 +143,11 @@ namespace WebApplication2.Controllers
 
 
                         //if (prin != null && group != null && osr != null && status != null)
-                        if (group != null)
+                        if (prin != null && group != null && osr != null && status != null)
                         {
-                            //prins = prins.Where(gpr => gpr.Principal.Contains(prin) && gpr.Group.Contains(group) && gpr.OSR.Contains(osr) && gpr.Status.Contains(status));
-                            fltstring = "gpr.Group.Contains(group)";
-                            prins = prins.Where(gpr => gpr.Group.Contains(group));
+                            prins = prins.Where(gpr => gpr.Principal.Contains(prin) && gpr.Group.Contains(group) && gpr.OSR.Contains(osr) && gpr.Status.Contains(status));
+                            //fltstring = "gpr.Group.Contains(group)";
+                            //prins = prins.Where(gpr => gpr.Group.Contains(group));
                             //  prins = prins.Where(gpr => gpr.Group.Contains(group));
                             stratvar = null;
                             //return View(db.Strategies.ToList());

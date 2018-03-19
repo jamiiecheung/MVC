@@ -58,7 +58,7 @@
           <Property Name="Updated" Type="date" />
           <Property Name="FollowUpDate" Type="date" />
           <Property Name="ManagerComment" Type="nvarchar" MaxLength="500" />
-          <Property Name="OSR" Type="nchar" MaxLength="10" />
+          <Property Name="OSR" Type="nvarchar" MaxLength="50" />
           <Property Name="Principal" Type="nvarchar" MaxLength="50" />
           <Property Name="Value" Type="money" />
           <Property Name="Group" Type="nvarchar" MaxLength="50" />
@@ -155,7 +155,7 @@
           <Property Name="Updated" Type="DateTime" Precision="0" />
           <Property Name="FollowUpDate" Type="DateTime" Precision="0" />
           <Property Name="ManagerComment" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="OSR" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="OSR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Principal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Value" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Group" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
