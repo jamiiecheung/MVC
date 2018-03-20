@@ -16,7 +16,7 @@ namespace WebApplication2.Controllers
         private sjassoc_dbEntities db = new sjassoc_dbEntities();
 
         // GET: Todoes
-        public ActionResult Index(string group, string prin, string osr, string status, string groupnew, string stratvar, string fltstring, Strategy selg, FormCollection form, string OSRcmb = null)
+        public ActionResult Index(string group, string prin, string osr, string status, string groupnew, string stratvar, string fltstring, Strategy selg, FormCollection form)
         {
 
             if (Session["UserId"] != null)
