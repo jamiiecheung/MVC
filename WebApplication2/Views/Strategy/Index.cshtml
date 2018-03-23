@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Index";
 }
-
 <h2>Index</h2>
 
 <div class="col-md-6">
@@ -12,51 +11,40 @@
 <div class="col-md-6">
     @if ((ViewData["perm"]).ToString() != "0")
     {
-
-
-
         using (Html.BeginForm())
         {
+                <table>
+                    <tr>
+                        <td>Group</td>
+                        <td>@Html.DropDownList("Groupddl", null, "Select")</td>
 
-    <table>
-        <tr>
-            <td>Group</td>
-            <td>@Html.DropDownList("group", new SelectList(ViewBag.Groupcmb), "--Select--")</td>
+                        <td>Principal</td>
+                        <td>@Html.DropDownList("Prinddl", null, "Select")</td>
 
-            <td>Principal</td>
-            <td>@Html.DropDownList("prin", new SelectList(ViewBag.Principalcmb), "--Select--")</td>
+                        <td>OSR</td>
+                        <td>@Html.DropDownList("OSRddl", null, "Select")</td>
 
-            <td>OSR</td>
-            <td>@Html.DropDownList("osr", new SelectList(ViewBag.OSRcmb), "--Select--")</td>
-
-            <td>Status</td>
-            <td>@Html.DropDownList("status", new SelectList(ViewBag.Statuscmb), "--Select--")</td>
-
-            <td>
-                <input type="submit" value="Search" onclick="location.href='@Url.Action("Index", "Strategy")'" />
-            </td>
-        </tr>
-    </table>
-
-
+                        <td>Status</td>
+                        <td>@Html.DropDownList("Statusddl", null, "Select")</td>
+                        <td>
+                            <input type="submit" value="Search" onclick="location.href='@Url.Action("Index", "Strategy")'" />
+                        </td>
+                    </tr>
+                </table>
         }
 
     }
     else if ((ViewData["perm"]).ToString() == "0")
     {
-        <div class="col-md-6 hide">
+            <div class="col-md-6 hide">
 
-            @using (Html.BeginForm())
-            {
-                @*<h5>Group</h5>
-                    <div class="hide">@Html.DropDownList("group", new SelectList(ViewBag.Group), "--Select--")</div>
-                    <div class="hide">
-                        <input type="submit" value="Search" onclick="location.href='@Url.Action("Index", "Strategy")'" />
-                    </div>*@
+                @using (Html.BeginForm())
+                {
 
-            }
-        </div>
-    }
+
+                }
+            </div>
+        }
 
 </div>
 <div class="col-md-12"></div>

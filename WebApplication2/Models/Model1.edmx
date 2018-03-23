@@ -87,6 +87,7 @@
           <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
           <Property Name="ConfirmPassword" Type="nvarchar(max)" />
+          <Property Name="epass" Type="nvarchar(max)" />
         </EntityType>
         <EntityContainer Name="sjassoc_dbModelStoreContainer">
           <EntitySet Name="EmailLists" EntityType="Self.EmailLists" Schema="dbo" store:Type="Tables" />
@@ -129,6 +130,7 @@
           <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="ConfirmPassword" Type="String" Unicode="true" FixedLength="false" MaxLength="Max" />
+          <Property Name="epass" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="EmailList">
           <Key>
@@ -211,7 +213,8 @@
     <EntitySetMapping Name="UserAccounts">
       <EntityTypeMapping TypeName="IsTypeOf(sjassoc_dbModel.UserAccount)">
         <MappingFragment StoreEntitySet="UserAccounts">
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="epass" ColumnName="epass" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="Email" ColumnName="Email" />

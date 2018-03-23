@@ -1,0 +1,67 @@
+﻿@model WebApplication2.Models.Strategy
+
+@{
+    ViewBag.Title = "Email";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Email</h2>
+@using (Html.BeginForm("Send", "Strategy"))
+{
+<table>
+    <tr>
+        <td>
+            <div class="col-md-1">To:</div>
+        </td>
+        <td>
+            <div class="col-md-12">
+                <input type="text" name="txtto" id="txtto" required="required" />
+            </div>
+        </td>
+        <td>
+            <div class="col-md-3"></div>
+        </td>
+    <tr>
+        <td>
+            <div class="col-md-3">
+                Subject:
+            </div>
+        </td>
+        <td>
+            <div class="col-md-12">
+                <input type="text" name="txtsubject" id="txtsubject" required="required" />
+            </div>
+        </td>
+        <td>
+            <div class="col-md-3"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="col-md-3">
+                Message:
+            </div>
+        </td>
+        <td>
+            <div class="col-md-12">
+                <input type="text" name="txtbody" id="txtbody" required="required" />
+            </div>
+        </td>
+        <td>
+            <div class="col-md-3"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="submit" value="Send" name="Send" onclick="location.href='@Url.Action("Send", "Strategy")'">
+            @*<button class="btn btn-default" type="button" value="Send" name="Send" onclick="location.href='@Url.Action("Send", "Strategy")'">Send</button>*@
+            @*<button class="btn btn-default" type="button" value="Cancel" name="Cancel" onclick="goBack()">Cancel</button>*@
+            <input type="submit" value="Cancel" name="Cancel" onclick="goBack()">
+
+            <script>
+                function goBack() { window.history.back(); }
+            </script>
+        </td>
+    </tr>
+</table>
+}

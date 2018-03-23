@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication2.Models;
 using System.Text;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Net.Mail;
 
 namespace WebApplication2.Controllers
 {
@@ -16,7 +19,8 @@ namespace WebApplication2.Controllers
         private sjassoc_dbEntities db = new sjassoc_dbEntities();
 
         // GET: Todoes
-        public ActionResult Index(string group, string prin, string osr, string status, string groupnew, string stratvar, string fltstring, Strategy selg, FormCollection form)
+        public ActionResult Index(string Groupddl, string Statusddl, string Prinddl, string OSRddl, string osrsel, string prinsel, string statussel, string groupsel,
+            string statusdrop, string groupnew, string stratvar, string fltstring, Strategy selg, FormCollection form)
         {
 
             if (Session["UserId"] != null)
@@ -54,7 +58,6 @@ namespace WebApplication2.Controllers
                             }
                         }
                     }
-
                     return View(list);
 
                 }
@@ -67,7 +70,7 @@ namespace WebApplication2.Controllers
                     sb.Append("SELECT * FROM dbo.Strategy WHERE "); //change table name for whatever you need returned
                     foreach (char c in p.ToCharArray())
                     {
-                        if (group == null)
+                        if (Groupddl == null)
                         {
                             sb.Append("Perm LIKE '%");
                             sb.Append(c);
@@ -80,111 +83,56 @@ namespace WebApplication2.Controllers
 
                     if (selg == null)
                     {
-
                         List<Strategy> list = db.Strategies.SqlQuery(sb.ToString()).ToList(); //change table name
                         return View(list);
                     }
 
                     else
                     {
-                        //var selectedval = form["group"];
-
-                        //var selectedvalpr = form["prin"];
-
-                        //var selectedvalosr = form["osr"];
-
-                        //var selectedvalstatus = form["status"];
-
-
                         var groups = from g in db.Strategies
                                      select g;
                         var prins = from pr in db.Strategies
                                     select pr;
-                        var osrs = from o in db.Strategies
-                                   select o;
-                        var statuss = from s in db.Strategies
-                                      select s;
+                        /*  var osrs = from o in db.Strategies
+                                     select o;
+                          var statuss = from s in db.Strategies
+                                        select s; */
 
-                        ViewBag.Groupcmb = (from g in db.Strategies.Include(p)
-                                            where g.Group != null
-                                            select g.Group).Distinct();
+                        List<SelectListItem> groupListItems = db.Strategies.Select(group => new SelectListItem { Value = group.Group, Text = group.Group }).Distinct().ToList();
+                        ViewBag.Groupddl = new SelectList(groupListItems, "Value", "Text").Distinct();
 
+                        List<SelectListItem> prinListItems = db.Strategies.Select(prin => new SelectListItem { Value = prin.Principal, Text = prin.Principal }).Distinct().ToList();
+                        ViewBag.Prinddl = new SelectList(prinListItems, "Value", "Text").Distinct();
 
-                        ViewBag.Principalcmb = (from pr in db.Strategies.Include(p)
-                                                where pr.Principal != null
-                                                select pr.Principal).Distinct();
+                        List<SelectListItem> osrListItems = db.Strategies.Select(osr => new SelectListItem { Value = osr.OSR, Text = osr.OSR }).Distinct().ToList();
+                        ViewBag.OSRddl = new SelectList(osrListItems, "Value", "Text").Distinct();
 
-                        ViewBag.OSRcmb = (from o in db.Strategies.Include(p)
-                                          where o.OSR != null
-                                          select o.OSR).Distinct();
+                        List<SelectListItem> statusListItems = db.Strategies.Select(status => new SelectListItem { Value = status.Status, Text = status.Status }).Distinct().ToList();
+                        ViewBag.Statusddl = new SelectList(statusListItems, "Value", "Text").Distinct();
 
-                        ViewBag.Statuscmb = (from s in db.Strategies.Include(p)
-                                             where s.Status != null
-                                             select s.Status).Distinct();
-
-                        //groups = groups.Where(g => g.Group.Contains(group));
-                        //prins = groups.Where(pr => pr.Principal.Contains(prin));
 
                         //if all filters are null
-                        if (group == null && stratvar == null && prin == null && osr == null && status == null)
+                        if (Groupddl == null && stratvar == null && Prinddl == null && OSRddl == null && Statusddl == null)
                         {
                             return View(db.Strategies.ToList());
                         }
 
                         //returns same search filter for group if edit 
-                        if (stratvar != null && group == null)
+                        if (stratvar != null && Groupddl == null)
                         {
-
-                            group = stratvar;
-                            groups = groups.Where(g => g.Group.Contains(group));
+                            Groupddl = stratvar;
+                            groups = groups.Where(z => z.Group.Contains(Groupddl));
                             //  return View(group.ToList());
                         };
 
 
-
                         //if (prin != null && group != null && osr != null && status != null)
-                        if (prin != null && group != null && osr != null && status != null)
+                        if (Prinddl != null && Groupddl != null && OSRddl != null && Statusddl != null)
                         {
-                            prins = prins.Where(gpr => gpr.Principal.Contains(prin) && gpr.Group.Contains(group) && gpr.OSR.Contains(osr) && gpr.Status.Contains(status));
-                            //fltstring = "gpr.Group.Contains(group)";
-                            //prins = prins.Where(gpr => gpr.Group.Contains(group));
-                            //  prins = prins.Where(gpr => gpr.Group.Contains(group));
+                            prins = prins.Where(gpr => gpr.Principal.Contains(Prinddl) && gpr.Group.Contains(Groupddl) && gpr.OSR.Contains(OSRddl) && gpr.Status.Contains(Statusddl));
                             stratvar = null;
-                            //return View(db.Strategies.ToList());
                             return View(prins.ToList());
                         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              
-
 
                         return View(db.Strategies.ToList());
                     }
@@ -196,11 +144,7 @@ namespace WebApplication2.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-
         }
-
-
-
 
 
         public ActionResult Details(int? id)
@@ -225,8 +169,6 @@ namespace WebApplication2.Controllers
             }
 
         }
-
-
 
 
 
@@ -255,7 +197,6 @@ namespace WebApplication2.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-
         }
 
         // POST: Todoes/Create
@@ -280,15 +221,11 @@ namespace WebApplication2.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-
-
         }
-
 
 
         public ActionResult Edit(int? id, string groupflt)
         {
-
             if (Session["UserId"] != null)
             {
                 if (id == null)
@@ -301,7 +238,6 @@ namespace WebApplication2.Controllers
                     return HttpNotFound();
                 }
 
-
                 var options = new List<Todo>();
                 options.Add(new Todo() { Status = "New Request", Text = "New Request" });
                 options.Add(new Todo() { Status = "Reviewed", Text = "Reviewed" });
@@ -309,17 +245,13 @@ namespace WebApplication2.Controllers
                 options.Add(new Todo() { Status = "In Progress", Text = "In Progress" });
                 options.Add(new Todo() { Status = "Completed", Text = "Completed" });
 
-
                 ViewBag.Status = options;
-
-
                 return View(strat);
             }
             else
             {
                 return RedirectToAction("Login", "Account");
             }
-
         }
 
 
@@ -327,7 +259,6 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "StrategyId,Customer,EndProduct,Product,Status,NextAction,History,CreateDate,Updated,FollowUpDate,ManagerComment,OSR,Principal,Value,Group")] Strategy strat, string stratvar)
         {
-
             if (Session["UserId"] != null)
             {
                 var stratvariable = from s in db.Strategies
@@ -349,10 +280,76 @@ namespace WebApplication2.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-
-
         }
 
+        public ActionResult Email()
+        {
+            if (Session["UserId"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+        }
+
+        private void SendHtmlFormattedEmail(string toAddress, string messageSubject, string messageBody)
+        {
+            int id = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
+            String emailacc = db.UserAccounts.Find(id).Email.ToString(); // Use the id to get the associated email address
+            String passw = db.UserAccounts.Find(id).epass.ToString(); // Use the id to get the associated email address
+            string senderID = "";
+            string senderPassword = "";
+
+            string result = "Message Successfully Sent!!!";
+
+            //catching if client or SJ Assoc.
+            if (passw == null)
+            {
+                senderID = "jcheung@sjassoc.com";// use sender’s email id here..
+                senderPassword = "1Direction!!"; // sender password here…
+            }
+            else
+            {
+                senderID = emailacc;// use sender’s email id here..
+                senderPassword = passw; // sender password here…
+            }
+
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress(senderID);
+            mailMessage.Subject = messageSubject;
+            mailMessage.Body = messageBody;
+            mailMessage.IsBodyHtml = true;
+            mailMessage.To.Add(toAddress);
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.office365.com";
+            smtp.EnableSsl = true;
+            System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+            NetworkCred.UserName = senderID;
+            NetworkCred.Password = senderPassword;
+            smtp.UseDefaultCredentials = true;
+            smtp.Credentials = NetworkCred;
+            smtp.Port = 25;
+            smtp.Send(mailMessage);
+        }
+
+        [HttpPost]
+        //string txtsubject, string txtto, string txtbody, 
+        public ActionResult Send(FormCollection form)
+        {
+            if (Session["UserId"] != null)
+            {
+                SendHtmlFormattedEmail(form["txtto"], form["txtsubject"], form["txtbody"]);
+
+                return RedirectToAction("Index", "Strategy");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+        }
+    
 
     }
 }

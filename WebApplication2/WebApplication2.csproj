@@ -278,6 +278,7 @@
     <Content Include="Views\Opptys\Create.cshtml" />
     <Content Include="Views\Opptys\Edit.cshtml" />
     <Content Include="Views\Opptys\Delete.cshtml" />
+    <Content Include="Views\Strategy\Email.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
