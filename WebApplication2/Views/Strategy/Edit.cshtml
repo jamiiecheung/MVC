@@ -94,7 +94,7 @@
                 </div>
             </td>
             <td>
-                <button class="btn btn-default" type="button" value="Email" name="Email" onclick="location.href='@Url.Action("Email", "Strategy")'">Email</button>
+                <button class="btn btn-default" type="button" value="Email" name="Email" onclick="location.href='@Url.Action("Email", "Strategy", new {id = Model.StrategyId})'">Email</button>
             </td>
         </tr>
 
@@ -111,8 +111,6 @@
         <div class="form-group">
 
             <hr />
-
-
         </div>
 
 

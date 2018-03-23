@@ -282,11 +282,13 @@ namespace WebApplication2.Controllers
             }
         }
 
-        public ActionResult Email()
+        public ActionResult Email(int? id, FormCollection form)
         {
             if (Session["UserId"] != null)
             {
-                return View();
+                Strategy strat = db.Strategies.Find(id);
+                ViewData["message"] = "Create Date: " + strat.CreateDate + "Updated: " + strat.Updated + "Customer: " + strat.Customer + "End Product: " + strat.EndProduct;
+                return View(strat);
             }
             else
             {
@@ -336,7 +338,7 @@ namespace WebApplication2.Controllers
 
         [HttpPost]
         //string txtsubject, string txtto, string txtbody, 
-        public ActionResult Send(FormCollection form)
+        public ActionResult Send(FormCollection form, int? id)
         {
             if (Session["UserId"] != null)
             {
