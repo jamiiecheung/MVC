@@ -1,67 +1,100 @@
 ﻿@model WebApplication2.Models.Strategy
 
 @{
+    /**/
+
     ViewBag.Title = "Email";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .textarea {
+        width: 100%;
+        max-width: 100%;
+    }
+
+
+    table {
+        border-collapse: collapse;
+    }
+
+    td {
+        padding-top: .5em;
+        padding-bottom: .5em;
+    }
+</style>
+
+
 <h2>Email</h2>
+
+
 @using (Html.BeginForm("Send", "Strategy"))
 {
-<table>
-    <tr>
-        <td>
-            <div class="col-md-1">To:</div>
-        </td>
-        <td>
-            <div class="col-md-12">
-                <input type="text" name="txtto" id="txtto" required="required" />
-            </div>
-        </td>
-        <td>
-            <div class="col-md-3"></div>
-        </td>
-    <tr>
-        <td>
-            <div class="col-md-3">
-                Subject:
-            </div>
-        </td>
-        <td>
-            <div class="col-md-12">
-                <input type="text" name="txtsubject" id="txtsubject" required="required" />
-            </div>
-        </td>
-        <td>
-            <div class="col-md-3"></div>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <div class="col-md-3">
-                Message:
-            </div>
-        </td>
-        <td>
-            <div class="col-md-12">
-                <input type="text" name="txtbody" id="txtbody" required="required" style="height:500px;" value="@ViewData["message"]"/>
-            </div>
-        </td>
-        <td>
-            <div class="col-md-3"></div>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <input type="submit" value="Send" name="Send" onclick="location.href='@Url.Action("Send", "Strategy")'">
-            @*<button class="btn btn-default" type="button" value="Send" name="Send" onclick="location.href='@Url.Action("Send", "Strategy")'">Send</button>*@
-            @*<button class="btn btn-default" type="button" value="Cancel" name="Cancel" onclick="goBack()">Cancel</button>*@
-            <input type="submit" value="Cancel" name="Cancel" onclick="goBack()">
+    <table style="width:100%">
+        <tr>
+            <td class="col-md-1">
+                <div>To:</div>
+            </td>
+            <td class="col-md-11">
+                <div>
+                    <textarea name="txtto" id="txtto" style="height:25px; min-width: 100%;">@TempData["Jamie"]</textarea>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-md-1">
+                <div>Subject:</div>
+            </td>
+            <td class="col-md-11">
+                <input type="text" name="txtsubject" id="txtsubject" style="min-width: 100%" required="required" />
+            </td>
+        </tr>
+        <tr>
+            <td class="col-md-1">
+                <div>Message:</div>
+            </td>
+            <td class="col-md-11">
+                <textarea name="txtbody" id="txtbody" style="height:200px; min-width: 100%;"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-md-1">
+                <div>Details</div>
+            </td>
+            <td class="col-md-11">
+                <textarea readonly style="height:300px;min-width: 100%">@TempData["message"]</textarea>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <br />
+    @*<input type="submit" value="Send" name="Send" onclick="location.href='@Url.Action("Send", "Strategy")'">*@
+    <input type="submit" value="Send" name="Send" onclick="return empty()">
+    <input type="submit" value="Cancel" name="Cancel" onclick="return goBack()">
 
-            <script>
-                function goBack() { window.history.back(); }
-            </script>
-        </td>
-    </tr>
-</table>
+    <script>
+        function goBack() { window.history.back(); }
+
+    </script>
+
+    <script>
+    function empty()
+    {
+        var x;
+        x = document.getElementById("txtsubject").value;
+        if (x == "")
+        {
+            return false;
+        }
+        else
+        {
+            return @Url.Action("Send", "Strategy");
+        };
+        }
+    </script>
+
 }
+
+
+
+

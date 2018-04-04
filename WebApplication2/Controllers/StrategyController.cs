@@ -98,17 +98,19 @@ namespace WebApplication2.Controllers
                           var statuss = from s in db.Strategies
                                         select s; */
 
-                        List<SelectListItem> groupListItems = db.Strategies.Select(group => new SelectListItem { Value = group.Group, Text = group.Group }).Distinct().ToList();
+                        List<SelectListItem> groupListItems = db.Strategies.Where(w => w.Group != null).Select(group => new SelectListItem { Value = group.Group, Text = group.Group }).Distinct().ToList();
                         ViewBag.Groupddl = new SelectList(groupListItems, "Value", "Text").Distinct();
 
-                        List<SelectListItem> prinListItems = db.Strategies.Select(prin => new SelectListItem { Value = prin.Principal, Text = prin.Principal }).Distinct().ToList();
+                        List<SelectListItem> prinListItems = db.Strategies.Where(w => w.Principal != null).Select(prin => new SelectListItem { Value = prin.Principal, Text = prin.Principal }).Distinct().ToList();
                         ViewBag.Prinddl = new SelectList(prinListItems, "Value", "Text").Distinct();
 
-                        List<SelectListItem> osrListItems = db.Strategies.Select(osr => new SelectListItem { Value = osr.OSR, Text = osr.OSR }).Distinct().ToList();
+                        List<SelectListItem> osrListItems = db.Strategies.Where(w => w.OSR != null).Select(osr => new SelectListItem { Value = osr.OSR, Text = osr.OSR }).Distinct().ToList();
                         ViewBag.OSRddl = new SelectList(osrListItems, "Value", "Text").Distinct();
 
-                        List<SelectListItem> statusListItems = db.Strategies.Select(status => new SelectListItem { Value = status.Status, Text = status.Status }).Distinct().ToList();
+                        List<SelectListItem> statusListItems = db.Strategies.Where(w => w.Status != null).Select(status => new SelectListItem { Value = status.Status, Text = status.Status }).Distinct().ToList();
                         ViewBag.Statusddl = new SelectList(statusListItems, "Value", "Text").Distinct();
+
+
 
 
                         //if all filters are null
@@ -117,12 +119,20 @@ namespace WebApplication2.Controllers
                             return View(db.Strategies.ToList());
                         }
 
-                        //returns same search filter for group if edit 
-                        if (stratvar != null && Groupddl == null)
+                        //returns same search filter if a strategy was selected beforehand
+                        if (stratvar != null)
                         {
-                            Groupddl = stratvar;
-                            groups = groups.Where(z => z.Group.Contains(Groupddl));
+                            if (Prinddl == null)//checks if there is a strategy already selected
+                            {
+                                //set the filters to the sessions
+                                Prinddl = Session["filtprins"].ToString();
+                                Groupddl = Session["filtgroup"].ToString();
+                                Statusddl = Session["filtstatus"].ToString();
+                                OSRddl = Session["filtosr"].ToString();
+                            }
                             //  return View(group.ToList());
+
+                            stratvar = null;
                         };
 
 
@@ -130,10 +140,18 @@ namespace WebApplication2.Controllers
                         if (Prinddl != null && Groupddl != null && OSRddl != null && Statusddl != null)
                         {
                             prins = prins.Where(gpr => gpr.Principal.Contains(Prinddl) && gpr.Group.Contains(Groupddl) && gpr.OSR.Contains(OSRddl) && gpr.Status.Contains(Statusddl));
+                            Session["filtprins"] = Prinddl;
+                            Session["filtgroup"] = Groupddl;
+                            Session["filtstatus"] = Statusddl;
+                            Session["filtosr"] = OSRddl;
+
                             stratvar = null;
+
                             return View(prins.ToList());
                         }
 
+
+                        //return View(prins.ToList());
                         return View(db.Strategies.ToList());
                     }
 
@@ -232,20 +250,28 @@ namespace WebApplication2.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
+
                 Strategy strat = db.Strategies.Find(id);
                 if (strat == null)
                 {
                     return HttpNotFound();
                 }
 
-                var options = new List<Todo>();
-                options.Add(new Todo() { Status = "New Request", Text = "New Request" });
-                options.Add(new Todo() { Status = "Reviewed", Text = "Reviewed" });
-                options.Add(new Todo() { Status = "Started", Text = "Started" });
-                options.Add(new Todo() { Status = "In Progress", Text = "In Progress" });
-                options.Add(new Todo() { Status = "Completed", Text = "Completed" });
+                var options = new List<Strategy>();
+
+                options.Add(new Strategy() { Status = "New Request", Text = "New Request" });
+                options.Add(new Strategy() { Status = "Reviewed", Text = "Reviewed" });
+                options.Add(new Strategy() { Status = "Started", Text = "Started" });
+                options.Add(new Strategy() { Status = "In Progress", Text = "In Progress" });
+                options.Add(new Strategy() { Status = "Completed", Text = "Completed" });
 
                 ViewBag.Status = options;
+                var x = strat.Status;
+                var p = strat.Perm;
+                TempData["statussel"] = x;
+                TempData["perm"] = p;
+                //ViewBag.Statusselected = strat.Status;
+
                 return View(strat);
             }
             else
@@ -257,7 +283,7 @@ namespace WebApplication2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "StrategyId,Customer,EndProduct,Product,Status,NextAction,History,CreateDate,Updated,FollowUpDate,ManagerComment,OSR,Principal,Value,Group")] Strategy strat, string stratvar)
+        public ActionResult Edit([Bind(Include = "StrategyId,Customer,EndProduct,Product,Status,NextAction,History,CreateDate,Updated,FollowUpDate,ManagerComment,OSR,Principal,Value,Group,Perm")] Strategy strat, string stratvar, string Groupddl, string Statusddl, string Prinddl, string OSRddl)
         {
             if (Session["UserId"] != null)
             {
@@ -265,16 +291,29 @@ namespace WebApplication2.Controllers
                                     select s;
                 stratvar = strat.ToString();
                 stratvariable = stratvariable.Where(s => s.Group.Contains(stratvar));
-                //document.getElementById('FollowUp').value=
+
+
+
+                //var x = strat.Status;
+                //strat.Status = TempData["statussel"].ToString();
+                //strat.Perm = TempData["perm"].ToString();
+
                 if (ModelState.IsValid)
                 {
+                    //Prinddl = Session["filtprins"].ToString();
+                    //Groupddl = Session["filtgroup"].ToString();
+                    //Statusddl = Session["filtstatus"].ToString();
+                    //OSRddl = Session["filtosr"].ToString();
+
                     db.Entry(strat).State = EntityState.Modified;
                     db.SaveChanges();
+                    //return RedirectToAction("Index");
                     return RedirectToAction("Index", new { stratvar = strat.Group });
                     //return View("Index", stratvar);
                 }
 
-                return View(stratvar, stratvar);
+                //return View(stratvar, stratvar);
+                return View(strat);
             }
             else
             {
@@ -282,12 +321,166 @@ namespace WebApplication2.Controllers
             }
         }
 
-        public ActionResult Email(int? id, FormCollection form)
+        public ActionResult MeetingSch(int? id, string nextactionold)
+        {
+            int uid = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
+            String em = db.UserAccounts.Find(uid).Email.ToString(); // Use the id to get the associated email address
+            UserAccount emailListItem = db.UserAccounts.First(x => x.Email == em); // Use the email address to get the associated emaillist object which holds the group
+
+            Strategy strat = db.Strategies.FirstOrDefault(x => x.StrategyId == id);
+            nextactionold = strat.NextAction;
+            strat.Updated = DateTime.Now;
+
+            strat.NextAction = "Meeting Scheduled";
+            strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
+
+            db.Entry(strat).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Edit", "Strategy", new { id });
+        }
+
+        public ActionResult SchVisit(int? id, string nextactionold)
+        {
+            int uid = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
+            String em = db.UserAccounts.Find(uid).Email.ToString(); // Use the id to get the associated email address
+            UserAccount emailListItem = db.UserAccounts.First(x => x.Email == em); // Use the email address to get the associated emaillist object which holds the group
+
+            Strategy strat = db.Strategies.FirstOrDefault(x => x.StrategyId == id);
+            nextactionold = strat.NextAction;
+            strat.Updated = DateTime.Now;
+            strat.NextAction = "Need to schedule visit";
+            strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
+
+            db.Entry(strat).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Edit", "Strategy", new { id });
+        }
+
+        public ActionResult ScheMeet(int? id, string nextactionold)
+        {
+
+            int uid = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
+            String em = db.UserAccounts.Find(uid).Email.ToString(); // Use the id to get the associated email address
+            UserAccount emailListItem = db.UserAccounts.First(x => x.Email == em); // Use the email address to get the associated emaillist object which holds the group
+
+            Strategy strat = db.Strategies.FirstOrDefault(x => x.StrategyId == id);
+            nextactionold = strat.NextAction;
+            strat.Updated = DateTime.Now;
+            strat.NextAction = "Need to schedule eMeeting";
+            strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
+
+            db.Entry(strat).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Edit", "Strategy", new { id });
+        }
+
+        public ActionResult NoAct(int? id, string nextactionold)
+        {
+            int uid = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
+            String em = db.UserAccounts.Find(uid).Email.ToString(); // Use the id to get the associated email address
+            UserAccount emailListItem = db.UserAccounts.First(x => x.Email == em); // Use the email address to get the associated emaillist object which holds the group
+
+            Strategy strat = db.Strategies.FirstOrDefault(x => x.StrategyId == id);
+            nextactionold = strat.NextAction;
+            strat.Updated = DateTime.Now;
+            strat.NextAction = "No action at this time, follow up planned";
+            strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
+
+            db.Entry(strat).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Edit", "Strategy", new { id });
+        }
+
+        public ActionResult SampReq(int? id, string nextactionold)
+        {
+            int uid = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
+            String em = db.UserAccounts.Find(uid).Email.ToString(); // Use the id to get the associated email address
+            UserAccount emailListItem = db.UserAccounts.First(x => x.Email == em); // Use the email address to get the associated emaillist object which holds the group
+
+            Strategy strat = db.Strategies.FirstOrDefault(x => x.StrategyId == id);
+            nextactionold = strat.NextAction;
+            strat.Updated = DateTime.Now;
+            strat.NextAction = "Samples Requested";
+            strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
+
+            db.Entry(strat).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Edit", "Strategy", new { id });
+        }
+
+        public ActionResult EvalSamp(int? id, string nextactionold)
+        {
+            int uid = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
+            String em = db.UserAccounts.Find(uid).Email.ToString(); // Use the id to get the associated email address
+            UserAccount emailListItem = db.UserAccounts.First(x => x.Email == em); // Use the email address to get the associated emaillist object which holds the group
+
+            Strategy strat = db.Strategies.FirstOrDefault(x => x.StrategyId == id);
+            nextactionold = strat.NextAction;
+            strat.Updated = DateTime.Now;
+            strat.NextAction = "Evaluating Samples";
+            strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
+
+            db.Entry(strat).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Edit", "Strategy", new { id });
+        }
+
+
+        public ActionResult ConfirmCEM(int? id, string nextactionold)
+        {
+            int uid = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
+            String em = db.UserAccounts.Find(uid).Email.ToString(); // Use the id to get the associated email address
+            UserAccount emailListItem = db.UserAccounts.First(x => x.Email == em); // Use the email address to get the associated emaillist object which holds the group
+
+            Strategy strat = db.Strategies.FirstOrDefault(x => x.StrategyId == id);
+            nextactionold = strat.NextAction;
+            strat.Updated = DateTime.Now;
+            strat.NextAction = "Need to Confirm CEM location";
+            strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
+
+            db.Entry(strat).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Edit", "Strategy", new { id });
+        }
+
+
+
+        public ActionResult Email(int? id, FormCollection form, string mailMessage)
         {
             if (Session["UserId"] != null)
             {
+
+
+
+
                 Strategy strat = db.Strategies.Find(id);
-                ViewData["message"] = "Create Date: " + strat.CreateDate + "Updated: " + strat.Updated + "Customer: " + strat.Customer + "End Product: " + strat.EndProduct;
+
+
+
+
+
+                //string osrid = strat.OSR; // Get the user id from the session
+                //                          //int osrid = Convert.ToInt32(strat.OSR);
+                //var o = db.UserAccounts.Find(osrid).OSR; // Use the id to get the associated email address
+                //string osremail = db.UserAccounts.Find(o).Email.ToString();
+                ////EmailList emailListItem = db.EmailLists.First(x => x.Email == em); // Use the email address to get the associated emaillist object which holds the group
+
+
+
+
+
+                TempData["Jamie"] = "jcheung@sjassoc.com";
+                TempData["message"] = "Create Date: " + strat.CreateDate + "\r\nUpdated: " + strat.Updated + "\r\nCustomer: " + strat.Customer + "\r\nEnd Product: " + strat.EndProduct + "\r\nOSR: " + strat.OSR + "\r\nPrincipal: " + strat.Principal + "\r\nProduct: " + strat.Product + "\r\nFollowup Date: " + strat.FollowUpDate + "\r\nValue: " + strat.Value + "\r\nStatus: " + strat.Status + "\r\nNext Action: " + strat.NextAction + "\r\nLatest Comments: " + strat.ManagerComment + "\r\nHistory: " + strat.History + "\r\nGroup: " + strat.Group;
+
+                TempData["id"] = id;
+
                 return View(strat);
             }
             else
@@ -306,6 +499,7 @@ namespace WebApplication2.Controllers
 
             string result = "Message Successfully Sent!!!";
 
+
             //catching if client or SJ Assoc.
             if (passw == null)
             {
@@ -318,11 +512,17 @@ namespace WebApplication2.Controllers
                 senderPassword = passw; // sender password here…
             }
 
+            Strategy strat = db.Strategies.Find(TempData["id"]);
             MailMessage mailMessage = new MailMessage();
+
+
             mailMessage.From = new MailAddress(senderID);
             mailMessage.Subject = messageSubject;
-            mailMessage.Body = messageBody;
+
+            mailMessage.Body = Convert.ToString(TempData["message"]);
             mailMessage.IsBodyHtml = true;
+            //mailMessage.Body = messageBody;
+            mailMessage.Body = messageBody + "<br/><br/>" + "<b>Create Date: </b>" + strat.CreateDate + "<br/>" + "<b>Updated: </b>" + strat.Updated + "<br/>" + "<b>Customer: </b>" + strat.Customer + "<br/>" + "<b>End Product: </b>" + strat.EndProduct + "<br/>" + "<b>OSR: </b>" + strat.OSR + "<br/>" + "<b>Principal: </b>" + strat.Principal + "<br/>" + "<b>Product: </b>" + strat.Product + "<br/>" + "<b>Followup Date: </b>" + strat.FollowUpDate + "<br/>" + "<b>Value: </b>" + strat.Value + "<br/>" + "<b>Status: </b>" + strat.Status + "<br/>" + "<b>Next Action: </b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: </b>" + strat.ManagerComment + "<br/>" + "<b>History: </b>" + strat.History + "<br/>" + "<b>Group: </b>" + strat.Group;
             mailMessage.To.Add(toAddress);
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp.office365.com";
@@ -338,20 +538,22 @@ namespace WebApplication2.Controllers
 
         [HttpPost]
         //string txtsubject, string txtto, string txtbody, 
-        public ActionResult Send(FormCollection form, int? id)
+        public ActionResult Send(FormCollection form)
         {
             if (Session["UserId"] != null)
             {
-                SendHtmlFormattedEmail(form["txtto"], form["txtsubject"], form["txtbody"]);
 
+                SendHtmlFormattedEmail(form["txtto"], form["txtsubject"], form["txtbody"]);
                 return RedirectToAction("Index", "Strategy");
+
+
             }
             else
             {
                 return RedirectToAction("Login", "Account");
             }
         }
-    
+
 
     }
 }

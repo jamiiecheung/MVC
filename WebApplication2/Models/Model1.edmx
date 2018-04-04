@@ -48,9 +48,9 @@
             <PropertyRef Name="StrategyId" />
           </Key>
           <Property Name="StrategyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Customer" Type="nchar" MaxLength="100" />
-          <Property Name="EndProduct" Type="nchar" MaxLength="100" />
-          <Property Name="Product" Type="nchar" MaxLength="100" />
+          <Property Name="Customer" Type="nvarchar" MaxLength="100" />
+          <Property Name="EndProduct" Type="nvarchar" MaxLength="100" />
+          <Property Name="Product" Type="nvarchar" MaxLength="100" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="NextAction" Type="nvarchar" MaxLength="500" />
           <Property Name="History" Type="nvarchar(max)" />
@@ -88,6 +88,7 @@
           <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
           <Property Name="ConfirmPassword" Type="nvarchar(max)" />
           <Property Name="epass" Type="nvarchar(max)" />
+          <Property Name="OSR" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityContainer Name="sjassoc_dbModelStoreContainer">
           <EntitySet Name="EmailLists" EntityType="Self.EmailLists" Schema="dbo" store:Type="Tables" />
@@ -131,6 +132,7 @@
           <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="ConfirmPassword" Type="String" Unicode="true" FixedLength="false" MaxLength="Max" />
           <Property Name="epass" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OSR" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="EmailList">
           <Key>
@@ -147,9 +149,9 @@
             <PropertyRef Name="StrategyId" />
           </Key>
           <Property Name="StrategyId" Type="Int32" Nullable="false" />
-          <Property Name="Customer" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="EndProduct" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="Product" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Customer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EndProduct" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Product" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NextAction" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="History" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -213,7 +215,8 @@
     <EntitySetMapping Name="UserAccounts">
       <EntityTypeMapping TypeName="IsTypeOf(sjassoc_dbModel.UserAccount)">
         <MappingFragment StoreEntitySet="UserAccounts">
-          <ScalarProperty Name="epass" ColumnName="epass" />
+          <ScalarProperty Name="OSR" ColumnName="OSR" />
+                <ScalarProperty Name="epass" ColumnName="epass" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />

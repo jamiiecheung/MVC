@@ -25,5 +25,6 @@ namespace WebApplication2.Models
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
         public string epass { get; set; }
+        public string OSR { get; set; }
     }
 }
