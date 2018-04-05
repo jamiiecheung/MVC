@@ -431,7 +431,6 @@ namespace WebApplication2.Controllers
             return RedirectToAction("Edit", "Strategy", new { id });
         }
 
-
         public ActionResult ConfirmCEM(int? id, string nextactionold)
         {
             int uid = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
@@ -456,27 +455,14 @@ namespace WebApplication2.Controllers
         {
             if (Session["UserId"] != null)
             {
-
-
-
-
                 Strategy strat = db.Strategies.Find(id);
 
+                string osrid = strat.OSR; // Get the OSR initials
+                UserAccount item = db.UserAccounts.FirstOrDefault(i => i.OSR == osrid); // Get all the user account information based that matches the osrid
+                TempData["OSREmail"] = item.Email; //put tempdata and store osr email address in it
 
 
-
-
-                //string osrid = strat.OSR; // Get the user id from the session
-                //                          //int osrid = Convert.ToInt32(strat.OSR);
-                //var o = db.UserAccounts.Find(osrid).OSR; // Use the id to get the associated email address
-                //string osremail = db.UserAccounts.Find(o).Email.ToString();
-                ////EmailList emailListItem = db.EmailLists.First(x => x.Email == em); // Use the email address to get the associated emaillist object which holds the group
-
-
-
-
-
-                TempData["Jamie"] = "jcheung@sjassoc.com";
+                //TempData["Jamie"] = "jcheung@sjassoc.com";
                 TempData["message"] = "Create Date: " + strat.CreateDate + "\r\nUpdated: " + strat.Updated + "\r\nCustomer: " + strat.Customer + "\r\nEnd Product: " + strat.EndProduct + "\r\nOSR: " + strat.OSR + "\r\nPrincipal: " + strat.Principal + "\r\nProduct: " + strat.Product + "\r\nFollowup Date: " + strat.FollowUpDate + "\r\nValue: " + strat.Value + "\r\nStatus: " + strat.Status + "\r\nNext Action: " + strat.NextAction + "\r\nLatest Comments: " + strat.ManagerComment + "\r\nHistory: " + strat.History + "\r\nGroup: " + strat.Group;
 
                 TempData["id"] = id;
@@ -545,7 +531,6 @@ namespace WebApplication2.Controllers
 
                 SendHtmlFormattedEmail(form["txtto"], form["txtsubject"], form["txtbody"]);
                 return RedirectToAction("Index", "Strategy");
-
 
             }
             else
