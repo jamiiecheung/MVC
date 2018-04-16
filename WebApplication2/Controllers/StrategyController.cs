@@ -323,6 +323,8 @@ namespace WebApplication2.Controllers
 
         public ActionResult MeetingSch(int? id, string nextactionold)
         {
+
+
             int uid = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
             String em = db.UserAccounts.Find(uid).Email.ToString(); // Use the id to get the associated email address
             UserAccount emailListItem = db.UserAccounts.First(x => x.Email == em); // Use the email address to get the associated emaillist object which holds the group
@@ -331,12 +333,21 @@ namespace WebApplication2.Controllers
             nextactionold = strat.NextAction;
             strat.Updated = DateTime.Now;
 
-            strat.NextAction = "Meeting Scheduled";
-            strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
-            db.Entry(strat).State = EntityState.Modified;
-            db.SaveChanges();
+            if (strat.NextAction == null)
+            {
+                strat.NextAction = "Meeting Scheduled";
+                db.Entry(strat).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            else
+            {
+                strat.NextAction = "Meeting Scheduled";
+                strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
+                db.Entry(strat).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Edit", "Strategy", new { id });
         }
 
@@ -349,12 +360,21 @@ namespace WebApplication2.Controllers
             Strategy strat = db.Strategies.FirstOrDefault(x => x.StrategyId == id);
             nextactionold = strat.NextAction;
             strat.Updated = DateTime.Now;
+
+            if (strat.NextAction == null)
+            {
+                strat.NextAction = "Need to schedule visit";
+                db.Entry(strat).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            else {
+
             strat.NextAction = "Need to schedule visit";
             strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
             db.Entry(strat).State = EntityState.Modified;
             db.SaveChanges();
-
+ }
             return RedirectToAction("Edit", "Strategy", new { id });
         }
 
@@ -368,12 +388,21 @@ namespace WebApplication2.Controllers
             Strategy strat = db.Strategies.FirstOrDefault(x => x.StrategyId == id);
             nextactionold = strat.NextAction;
             strat.Updated = DateTime.Now;
-            strat.NextAction = "Need to schedule eMeeting";
-            strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
-            db.Entry(strat).State = EntityState.Modified;
-            db.SaveChanges();
+            if (strat.NextAction == null)
+            {
+                strat.NextAction = "Need to schedule eMeeting";
+                db.Entry(strat).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            else
+            {
+                strat.NextAction = "Need to schedule eMeeting";
+                strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
+                db.Entry(strat).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Edit", "Strategy", new { id });
         }
 
@@ -386,12 +415,21 @@ namespace WebApplication2.Controllers
             Strategy strat = db.Strategies.FirstOrDefault(x => x.StrategyId == id);
             nextactionold = strat.NextAction;
             strat.Updated = DateTime.Now;
-            strat.NextAction = "No action at this time, follow up planned";
-            strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
-            db.Entry(strat).State = EntityState.Modified;
-            db.SaveChanges();
+            if (strat.NextAction == null)
+            {
+                strat.NextAction = "No action at this time, follow up planned";
+                db.Entry(strat).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            else
+            {
+                strat.NextAction = "No action at this time, follow up planned";
+                strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
+                db.Entry(strat).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Edit", "Strategy", new { id });
         }
 
@@ -404,12 +442,22 @@ namespace WebApplication2.Controllers
             Strategy strat = db.Strategies.FirstOrDefault(x => x.StrategyId == id);
             nextactionold = strat.NextAction;
             strat.Updated = DateTime.Now;
-            strat.NextAction = "Samples Requested";
-            strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
-            db.Entry(strat).State = EntityState.Modified;
-            db.SaveChanges();
+            if (strat.NextAction == null)
+            {
+                strat.NextAction = "Samples Requested";
+                db.Entry(strat).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            else
+            {
 
+                strat.NextAction = "Samples Requested";
+                strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
+
+                db.Entry(strat).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Edit", "Strategy", new { id });
         }
 
@@ -422,12 +470,21 @@ namespace WebApplication2.Controllers
             Strategy strat = db.Strategies.FirstOrDefault(x => x.StrategyId == id);
             nextactionold = strat.NextAction;
             strat.Updated = DateTime.Now;
-            strat.NextAction = "Evaluating Samples";
-            strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
-            db.Entry(strat).State = EntityState.Modified;
-            db.SaveChanges();
+            if (strat.NextAction == null)
+            {
+                strat.NextAction = "Evaluating Samples";
+                db.Entry(strat).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            else
+            {
+                strat.NextAction = "Evaluating Samples";
+                strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
+                db.Entry(strat).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Edit", "Strategy", new { id });
         }
 
@@ -440,12 +497,21 @@ namespace WebApplication2.Controllers
             Strategy strat = db.Strategies.FirstOrDefault(x => x.StrategyId == id);
             nextactionold = strat.NextAction;
             strat.Updated = DateTime.Now;
-            strat.NextAction = "Need to Confirm CEM location";
-            strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
-            db.Entry(strat).State = EntityState.Modified;
-            db.SaveChanges();
+            if (strat.NextAction == null)
+            {
+                strat.NextAction = "Need to Confirm CEM location";
+                db.Entry(strat).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            else
+            {
+                strat.NextAction = "Need to Confirm CEM location";
+                strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
+                db.Entry(strat).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Edit", "Strategy", new { id });
         }
 

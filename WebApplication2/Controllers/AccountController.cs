@@ -29,13 +29,14 @@ namespace WebApplication2.Controllers
                 return RedirectToAction("Login");
             }
 
-
         }
+
 
         public ActionResult Register()
         {
             return View();
         }
+
 
         [HttpPost]
         //public ActionResult Register(UserAccount account, EmailList emailList)

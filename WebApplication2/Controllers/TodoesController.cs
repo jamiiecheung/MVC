@@ -15,7 +15,6 @@ namespace WebApplication2.Controllers
         private sjassoc_dbEntities db = new sjassoc_dbEntities();
 
 
-
         // GET: Todoes
         public ActionResult Index()
         {
@@ -29,7 +28,7 @@ namespace WebApplication2.Controllers
                 // Use the email address to get the associated emaillist object which holds the group
                 EmailList emailListItem = db.EmailLists.First(x => x.Email == em);
 
-                if (emailListItem.Group.Equals("ZZMMWW")) {
+                if (emailListItem.Group.Equals("Wachtel")) {
                     return View(db.Todoes.ToList());
                 }
 
@@ -120,10 +119,6 @@ namespace WebApplication2.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    //var val = todo.Val.ToString();
-                    //todo.Status = val;
-
-                    //todo.Val = todo.Status;
                     db.Todoes.Add(todo);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -155,7 +150,6 @@ namespace WebApplication2.Controllers
                     return HttpNotFound();
                 }
 
-
                 var options = new List<Todo>();
                 options.Add(new Todo() { Status = "New Request", Text = "New Request" });
                 options.Add(new Todo() { Status = "Reviewed", Text = "Reviewed" });
@@ -163,9 +157,7 @@ namespace WebApplication2.Controllers
                 options.Add(new Todo() { Status = "In Progress", Text = "In Progress" });
                 options.Add(new Todo() { Status = "Completed", Text = "Completed" });
 
-
                 ViewBag.Status = options;
-
 
                 return View(todo);
             }
@@ -249,7 +241,6 @@ namespace WebApplication2.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-
 
         }
 
