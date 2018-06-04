@@ -25,6 +25,7 @@ namespace WebApplication2.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy}")]
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string Text { get; internal set; }
+        public string Owner { get; set; }
 
         public Todo()
         {

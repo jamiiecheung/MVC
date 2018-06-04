@@ -1,4 +1,4 @@
-﻿@model WebApplication2.Models.Strategy
+﻿@model WebApplication2.Models.Todo
 
 @{
     /**/
@@ -25,23 +25,24 @@
 </style>
 
 
+@*<h2>Email</h2>*@
 
 
-
-@using (Html.BeginForm("Send", "Strategy"))
+@using (Html.BeginForm("Send", "Todoes"))
 {
-<table>
-    <tr>
-        <td class="col-md-2">
-            <h2>Email</h2>
-        </td>
-        <td>
-            <input type="submit" value="Send" name="Send" onclick="return empty()">
-            <input type="submit" value="Cancel" name="Cancel" onclick="return goBack()">
-        </td>
-    </tr>
 
-</table>
+    <table>
+        <tr>
+            <td class="col-md-2">
+                <h2>Email</h2>
+            </td>
+            <td>
+                <input type="submit" value="Send" name="Send" onclick="return empty()">
+                <input type="submit" value="Cancel" name="Cancel" onclick="return goBack()">
+            </td>
+        </tr>
+
+    </table>
 
 
     <table style="width:100%">
@@ -51,7 +52,7 @@
             </td>
             <td class="col-md-11">
                 <div>
-                    <textarea name="txtto" id="txtto" style="height:25px; min-width: 100%;">@TempData["OSREmail"]</textarea>
+                    <textarea name="txtto" id="txtto" style="height:25px; min-width: 100%;" required="required"></textarea>
                 </div>
             </td>
         </tr>
@@ -83,7 +84,8 @@
     <br />
     <br />
     @*<input type="submit" value="Send" name="Send" onclick="location.href='@Url.Action("Send", "Strategy")'">*@
-
+    @*<input type="submit" value="Send" name="Send" onclick="return empty()">
+        <input type="submit" value="Cancel" name="Cancel" onclick="return goBack()">*@
 
     <script>
         function goBack() { window.history.back(); }

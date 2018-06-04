@@ -29,6 +29,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Group)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Owner)
+        </th>
         <th></th>
     </tr>
 
@@ -49,9 +52,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.FollowUp)
         </td>
-        <th>
+        <td>
             @Html.DisplayFor(modelItem => item.Group)
-        </th>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Owner)
+        </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
             @Html.ActionLink("Details", "Details", new { id = item.ID }) |
