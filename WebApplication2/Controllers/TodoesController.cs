@@ -198,7 +198,7 @@ namespace WebApplication2.Controllers
                 owners.Add(new Todo() { Owner = "TF", Text = "TF" });
                 owners.Add(new Todo() { Owner = "TL", Text = "TL" });
                 owners.Add(new Todo() { Owner = "WL", Text = "WL" });
-                owners.Add(new Todo() { Owner = "WL", Text = "WL" });
+
 
                 ViewBag.Ownerddl = owners;
 
