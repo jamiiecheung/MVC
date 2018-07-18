@@ -10,6 +10,7 @@
         <EntityTypeShape EntityType="sjassoc_dbModel.EmailList" Width="1.5" PointX="4" PointY="1.125" />
         <EntityTypeShape EntityType="sjassoc_dbModel.Strategy" Width="1.5" PointX="5.75" PointY="1.125" />
         <EntityTypeShape EntityType="sjassoc_dbModel.Opptys" Width="1.5" PointX="7.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="sjassoc_dbModel.EMeetings" Width="1.5" PointX="9.5" PointY="1.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

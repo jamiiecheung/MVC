@@ -15,6 +15,12 @@
           <Property Name="IntExt" Type="bit" />
           <Property Name="Perm" Type="nchar" MaxLength="10" />
         </EntityType>
+        <EntityType Name="EMeetings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Opptys">
           <Key>
             <PropertyRef Name="Id" />
@@ -93,6 +99,7 @@
         </EntityType>
         <EntityContainer Name="sjassoc_dbModelStoreContainer">
           <EntitySet Name="EmailLists" EntityType="Self.EmailLists" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMeetings" EntityType="Self.EMeetings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Opptys" EntityType="Self.Opptys" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Strategy" EntityType="Self.Strategy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Todoes" EntityType="Self.Todoes" Schema="dbo" store:Type="Tables" />
@@ -121,6 +128,7 @@
           <EntitySet Name="EmailLists" EntityType="sjassoc_dbModel.EmailList" />
           <EntitySet Name="Strategies" EntityType="sjassoc_dbModel.Strategy" />
           <EntitySet Name="Opptys1" EntityType="sjassoc_dbModel.Opptys" />
+          <EntitySet Name="EMeetings" EntityType="sjassoc_dbModel.EMeetings" />
         </EntityContainer>
         <EntityType Name="UserAccount">
           <Key>
@@ -194,6 +202,12 @@
           <Property Name="Principal" Type="String" Unicode="true" FixedLength="false" MaxLength="50" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Updated" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="EMeetings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -288,6 +302,13 @@
                 <ScalarProperty Name="Phone_Number" ColumnName="Phone Number" />
                 <ScalarProperty Name="Engineer" ColumnName="Engineer" />
                 <ScalarProperty Name="Customer" ColumnName="Customer" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMeetings">
+            <EntityTypeMapping TypeName="IsTypeOf(sjassoc_dbModel.EMeetings)">
+              <MappingFragment StoreEntitySet="EMeetings">
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

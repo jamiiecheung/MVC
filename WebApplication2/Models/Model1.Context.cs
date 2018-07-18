@@ -30,5 +30,6 @@ namespace WebApplication2.Models
         public virtual DbSet<EmailList> EmailLists { get; set; }
         public virtual DbSet<Strategy> Strategies { get; set; }
         public virtual DbSet<Opptys> Opptys1 { get; set; }
+        public virtual DbSet<EMeetings> EMeetings { get; set; }
     }
 }
