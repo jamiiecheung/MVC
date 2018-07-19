@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using WebApplication2.Models;
 using System.Web.UI.WebControls;
 using System.Net.Mail;
+using System.Text;
 
 namespace WebApplication2.Controllers
 {
@@ -18,7 +19,8 @@ namespace WebApplication2.Controllers
 
 
         // GET: Todoes
-        public ActionResult Index()
+        public ActionResult Index(string Groupddl, string Statusddl, string osrsel, string prinsel, string statussel, string groupsel,
+            string statusdrop, string groupnew, string stratvar, string fltstring, Strategy selg, FormCollection form)
         {
 
             if (Session["UserId"] != null)
@@ -51,13 +53,114 @@ namespace WebApplication2.Controllers
                         }
                     }
                 }
-                return View(list);
+
+                //string p = emailListItem.Perm;
+                //string gr = emailListItem.Group;
+                //StringBuilder sb = new StringBuilder();
+                //sb.Append("SELECT * FROM dbo.Strategy WHERE "); //change table name for whatever you need returned
+                //foreach (char c in p.ToCharArray())
+                //{
+                //    if (Groupddl == null)
+                //    {
+                //        sb.Append("Perm LIKE '%");
+                //        sb.Append(c);
+                //        sb.Append("%' OR ");
+                //    }
+
+                //}
+                //sb.Length = sb.Length - 4;
+
+                //if (selg == null)
+                //{
+                //    List<Todo> lists = db.Todoes.SqlQuery(sb.ToString()).ToList(); //change table name
+                //    return View(lists);
+                //}
+
+                //else
+                //{
+                //    var groups = from g in db.Todoes
+                //                 select g;
+                //    var prins = from pr in db.Todoes
+                //                select pr;
+                //    /*  var osrs = from o in db.Strategies
+                //                 select o;
+                //      var statuss = from s in db.Strategies
+                //                    select s; */
+
+                //    List<SelectListItem> groupListItems = db.Todoes.Where(w => w.Group != null).Select(group => new SelectListItem { Value = group.Group, Text = group.Group }).Distinct().ToList();
+                //    ViewBag.Groupddl = new SelectList(groupListItems, "Value", "Text").Distinct();
+
+                //    //List<SelectListItem> prinListItems = db.Todoes.Where(w => w.Principal != null).Select(prin => new SelectListItem { Value = prin.Principal, Text = prin.Principal }).Distinct().ToList();
+                //    //ViewBag.Prinddl = new SelectList(prinListItems, "Value", "Text").Distinct();
+
+                //    //List<SelectListItem> osrListItems = db.Todoes.Where(w => w.OSR != null).Select(osr => new SelectListItem { Value = osr.OSR, Text = osr.OSR }).Distinct().ToList();
+                //    //ViewBag.OSRddl = new SelectList(osrListItems, "Value", "Text").Distinct();
+
+                //    List<SelectListItem> statusListItems = db.Todoes.Where(w => w.Status != null).Select(status => new SelectListItem { Value = status.Status, Text = status.Status }).Distinct().ToList();
+                //    ViewBag.Statusddl = new SelectList(statusListItems, "Value", "Text").Distinct();
+
+
+
+
+                //    //if all filters are null
+                //    //if (Groupddl == null && Statusddl == null)
+                //    if (gr == null && Statusddl == null)
+                //    {
+                //        return View(db.Todoes.ToList());
+                //    }
+
+                //    //returns same search filter if a strategy was selected beforehand
+                //    if (stratvar != null)
+                //    {
+                //        if (gr == null)//checks if there is a strategy already selected
+                //        {
+                //            //set the filters to the sessions
+                //            //Prinddl = Session["filtprins"].ToString();
+                //            Groupddl = Session["filtgroup"].ToString();
+                //            Statusddl = Session["filtstatus"].ToString();
+                //            //OSRddl = Session["filtosr"].ToString();
+                //        }
+                //        //  return View(group.ToList());
+
+                //        stratvar = null;
+                //    };
+
+
+                //    //if (prin != null && group != null && osr != null && status != null)
+                //    //if (Prinddl != null && Groupddl != null && OSRddl != null && Statusddl != null)
+                //    if (gr != null && Statusddl != null)
+                //    {
+                //        prins = prins.Where(gpr => gpr.Group.Contains(Groupddl) && gpr.Status.Contains(Statusddl));
+                //        //Session["filtprins"] = Prinddl;
+                //        Session["filtgroup"] = Groupddl;
+                //        Session["filtstatus"] = Statusddl;
+                //        //Session["filtosr"] = OSRddl;
+
+                //        stratvar = null;
+
+                //        return View(prins.ToList());
+                //    }
+
+
+                    return View(list);
+                    //}
+
+
+
+
+                //}
             }
+
+
+
+
             else
             {
                 return RedirectToAction("Login", "Account");
             }
 
+                
+            
         }
 
         // GET: Todoes/Details/5
@@ -94,10 +197,10 @@ namespace WebApplication2.Controllers
                 model.CreateDate = DateTime.Now;
 
                 var options = new List<Todo>();
-                options.Add(new Todo() { Status = "New Request", Text = "New Request" });
-                options.Add(new Todo() { Status = "Reviewed", Text = "Reviewed" });
-                options.Add(new Todo() { Status = "Started", Text = "Started" });
-                options.Add(new Todo() { Status = "In Progress", Text = "In Progress" });
+                options.Add(new Todo() { Status = "Assigned", Text = "Assigned" });
+                options.Add(new Todo() { Status = "Accepted", Text = "Accepted" });
+                options.Add(new Todo() { Status = "Rejected", Text = "Rejected" });
+                options.Add(new Todo() { Status = "Pending", Text = "Pending" });
                 options.Add(new Todo() { Status = "Completed", Text = "Completed" });
 
                 ViewBag.Status = options;
@@ -156,10 +259,10 @@ namespace WebApplication2.Controllers
                 }
 
                 var options = new List<Todo>();
-                options.Add(new Todo() { Status = "New Request", Text = "New Request" });
-                options.Add(new Todo() { Status = "Reviewed", Text = "Reviewed" });
-                options.Add(new Todo() { Status = "Started", Text = "Started" });
-                options.Add(new Todo() { Status = "In Progress", Text = "In Progress" });
+                options.Add(new Todo() { Status = "Assigned", Text = "Assigned" });
+                options.Add(new Todo() { Status = "Accepted", Text = "Accepted" });
+                options.Add(new Todo() { Status = "Rejected", Text = "Rejected" });
+                options.Add(new Todo() { Status = "Pending", Text = "Pending" });
                 options.Add(new Todo() { Status = "Completed", Text = "Completed" });
 
                 ViewBag.Status = options;
@@ -175,8 +278,6 @@ namespace WebApplication2.Controllers
                 //osrListItems = osrListItems.OrderBy(x => x.Value).ToList();
 
                 //ViewBag.OSRddl = new SelectList(osrListItems, "Value", "Text", 2).Distinct();
-
-
 
 
 
@@ -201,6 +302,30 @@ namespace WebApplication2.Controllers
 
 
                 ViewBag.Ownerddl = owners;
+
+
+
+                var creators = new List<Todo>();
+
+                creators.Add(new Todo() { Owner = "CF", Text = "CF" });
+                creators.Add(new Todo() { Owner = "DR", Text = "DR" });
+                creators.Add(new Todo() { Owner = "JA", Text = "JA" });
+                creators.Add(new Todo() { Owner = "JB", Text = "JB" });
+                creators.Add(new Todo() { Owner = "JC", Text = "JC" });
+                creators.Add(new Todo() { Owner = "JL", Text = "JL" });
+                creators.Add(new Todo() { Owner = "JM", Text = "JM" });
+                creators.Add(new Todo() { Owner = "JT", Text = "JT" });
+                creators.Add(new Todo() { Owner = "MW", Text = "MW" });
+                creators.Add(new Todo() { Owner = "RN", Text = "RN" });
+                creators.Add(new Todo() { Owner = "RW", Text = "RW" });
+                creators.Add(new Todo() { Owner = "SH", Text = "SH" });
+                creators.Add(new Todo() { Owner = "TF", Text = "TF" });
+                creators.Add(new Todo() { Owner = "TL", Text = "TL" });
+                creators.Add(new Todo() { Owner = "WL", Text = "WL" });
+
+
+                ViewBag.Creatorddl = creators;
+
 
 
 
@@ -245,18 +370,18 @@ namespace WebApplication2.Controllers
 
                     //if (OSRddl != null)
                     //{
-                        //todo.Owner = OSRddl;
+                    //todo.Owner = OSRddl;
 
                     //}
 
                     //if (Ownerddl != null)
                     //{
-                        //todo.Owner = Ownerddl;
+                    //todo.Owner = Ownerddl;
                     //}
 
-                        db.Entry(todo).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+                    db.Entry(todo).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
                 return View(todo);
             }
@@ -332,13 +457,20 @@ namespace WebApplication2.Controllers
             {
                 Todo todo = db.Todoes.Find(id);
 
-                //string osrid = todo.OSR; // Get the OSR initials
-                // UserAccount item = db.UserAccounts.FirstOrDefault(i => i.OSR == osrid); // Get all the user account information based that matches the osrid
+                //string osrid = todo.Owner; // Get the OSR initials
+                //UserAccount item = db.UserAccounts.FirstOrDefault(i => i.OSR == osrid); // Get all the user account information based that matches the osrid
                 //TempData["OSREmail"] = item.Email; //put tempdata and store osr email address in it
+                //DateTime? createdate = todo.CreateDate;
+                //fcreatedate = todo.CreateDate.Value.ToString("MM/dd/yy");
 
+                //DateTime? followupdate = todo.FollowUp;
+                //string ffollowupdate = todo.FollowUp.Value.ToString("MM/dd/yy");
 
                 //TempData["Jamie"] = "jcheung@sjassoc.com";
-                TempData["message"] = "Create Date: " + todo.CreateDate + "\r\nDescription: " + todo.Description + "\r\nTask: " + todo.Task + "\r\nStatus: " + todo.Status + "\r\nFollowUp: " + todo.FollowUp + "\r\nGroup: " + todo.Group;
+                TempData["message"] = "Create Date: " + todo.CreateDate.Value.ToString("MM/dd/yy") + "\r\nDescription: " + todo.Description + "\r\nTask: " + todo.Task + "\r\nStatus: " + todo.Status + "\r\nFollowUp: " + todo.FollowUp.Value.ToString("MM/dd/yy") + "\r\nGroup: " + todo.Group;
+
+
+                TempData["subject"] = "SJ Associates To Do: " + todo.Description;
 
                 TempData["id"] = id;
 
@@ -349,6 +481,42 @@ namespace WebApplication2.Controllers
                 return RedirectToAction("Login", "Account");
             }
         }
+
+
+        public ActionResult Updateemail(int? id, FormCollection form, string mailMessage)
+        {
+            if (Session["UserId"] != null)
+            {
+                Todo todo = db.Todoes.Find(id);
+
+                string osrid = todo.Owner; // Get the OSR initials
+                UserAccount item = db.UserAccounts.FirstOrDefault(i => i.OSR == osrid); // Get all the user account information based that matches the osrid
+                TempData["OSREmail"] = item.Email; //put tempdata and store osr email address in it
+
+                //DateTime? createdate = todo.CreateDate;
+                //fcreatedate = todo.CreateDate.Value.ToString("MM/dd/yy");
+
+                //DateTime? followupdate = todo.FollowUp;
+                //string ffollowupdate = todo.FollowUp.Value.ToString("MM/dd/yy");
+
+                //TempData["Jamie"] = "jcheung@sjassoc.com";
+                TempData["message"] = "Create Date: " + todo.CreateDate.Value.ToString("MM/dd/yy") + "\r\nDescription: " + todo.Description + "\r\nTask: " + todo.Task + "\r\nStatus: " + todo.Status + "\r\nFollowUp: " + todo.FollowUp.Value.ToString("MM/dd/yy") + "\r\nGroup: " + todo.Group;
+
+
+                TempData["subject"] = "SJ Associates To Do: " + todo.Description;
+
+                TempData["id"] = id;
+
+                return View(todo);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+        }
+
+
+
 
         private void SendHtmlFormattedEmail(string toAddress, string messageSubject, string messageBody)
         {
@@ -376,14 +544,21 @@ namespace WebApplication2.Controllers
             Todo todo = db.Todoes.Find(TempData["id"]);
             MailMessage mailMessage = new MailMessage();
 
+            //DateTime? createdate = todo.CreateDate;
+            string fcreatedate = todo.CreateDate.Value.ToString("MM/dd/yy");
+
+            //DateTime? followupdate = todo.FollowUp;
+            string ffollowupdate = todo.FollowUp.Value.ToString("MM/dd/yy");
 
             mailMessage.From = new MailAddress(senderID);
-            mailMessage.Subject = messageSubject;
+            //mailMessage.Subject = messageSubject;
+            mailMessage.Subject = "SJ Associates To Do: " + todo.Description;
 
             mailMessage.Body = Convert.ToString(TempData["message"]);
             mailMessage.IsBodyHtml = true;
-            //mailMessage.Body = messageBody;
-            mailMessage.Body = messageBody + "<br/><br/>" + "<b>Create Date: </b>" + todo.CreateDate + "<br/>" + "<b>Description: </b>" + todo.Description + "<br/>" + "<b>Task: </b>" + todo.Task + "<br/>" + "<b>Status: </b>" + todo.Status + "<br/>" + "<b>Followup: </b>" + todo.FollowUp + "<br/>" + "<b>Group: </b>" + todo.Group;
+
+
+            mailMessage.Body = messageBody + "<br/><br/>" + "<b>Create Date: </b>" + fcreatedate + "<br/>" + "<b>Description: </b>" + todo.Description + "<br/>" + "<b>Task: </b>" + todo.Task + "<br/>" + "<b>Status: </b>" + todo.Status + "<br/>" + "<b>Followup: </b>" + ffollowupdate + "<br/>" + "<b>Group: </b>" + todo.Group;
             mailMessage.To.Add(toAddress);
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp.office365.com";

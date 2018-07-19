@@ -19,7 +19,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="Opptys">
           <Key>
@@ -82,6 +82,7 @@
           <Property Name="FollowUp" Type="datetime" />
           <Property Name="Group" Type="nvarchar" MaxLength="50" />
           <Property Name="Owner" Type="nvarchar" MaxLength="10" />
+          <Property Name="Creator" Type="nchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="UserAccounts">
           <Key>
@@ -121,6 +122,7 @@
           <Property Name="Group" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="Owner" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Creator" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityContainer Name="sjassoc_dbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Todoes" EntityType="Self.Todo" />
@@ -218,7 +220,8 @@
     <EntitySetMapping Name="Todoes">
       <EntityTypeMapping TypeName="IsTypeOf(sjassoc_dbModel.Todo)">
         <MappingFragment StoreEntitySet="Todoes">
-          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Description" ColumnName="Description" />

@@ -9,6 +9,30 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+        @*using (Html.BeginForm())
+        {*@
+@*<table>
+    <tr>
+        <td>Group</td>
+        <td>@Html.DropDownList("Groupddl", null, "Select")</td>*@
+
+        @*<td>Principal</td>
+        <td>@Html.DropDownList("Prinddl", null, "Select")</td>
+
+        <td>OSR</td>
+        <td>@Html.DropDownList("OSRddl", null, "Select")</td>*@
+
+        @*<td>Status</td>
+        <td>@Html.DropDownList("Statusddl", null, "Select")</td>
+
+        <td>
+            <input type="submit" value="Search" onclick="location.href='@Url.Action("Index", "Todoes")'" />
+        </td>
+    </tr>
+</table>*@
+        @*}*@
+
 <table class="table">
     <tr>
         <th>
@@ -32,38 +56,45 @@
         <th>
             @Html.DisplayNameFor(model => model.Owner)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Creator)
+        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreateDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Task)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FollowUp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Group)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Owner)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Task)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FollowUp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Group)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Owner)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Creator)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @*@Html.ActionLink("Details", "Details", new { id = item.ID }) |*@
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
 </table>

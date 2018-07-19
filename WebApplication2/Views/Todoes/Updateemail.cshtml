@@ -3,7 +3,7 @@
 @{
     /**/
 
-    ViewBag.Title = "Email";
+    ViewBag.Title = "Updateemail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -34,7 +34,7 @@
     <table>
         <tr>
             <td class="col-md-2">
-                <h2>Email</h2>
+                <h2>Update Email</h2>
             </td>
             <td>
                 <input type="submit" value="Send" name="Send" onclick="return empty()">
@@ -52,7 +52,7 @@
             </td>
             <td class="col-md-11">
                 <div>
-                    <textarea name="txtto" id="txtto" style="height:25px; min-width: 100%;" required="required"></textarea>
+                    <textarea name="txtto" id="txtto" style="height:25px; min-width: 100%;" required="required">@TempData["OSREmail"]</textarea>
                 </div>
             </td>
         </tr>

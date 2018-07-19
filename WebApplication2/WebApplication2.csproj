@@ -285,6 +285,7 @@
     <Content Include="Views\Strategy\Email.cshtml" />
     <Content Include="Views\Todoes\Email.cshtml" />
     <Content Include="Views\EMeetings\Index.cshtml" />
+    <Content Include="Views\Todoes\Updateemail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

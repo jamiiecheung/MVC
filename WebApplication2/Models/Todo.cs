@@ -26,6 +26,7 @@ namespace WebApplication2.Models
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string Text { get; internal set; }
         public string Owner { get; set; }
+        public string Creator { get; set; }
 
         public Todo()
         {
