@@ -32,9 +32,52 @@ namespace WebApplication2.Controllers
                 // Use the email address to get the associated emaillist object which holds the group
                 EmailList emailListItem = db.EmailLists.First(x => x.Email == em);
 
+
+                string groupus = emailListItem.Group;
+                ViewData["groupuser"] = groupus;
+
+
                 if (emailListItem.Group.Equals("Wachtel"))
                 {
-                    return View(db.Todoes.ToList());
+                        List<SelectListItem> groupListItems = db.Todoes.Where(w => w.Group != null).Select(group => new SelectListItem { Value = group.Group, Text = group.Group }).Distinct().ToList();
+                        ViewBag.Groupddl = new SelectList(groupListItems, "Value", "Text").Distinct();
+
+                        List<SelectListItem> statusListItems = db.Todoes.Where(w => w.Status != null).Select(status => new SelectListItem { Value = status.Status, Text = status.Status }).Distinct().ToList();
+                        ViewBag.Statusddl = new SelectList(statusListItems, "Value", "Text").Distinct();
+
+
+
+
+                    if (Groupddl == null)
+                    {
+                        return View(db.Todoes.ToList());
+                    }
+
+                    if (Groupddl != null)
+                    {
+                        var groups = from g in db.Todoes
+                                     select g;
+                        var prins = from pr in db.Todoes
+                                    select pr;
+                        //    /*  var osrs = from o in db.Strategies
+                        //                 select o;
+                        //      var statuss = from s in db.Strategies
+                        //                    select s; */
+
+                        //List<SelectListItem> groupListItems = db.Todoes.Where(w => w.Group != null).Select(group => new SelectListItem { Value = group.Group, Text = group.Group }).Distinct().ToList();
+                        //ViewBag.Groupddl = new SelectList(groupListItems, "Value", "Text").Distinct();
+
+                        prins = prins.Where(gpr => gpr.Group.Contains(Groupddl) && gpr.Status.Contains(Statusddl));
+                        //Session["filtprins"] = Prinddl;
+                        Session["filtgroup"] = Groupddl;
+                        Session["filtstatus"] = Statusddl;
+                        //Session["filtosr"] = OSRddl;
+
+                        stratvar = null;
+
+                        return View(prins.ToList());
+
+                    }
                 }
 
                 // Create a list to hold the Todos which we will end up showing
@@ -54,10 +97,17 @@ namespace WebApplication2.Controllers
                     }
                 }
 
+
+
+                
+
+                
+
+
                 //string p = emailListItem.Perm;
                 //string gr = emailListItem.Group;
                 //StringBuilder sb = new StringBuilder();
-                //sb.Append("SELECT * FROM dbo.Strategy WHERE "); //change table name for whatever you need returned
+                //sb.Append("SELECT * FROM dbo.Todoes WHERE "); //change table name for whatever you need returned
                 //foreach (char c in p.ToCharArray())
                 //{
                 //    if (Groupddl == null)
@@ -142,12 +192,14 @@ namespace WebApplication2.Controllers
                 //    }
 
 
+
+
+
+
+
+
                     return View(list);
                     //}
-
-
-
-
                 //}
             }
 
@@ -204,6 +256,56 @@ namespace WebApplication2.Controllers
                 options.Add(new Todo() { Status = "Completed", Text = "Completed" });
 
                 ViewBag.Status = options;
+
+                var owners = new List<Todo>();
+
+                owners.Add(new Todo() { Owner = "CF", Text = "CF" });
+                owners.Add(new Todo() { Owner = "DR", Text = "DR" });
+                owners.Add(new Todo() { Owner = "JA", Text = "JA" });
+                owners.Add(new Todo() { Owner = "JB", Text = "JB" });
+                owners.Add(new Todo() { Owner = "JC", Text = "JC" });
+                owners.Add(new Todo() { Owner = "JL", Text = "JL" });
+                owners.Add(new Todo() { Owner = "JM", Text = "JM" });
+                owners.Add(new Todo() { Owner = "JT", Text = "JT" });
+                owners.Add(new Todo() { Owner = "KK", Text = "KK" });
+                owners.Add(new Todo() { Owner = "MW", Text = "MW" });
+                owners.Add(new Todo() { Owner = "RN", Text = "RN" });
+                owners.Add(new Todo() { Owner = "RW", Text = "RW" });
+                owners.Add(new Todo() { Owner = "SH", Text = "SH" });
+                owners.Add(new Todo() { Owner = "TF", Text = "TF" });
+                owners.Add(new Todo() { Owner = "TL", Text = "TL" });
+                owners.Add(new Todo() { Owner = "WL", Text = "WL" });
+
+
+                ViewBag.Owner = owners;
+
+
+                var creators = new List<Todo>();
+
+                creators.Add(new Todo() { Creator = "CF", Text = "CF" });
+                creators.Add(new Todo() { Creator = "DR", Text = "DR" });
+                creators.Add(new Todo() { Creator = "JA", Text = "JA" });
+                creators.Add(new Todo() { Creator = "JB", Text = "JB" });
+                creators.Add(new Todo() { Creator = "JC", Text = "JC" });
+                creators.Add(new Todo() { Creator = "JL", Text = "JL" });
+                creators.Add(new Todo() { Creator = "JM", Text = "JM" });
+                creators.Add(new Todo() { Creator = "JT", Text = "JT" });
+                creators.Add(new Todo() { Creator = "KK", Text = "KK" });
+                creators.Add(new Todo() { Creator = "MW", Text = "MW" });
+                creators.Add(new Todo() { Creator = "RN", Text = "RN" });
+                creators.Add(new Todo() { Creator = "RW", Text = "RW" });
+                creators.Add(new Todo() { Creator = "SH", Text = "SH" });
+                creators.Add(new Todo() { Creator = "TF", Text = "TF" });
+                creators.Add(new Todo() { Creator = "TL", Text = "TL" });
+                creators.Add(new Todo() { Creator = "WL", Text = "WL" });
+
+
+                ViewBag.Creator = creators;
+
+
+
+
+
                 return View(model);
 
             }
@@ -220,7 +322,7 @@ namespace WebApplication2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Description,CreatedDate,Task,FollowUp,Status,Group")] Todo todo)
+        public ActionResult Create([Bind(Include = "ID,Description,CreatedDate,Task,FollowUp,Status,Group,Owner,Creator")] Todo todo)
         {
 
             if (Session["UserId"] != null)
@@ -292,6 +394,7 @@ namespace WebApplication2.Controllers
                 owners.Add(new Todo() { Owner = "JL", Text = "JL" });
                 owners.Add(new Todo() { Owner = "JM", Text = "JM" });
                 owners.Add(new Todo() { Owner = "JT", Text = "JT" });
+                owners.Add(new Todo() { Owner = "KK", Text = "KK" });
                 owners.Add(new Todo() { Owner = "MW", Text = "MW" });
                 owners.Add(new Todo() { Owner = "RN", Text = "RN" });
                 owners.Add(new Todo() { Owner = "RW", Text = "RW" });
@@ -315,6 +418,7 @@ namespace WebApplication2.Controllers
                 creators.Add(new Todo() { Owner = "JL", Text = "JL" });
                 creators.Add(new Todo() { Owner = "JM", Text = "JM" });
                 creators.Add(new Todo() { Owner = "JT", Text = "JT" });
+                creators.Add(new Todo() { Owner = "KK", Text = "KK" });
                 creators.Add(new Todo() { Owner = "MW", Text = "MW" });
                 creators.Add(new Todo() { Owner = "RN", Text = "RN" });
                 creators.Add(new Todo() { Owner = "RW", Text = "RW" });
@@ -457,18 +561,53 @@ namespace WebApplication2.Controllers
             {
                 Todo todo = db.Todoes.Find(id);
 
-                //string osrid = todo.Owner; // Get the OSR initials
-                //UserAccount item = db.UserAccounts.FirstOrDefault(i => i.OSR == osrid); // Get all the user account information based that matches the osrid
-                //TempData["OSREmail"] = item.Email; //put tempdata and store osr email address in it
-                //DateTime? createdate = todo.CreateDate;
+                string osrid = todo.Owner; // Get the OSR initials
+                UserAccount item = db.UserAccounts.FirstOrDefault(i => i.OSR == osrid); // Get all the user account information based that matches the osrid
+                TempData["OSREmail"] = item.Email; //put tempdata and store osr email address in it
+                DateTime? createdate = todo.CreateDate;
                 //fcreatedate = todo.CreateDate.Value.ToString("MM/dd/yy");
 
-                //DateTime? followupdate = todo.FollowUp;
-                //string ffollowupdate = todo.FollowUp.Value.ToString("MM/dd/yy");
+                DateTime? followupdate = todo.FollowUp;
+                string ffollowupdate = todo.FollowUp.Value.ToString("MM/dd/yy");
 
                 //TempData["Jamie"] = "jcheung@sjassoc.com";
-                TempData["message"] = "Create Date: " + todo.CreateDate.Value.ToString("MM/dd/yy") + "\r\nDescription: " + todo.Description + "\r\nTask: " + todo.Task + "\r\nStatus: " + todo.Status + "\r\nFollowUp: " + todo.FollowUp.Value.ToString("MM/dd/yy") + "\r\nGroup: " + todo.Group;
 
+
+
+                //var osrs = new List<Todo>();
+
+                //osrs.Add(new Todo() { Owner = "CF", Text = "CF" });
+                //osrs.Add(new Todo() { Owner = "DR", Text = "DR" });
+                //osrs.Add(new Todo() { Owner = "JA", Text = "JA" });
+                //osrs.Add(new Todo() { Owner = "JB", Text = "JB" });
+                //osrs.Add(new Todo() { Value = "jcheung@sjassoc.com", Text = "jcheung@sjassoc.com" });
+                //osrs.Add(new Todo() { Owner = "JL", Text = "JL" });
+                //osrs.Add(new Todo() { Owner = "JM", Text = "JM" });
+                //osrs.Add(new Todo() { Owner = "JT", Text = "JT" });
+                //osrs.Add(new Todo() { Owner = "KK", Text = "KK" });
+                //osrs.Add(new Todo() { Owner = "MW", Text = "MW" });
+                //osrs.Add(new Todo() { Owner = "RN", Text = "RN" });
+                //osrs.Add(new Todo() { Owner = "RW", Text = "RW" });
+                //osrs.Add(new Todo() { Owner = "SH", Text = "SH" });
+                //osrs.Add(new Todo() { Owner = "TF", Text = "TF" });
+                //osrs.Add(new Todo() { Owner = "TL", Text = "TL" });
+                //osrs.Add(new Todo() { Text = "wlondon@sjassoc.com" });
+
+                //ViewBag.OSRsddl = osrs;
+                //TempData["ToAddress"] = osrs;
+
+                //List<SelectListItem> statusListItems = db.Todoes.Where(w => w.OSRs != null).Select(status => new SelectListItem { Value = status.Status, Text = status.Status }).Distinct().ToList();
+                //ViewBag.Statusddl = new SelectList(statusListItems, "Value", "Text").Distinct();
+
+
+
+
+
+
+
+                TempData["message"] = "Create Date: \t" + todo.CreateDate.Value.ToString("MM/dd/yy") + "\r\nDescription: \t" + todo.Description + "\r\nTask: \t\t" + todo.Task + "\r\nStatus: \t\t" + todo.Status + "\r\nFollowUp: \t" + todo.FollowUp.Value.ToString("MM/dd/yy") + "\r\nGroup: \t\t" + todo.Group;
+
+                //TempData["OSRddl"] = ViewBag.OSRsddl;
 
                 TempData["subject"] = "SJ Associates To Do: " + todo.Description;
 
@@ -483,7 +622,7 @@ namespace WebApplication2.Controllers
         }
 
 
-        public ActionResult Updateemail(int? id, FormCollection form, string mailMessage)
+        public ActionResult Updateemail(int? id, FormCollection form, string mailMessage, string dropdown)
         {
             if (Session["UserId"] != null)
             {
@@ -500,12 +639,14 @@ namespace WebApplication2.Controllers
                 //string ffollowupdate = todo.FollowUp.Value.ToString("MM/dd/yy");
 
                 //TempData["Jamie"] = "jcheung@sjassoc.com";
-                TempData["message"] = "Create Date: " + todo.CreateDate.Value.ToString("MM/dd/yy") + "\r\nDescription: " + todo.Description + "\r\nTask: " + todo.Task + "\r\nStatus: " + todo.Status + "\r\nFollowUp: " + todo.FollowUp.Value.ToString("MM/dd/yy") + "\r\nGroup: " + todo.Group;
+                TempData["message"] = "Create Date: \t" + todo.CreateDate.Value.ToString("MM/dd/yy") + "\r\nDescription: \t" + todo.Description + "\r\nTask: \t\t" + todo.Task + "\r\nStatus: \t\t" + todo.Status + "\r\nFollowUp: \t" + todo.FollowUp.Value.ToString("MM/dd/yy") + "\r\nGroup: \t\t" + todo.Group;
 
 
                 TempData["subject"] = "SJ Associates To Do: " + todo.Description;
 
                 TempData["id"] = id;
+
+                //TempData["to"] = dropdown;
 
                 return View(todo);
             }
@@ -549,6 +690,10 @@ namespace WebApplication2.Controllers
 
             //DateTime? followupdate = todo.FollowUp;
             string ffollowupdate = todo.FollowUp.Value.ToString("MM/dd/yy");
+            //toAddress = ViewBag.OSRsddl;
+            //toAddress = TempData["ToAddress"].ToString();
+
+            //toAddress = TempData["to"].ToString();
 
             mailMessage.From = new MailAddress(senderID);
             //mailMessage.Subject = messageSubject;
@@ -558,7 +703,7 @@ namespace WebApplication2.Controllers
             mailMessage.IsBodyHtml = true;
 
 
-            mailMessage.Body = messageBody + "<br/><br/>" + "<b>Create Date: </b>" + fcreatedate + "<br/>" + "<b>Description: </b>" + todo.Description + "<br/>" + "<b>Task: </b>" + todo.Task + "<br/>" + "<b>Status: </b>" + todo.Status + "<br/>" + "<b>Followup: </b>" + ffollowupdate + "<br/>" + "<b>Group: </b>" + todo.Group;
+            mailMessage.Body = messageBody + "<br/><br/>" + "<b>Create Date: &emsp;</b>" + fcreatedate + "<br/>" + "<b>Description: &emsp;</b>" + todo.Description + "<br/>" + "<b>Task: &emsp;&emsp;&emsp;&nbsp;</b>" + todo.Task + "<br/>" + "<b>Status: &emsp;&emsp;&emsp;&nbsp;</b>" + todo.Status + "<br/>" + "<b>Followup: &emsp;&emsp;</b>" + ffollowupdate + "<br/>" + "<b>Group: &emsp;&emsp;&emsp;&nbsp;&nbsp;</b>" + todo.Group;
             mailMessage.To.Add(toAddress);
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp.office365.com";
@@ -579,7 +724,8 @@ namespace WebApplication2.Controllers
             if (Session["UserId"] != null)
             {
 
-                SendHtmlFormattedEmail(form["txtto"], form["txtsubject"], form["txtbody"]);
+                //SendHtmlFormattedEmail(form["txtto"], form["txtsubject"], form["txtbody"]);
+                SendHtmlFormattedEmail(form["dropdown"], form["txtsubject"], form["txtbody"]);
                 return RedirectToAction("Index", "Todoes");
 
             }

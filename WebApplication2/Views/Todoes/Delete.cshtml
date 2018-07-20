@@ -12,6 +12,13 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.Owner)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Owner)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
 
@@ -51,6 +58,13 @@
             @Html.DisplayFor(model => model.FollowUp)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Creator)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Creator)
+        </dd>
     </dl>
 
     @using (Html.BeginForm()) {

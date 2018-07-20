@@ -50,10 +50,34 @@
             <td class="col-md-1">
                 <div>To:</div>
             </td>
-            <td class="col-md-11">
+            @*<td class="col-md-11">
                 <div>
                     <textarea name="txtto" id="txtto" style="height:25px; min-width: 100%;" required="required"></textarea>
                 </div>
+            </td>*@
+            @*<td class="col-md-11">
+                    @*<textarea readonly style="height:25px;min-width: 100%">@TempData["OSRddl"]</textarea>
+                    @Html.DropDownListFor(m => m.Owner, new SelectList(ViewBag.OSRsddl, "Owner", "Text"), new { id = "Type", @class = "form-control" })
+                </td>*@
+            <td class="col-md-11">
+                <select name="dropdown">
+                    <option>cfinn@sjassoc.com</option>
+                    <option>drysz@sjassoc.com</option>
+                    <option>jangelo@sjassoc.com</option>
+                    <option>jbreda@sjassoc.com</option>
+                    <option>jcheung@sjassoc.com</option>
+                    <option>jland@sjassoc.com</option>
+                    <option>jmcevoy@sjassoc.com</option>
+                    <option>jtilley@sjassoc.com</option>
+                    <option>kkumar@sjassoc.com</option>
+                    <option>mwachtel@sjassoc.com</option>
+                    <option>rnogueira@sjassoc.com</option>
+                    <option>rweintraub@sjassoc.com</option>
+                    <option>shanley@sjassoc.com</option>
+                    <option>tfaherty@sjassoc.com</option>
+                    <option>tlucey@sjassoc.com</option>
+                    <option>wlondon@sjassoc.com</option>
+                </select>
             </td>
         </tr>
         <tr>
@@ -61,7 +85,6 @@
                 <div>Subject:</div>
             </td>
             <td class="col-md-11">
-                @*<input type="text" name="txtsubject" id="txtsubject" style="min-width: 100%" required="required" />*@
                 <textarea readonly style="height:25px;min-width: 100%">@TempData["subject"]</textarea>
             </td>
         </tr>

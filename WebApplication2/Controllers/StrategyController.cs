@@ -529,7 +529,7 @@ namespace WebApplication2.Controllers
 
 
                 //TempData["Jamie"] = "jcheung@sjassoc.com";
-                TempData["message"] = "Create Date: " + strat.CreateDate + "\r\nUpdated: " + strat.Updated + "\r\nCustomer: " + strat.Customer + "\r\nEnd Product: " + strat.EndProduct + "\r\nOSR: " + strat.OSR + "\r\nPrincipal: " + strat.Principal + "\r\nProduct: " + strat.Product + "\r\nFollowup Date: " + strat.FollowUpDate + "\r\nValue: " + strat.Value + "\r\nStatus: " + strat.Status + "\r\nNext Action: " + strat.NextAction + "\r\nLatest Comments: " + strat.ManagerComment + "\r\nHistory: " + strat.History + "\r\nGroup: " + strat.Group;
+                TempData["message"] = "Create Date: \t\t" + strat.CreateDate.ToString("MM/dd/yy") + "\r\nUpdated: \t\t" + strat.Updated.Value.ToString("MM/dd/yy") + "\r\nCustomer: \t\t" + strat.Customer + "\r\nEnd Product: \t\t" + strat.EndProduct + "\r\nOSR: \t\t\t" + strat.OSR + "\r\nPrincipal: \t\t" + strat.Principal + "\r\nProduct: \t\t" + strat.Product + "\r\nFollowup Date: \t" + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "\r\nValue: \t\t\t" + strat.Value + "\r\nStatus: \t\t\t" + strat.Status + "\r\nNext Action: \t\t" + strat.NextAction + "\r\nLatest Comments: \t" + strat.ManagerComment + "\r\nHistory: \t\t\t" + strat.History + "\r\nGroup: \t\t\t" + strat.Group;
 
                 TempData["id"] = id;
 
@@ -551,6 +551,9 @@ namespace WebApplication2.Controllers
 
             string result = "Message Successfully Sent!!!";
 
+         
+
+            //toAddress = dropdown;
 
             //catching if client or SJ Assoc.
             if (passw == null)
@@ -574,7 +577,7 @@ namespace WebApplication2.Controllers
             mailMessage.Body = Convert.ToString(TempData["message"]);
             mailMessage.IsBodyHtml = true;
             //mailMessage.Body = messageBody;
-            mailMessage.Body = messageBody + "<br/><br/>" + "<b>Create Date: </b>" + strat.CreateDate + "<br/>" + "<b>Updated: </b>" + strat.Updated + "<br/>" + "<b>Customer: </b>" + strat.Customer + "<br/>" + "<b>End Product: </b>" + strat.EndProduct + "<br/>" + "<b>OSR: </b>" + strat.OSR + "<br/>" + "<b>Principal: </b>" + strat.Principal + "<br/>" + "<b>Product: </b>" + strat.Product + "<br/>" + "<b>Followup Date: </b>" + strat.FollowUpDate + "<br/>" + "<b>Value: </b>" + strat.Value + "<br/>" + "<b>Status: </b>" + strat.Status + "<br/>" + "<b>Next Action: </b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: </b>" + strat.ManagerComment + "<br/>" + "<b>History: </b>" + strat.History + "<br/>" + "<b>Group: </b>" + strat.Group;
+            mailMessage.Body = messageBody + "<br/><br/>" + "<b>Create Date: </b>" + strat.CreateDate.ToString("MM/dd/yy") + "<br/>" + "<b>Updated: </b>" + strat.Updated + "<br/>" + "<b>Customer: </b>" + strat.Customer + "<br/>" + "<b>End Product: </b>" + strat.EndProduct + "<br/>" + "<b>OSR: </b>" + strat.OSR + "<br/>" + "<b>Principal: </b>" + strat.Principal + "<br/>" + "<b>Product: </b>" + strat.Product + "<br/>" + "<b>Followup Date: </b>" + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "<br/>" + "<b>Value: </b>" + strat.Value + "<br/>" + "<b>Status: </b>" + strat.Status + "<br/>" + "<b>Next Action: </b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: </b>" + strat.ManagerComment + "<br/>" + "<b>History: </b>" + strat.History + "<br/>" + "<b>Group: </b>" + strat.Group;
             mailMessage.To.Add(toAddress);
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp.office365.com";
@@ -595,6 +598,10 @@ namespace WebApplication2.Controllers
             if (Session["UserId"] != null)
             {
 
+                //string dropdown = form["txtto"];
+                //form["txtto"] = dropdown;
+                    
+                //SendHtmlFormattedEmail(form["txtto"], form["txtsubject"], form["txtbody"]);
                 SendHtmlFormattedEmail(form["txtto"], form["txtsubject"], form["txtbody"]);
                 return RedirectToAction("Index", "Strategy");
 

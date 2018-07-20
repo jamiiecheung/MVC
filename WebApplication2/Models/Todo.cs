@@ -27,6 +27,7 @@ namespace WebApplication2.Models
         public string Text { get; internal set; }
         public string Owner { get; set; }
         public string Creator { get; set; }
+        public string Value { get; internal set; }
 
         public Todo()
         {
