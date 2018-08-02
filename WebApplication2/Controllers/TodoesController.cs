@@ -48,12 +48,13 @@ namespace WebApplication2.Controllers
 
 
 
-                    if (Groupddl == null)
+                    if (Groupddl == null && Statusddl == null)
                     {
                         return View(db.Todoes.ToList());
                     }
 
-                    if (Groupddl != null)
+
+                    if (Groupddl != null && Statusddl != null)
                     {
                         var groups = from g in db.Todoes
                                      select g;
@@ -69,8 +70,18 @@ namespace WebApplication2.Controllers
 
                         prins = prins.Where(gpr => gpr.Group.Contains(Groupddl) && gpr.Status.Contains(Statusddl));
                         //Session["filtprins"] = Prinddl;
+
+
+                        if (Groupddl == "" && Statusddl == "")
+                        {
+                            //prins = prins.Where(gpr => gpr.Group.Contains(Groupddl) && gpr.Status.Contains(null));
+                             return View(db.Todoes.ToList());
+                        }
+
                         Session["filtgroup"] = Groupddl;
                         Session["filtstatus"] = Statusddl;
+
+
                         //Session["filtosr"] = OSRddl;
 
                         stratvar = null;

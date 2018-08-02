@@ -125,6 +125,11 @@ namespace WebApplication2.Controllers
                             if (Prinddl == null)//checks if there is a strategy already selected
                             {
                                 //set the filters to the sessions
+                                //if (Prinddl == null)
+                                //{
+                                //    Prinddl = "";
+                                //    Session["fltprins"] = "";
+                                //}
                                 Prinddl = Session["filtprins"].ToString();
                                 Groupddl = Session["filtgroup"].ToString();
                                 Statusddl = Session["filtstatus"].ToString();
@@ -343,7 +348,7 @@ namespace WebApplication2.Controllers
             else
             {
                 strat.NextAction = "Meeting Scheduled";
-                strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
+                strat.History = strat.Updated.Value.ToString("MM/dd/yy") + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
                 db.Entry(strat).State = EntityState.Modified;
                 db.SaveChanges();
@@ -367,14 +372,15 @@ namespace WebApplication2.Controllers
                 db.Entry(strat).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            else {
+            else
+            {
 
-            strat.NextAction = "Need to schedule visit";
-            strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
+                strat.NextAction = "Need to schedule visit";
+                strat.History = strat.Updated.Value.ToString("MM/dd/yy") + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
-            db.Entry(strat).State = EntityState.Modified;
-            db.SaveChanges();
- }
+                db.Entry(strat).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Edit", "Strategy", new { id });
         }
 
@@ -398,7 +404,7 @@ namespace WebApplication2.Controllers
             else
             {
                 strat.NextAction = "Need to schedule eMeeting";
-                strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
+                strat.History = strat.Updated.Value.ToString("MM/dd/yy") + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
                 db.Entry(strat).State = EntityState.Modified;
                 db.SaveChanges();
@@ -425,7 +431,7 @@ namespace WebApplication2.Controllers
             else
             {
                 strat.NextAction = "No action at this time, follow up planned";
-                strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
+                strat.History = strat.Updated.Value.ToString("MM/dd/yy") + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
                 db.Entry(strat).State = EntityState.Modified;
                 db.SaveChanges();
@@ -453,7 +459,7 @@ namespace WebApplication2.Controllers
             {
 
                 strat.NextAction = "Samples Requested";
-                strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
+                strat.History = strat.Updated.Value.ToString("MM/dd/yy") + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
                 db.Entry(strat).State = EntityState.Modified;
                 db.SaveChanges();
@@ -480,7 +486,7 @@ namespace WebApplication2.Controllers
             else
             {
                 strat.NextAction = "Evaluating Samples";
-                strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
+                strat.History = strat.Updated.Value.ToString("MM/dd/yy") + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
                 db.Entry(strat).State = EntityState.Modified;
                 db.SaveChanges();
@@ -507,7 +513,7 @@ namespace WebApplication2.Controllers
             else
             {
                 strat.NextAction = "Need to Confirm CEM location";
-                strat.History = strat.Updated + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
+                strat.History = strat.Updated.Value.ToString("MM/dd/yy") + " (" + emailListItem.FirstName + " " + emailListItem.LastName + ") :" + nextactionold + "\r\n" + strat.History;
 
                 db.Entry(strat).State = EntityState.Modified;
                 db.SaveChanges();
@@ -528,9 +534,15 @@ namespace WebApplication2.Controllers
                 TempData["OSREmail"] = item.Email; //put tempdata and store osr email address in it
 
 
-                //TempData["Jamie"] = "jcheung@sjassoc.com";
-                TempData["message"] = "Create Date: \t\t" + strat.CreateDate.ToString("MM/dd/yy") + "\r\nUpdated: \t\t" + strat.Updated.Value.ToString("MM/dd/yy") + "\r\nCustomer: \t\t" + strat.Customer + "\r\nEnd Product: \t\t" + strat.EndProduct + "\r\nOSR: \t\t\t" + strat.OSR + "\r\nPrincipal: \t\t" + strat.Principal + "\r\nProduct: \t\t" + strat.Product + "\r\nFollowup Date: \t" + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "\r\nValue: \t\t\t" + strat.Value + "\r\nStatus: \t\t\t" + strat.Status + "\r\nNext Action: \t\t" + strat.NextAction + "\r\nLatest Comments: \t" + strat.ManagerComment + "\r\nHistory: \t\t\t" + strat.History + "\r\nGroup: \t\t\t" + strat.Group;
-
+                if (strat.FollowUpDate == null)
+                {
+                    TempData["message"] = "Create Date: \t\t" + strat.CreateDate.ToString("MM/dd/yy") + "\r\nUpdated: \t\t" + strat.Updated.Value.ToString("MM/dd/yy") + "\r\nCustomer: \t\t" + strat.Customer + "\r\nEnd Product: \t\t" + strat.EndProduct + "\r\nOSR: \t\t\t" + strat.OSR + "\r\nPrincipal: \t\t" + strat.Principal + "\r\nProduct: \t\t" + strat.Product + "\r\nFollowup Date: \t" + "\r\nValue: \t\t\t" + strat.Value + "\r\nStatus: \t\t\t" + strat.Status + "\r\nNext Action: \t\t" + strat.NextAction + "\r\nLatest Comments: \t" + strat.ManagerComment + "\r\nHistory: \t\t\t" + strat.History + "\r\nGroup: \t\t\t" + strat.Group;
+                }
+                else
+                {
+                    //TempData["Jamie"] = "jcheung@sjassoc.com";
+                    TempData["message"] = "Create Date: \t\t" + strat.CreateDate.ToString("MM/dd/yy") + "\r\nUpdated: \t\t" + strat.Updated.Value.ToString("MM/dd/yy") + "\r\nCustomer: \t\t" + strat.Customer + "\r\nEnd Product: \t\t" + strat.EndProduct + "\r\nOSR: \t\t\t" + strat.OSR + "\r\nPrincipal: \t\t" + strat.Principal + "\r\nProduct: \t\t" + strat.Product + "\r\nFollowup Date: \t" + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "\r\nValue: \t\t\t" + strat.Value + "\r\nStatus: \t\t\t" + strat.Status + "\r\nNext Action: \t\t" + strat.NextAction + "\r\nLatest Comments: \t" + strat.ManagerComment + "\r\nHistory: \t\t\t" + strat.History + "\r\nGroup: \t\t\t" + strat.Group;
+                }
                 TempData["id"] = id;
 
                 return View(strat);
@@ -551,7 +563,7 @@ namespace WebApplication2.Controllers
 
             string result = "Message Successfully Sent!!!";
 
-         
+
 
             //toAddress = dropdown;
 
@@ -577,7 +589,17 @@ namespace WebApplication2.Controllers
             mailMessage.Body = Convert.ToString(TempData["message"]);
             mailMessage.IsBodyHtml = true;
             //mailMessage.Body = messageBody;
-            mailMessage.Body = messageBody + "<br/><br/>" + "<b>Create Date: </b>" + strat.CreateDate.ToString("MM/dd/yy") + "<br/>" + "<b>Updated: </b>" + strat.Updated + "<br/>" + "<b>Customer: </b>" + strat.Customer + "<br/>" + "<b>End Product: </b>" + strat.EndProduct + "<br/>" + "<b>OSR: </b>" + strat.OSR + "<br/>" + "<b>Principal: </b>" + strat.Principal + "<br/>" + "<b>Product: </b>" + strat.Product + "<br/>" + "<b>Followup Date: </b>" + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "<br/>" + "<b>Value: </b>" + strat.Value + "<br/>" + "<b>Status: </b>" + strat.Status + "<br/>" + "<b>Next Action: </b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: </b>" + strat.ManagerComment + "<br/>" + "<b>History: </b>" + strat.History + "<br/>" + "<b>Group: </b>" + strat.Group;
+
+            if (strat.FollowUpDate == null)
+            {
+                mailMessage.Body = messageBody + "<br/><br/>" + "<b>Create Date: </b>" + strat.CreateDate.ToString("MM/dd/yy") + "<br/>" + "<b>Updated: </b>" + strat.Updated + "<br/>" + "<b>Customer: </b>" + strat.Customer + "<br/>" + "<b>End Product: </b>" + strat.EndProduct + "<br/>" + "<b>OSR: </b>" + strat.OSR + "<br/>" + "<b>Principal: </b>" + strat.Principal + "<br/>" + "<b>Product: </b>" + strat.Product + "<br/>" + "<b>Followup Date: </b>" + "<br/>" + "<b>Value: </b>" + strat.Value + "<br/>" + "<b>Status: </b>" + strat.Status + "<br/>" + "<b>Next Action: </b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: </b>" + strat.ManagerComment + "<br/>" + "<b>History: </b>" + strat.History + "<br/>" + "<b>Group: </b>" + strat.Group;
+            }
+            else
+            {
+                mailMessage.Body = messageBody + "<br/><br/>" + "<b>Create Date: &emsp;&emsp;&emsp;&nbsp;&nbsp;</b>" + strat.CreateDate.ToString("MM/dd/yy") + "<br/>" + "<b>Updated: &emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>" + strat.Updated + "<br/>" + "<b>Customer: &emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;</b>" + strat.Customer + "<br/>" + "<b>End Product: &emsp;&emsp;&emsp;&nbsp</b>" + strat.EndProduct + "<br/>" + "<b>OSR: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;</b>" + strat.OSR + "<br/>" + "<b>Principal: &emsp;&emsp;&emsp;&emsp;&emsp;</b>" + strat.Principal + "<br/>" + "<b>Product: &emsp;&emsp;&emsp;&emsp;&nbsp;</b>" + strat.Product + "<br/>" + "<b>Followup Date: &emsp;&emsp;&nbsp;</b>" + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "<br/>" + "<b>Value: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;</b>" + strat.Value + "<br/>" + "<b>Status: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</b>" + strat.Status + "<br/>" + "<b>Next Action: &emsp;&emsp;&ensp;&nbsp;&nbsp;&nbsp;</b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: &emsp;</b>" + strat.ManagerComment + "<br/>" + "<b>History: &emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;</b>" + strat.History + "<br/>" + "<b>Group: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp</b>" + strat.Group;
+
+            }
+           // mailMessage.Body = messageBody + "<br/><br/>" + "<b>Create Date: </b>" + strat.CreateDate.ToString("MM/dd/yy") + "<br/>" + "<b>Updated: </b>" + strat.Updated + "<br/>" + "<b>Customer: </b>" + strat.Customer + "<br/>" + "<b>End Product: </b>" + strat.EndProduct + "<br/>" + "<b>OSR: </b>" + strat.OSR + "<br/>" + "<b>Principal: </b>" + strat.Principal + "<br/>" + "<b>Product: </b>" + strat.Product + "<br/>" + "<b>Followup Date: </b>" + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "<br/>" + "<b>Value: </b>" + strat.Value + "<br/>" + "<b>Status: </b>" + strat.Status + "<br/>" + "<b>Next Action: </b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: </b>" + strat.ManagerComment + "<br/>" + "<b>History: </b>" + strat.History + "<br/>" + "<b>Group: </b>" + strat.Group;
             mailMessage.To.Add(toAddress);
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp.office365.com";
@@ -600,7 +622,7 @@ namespace WebApplication2.Controllers
 
                 //string dropdown = form["txtto"];
                 //form["txtto"] = dropdown;
-                    
+
                 //SendHtmlFormattedEmail(form["txtto"], form["txtsubject"], form["txtbody"]);
                 SendHtmlFormattedEmail(form["txtto"], form["txtsubject"], form["txtbody"]);
                 return RedirectToAction("Index", "Strategy");
