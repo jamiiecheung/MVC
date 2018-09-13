@@ -91,6 +91,7 @@ namespace WebApplication2.Controllers
                     }
                 }
 
+
                 // Create a list to hold the Todos which we will end up showing
                 List<Todo> list = new List<Todo>();
 
@@ -110,97 +111,100 @@ namespace WebApplication2.Controllers
 
 
 
-                
-
-                
-
-
-                //string p = emailListItem.Perm;
-                //string gr = emailListItem.Group;
-                //StringBuilder sb = new StringBuilder();
-                //sb.Append("SELECT * FROM dbo.Todoes WHERE "); //change table name for whatever you need returned
-                //foreach (char c in p.ToCharArray())
-                //{
-                //    if (Groupddl == null)
-                //    {
-                //        sb.Append("Perm LIKE '%");
-                //        sb.Append(c);
-                //        sb.Append("%' OR ");
-                //    }
-
-                //}
-                //sb.Length = sb.Length - 4;
-
-                //if (selg == null)
-                //{
-                //    List<Todo> lists = db.Todoes.SqlQuery(sb.ToString()).ToList(); //change table name
-                //    return View(lists);
-                //}
-
-                //else
-                //{
-                //    var groups = from g in db.Todoes
-                //                 select g;
-                //    var prins = from pr in db.Todoes
-                //                select pr;
-                //    /*  var osrs = from o in db.Strategies
-                //                 select o;
-                //      var statuss = from s in db.Strategies
-                //                    select s; */
-
-                //    List<SelectListItem> groupListItems = db.Todoes.Where(w => w.Group != null).Select(group => new SelectListItem { Value = group.Group, Text = group.Group }).Distinct().ToList();
-                //    ViewBag.Groupddl = new SelectList(groupListItems, "Value", "Text").Distinct();
-
-                //    //List<SelectListItem> prinListItems = db.Todoes.Where(w => w.Principal != null).Select(prin => new SelectListItem { Value = prin.Principal, Text = prin.Principal }).Distinct().ToList();
-                //    //ViewBag.Prinddl = new SelectList(prinListItems, "Value", "Text").Distinct();
-
-                //    //List<SelectListItem> osrListItems = db.Todoes.Where(w => w.OSR != null).Select(osr => new SelectListItem { Value = osr.OSR, Text = osr.OSR }).Distinct().ToList();
-                //    //ViewBag.OSRddl = new SelectList(osrListItems, "Value", "Text").Distinct();
-
-                //    List<SelectListItem> statusListItems = db.Todoes.Where(w => w.Status != null).Select(status => new SelectListItem { Value = status.Status, Text = status.Status }).Distinct().ToList();
-                //    ViewBag.Statusddl = new SelectList(statusListItems, "Value", "Text").Distinct();
 
 
 
 
-                //    //if all filters are null
-                //    //if (Groupddl == null && Statusddl == null)
-                //    if (gr == null && Statusddl == null)
-                //    {
-                //        return View(db.Todoes.ToList());
-                //    }
-
-                //    //returns same search filter if a strategy was selected beforehand
-                //    if (stratvar != null)
-                //    {
-                //        if (gr == null)//checks if there is a strategy already selected
-                //        {
-                //            //set the filters to the sessions
-                //            //Prinddl = Session["filtprins"].ToString();
-                //            Groupddl = Session["filtgroup"].ToString();
-                //            Statusddl = Session["filtstatus"].ToString();
-                //            //OSRddl = Session["filtosr"].ToString();
-                //        }
-                //        //  return View(group.ToList());
-
-                //        stratvar = null;
-                //    };
 
 
-                //    //if (prin != null && group != null && osr != null && status != null)
-                //    //if (Prinddl != null && Groupddl != null && OSRddl != null && Statusddl != null)
-                //    if (gr != null && Statusddl != null)
-                //    {
-                //        prins = prins.Where(gpr => gpr.Group.Contains(Groupddl) && gpr.Status.Contains(Statusddl));
-                //        //Session["filtprins"] = Prinddl;
-                //        Session["filtgroup"] = Groupddl;
-                //        Session["filtstatus"] = Statusddl;
-                //        //Session["filtosr"] = OSRddl;
 
-                //        stratvar = null;
 
-                //        return View(prins.ToList());
-                //    }
+                    //string p = emailListItem.Perm;
+                    //string gr = emailListItem.Group;
+                    //StringBuilder sb = new StringBuilder();
+                    //sb.Append("SELECT * FROM dbo.Todoes WHERE "); //change table name for whatever you need returned
+                    //foreach (char c in p.ToCharArray())
+                    //{
+                    //    if (Groupddl == null)
+                    //    {
+                    //        sb.Append("Perm LIKE '%");
+                    //        sb.Append(c);
+                    //        sb.Append("%' OR ");
+                    //    }
+
+                    //}
+                    //sb.Length = sb.Length - 4;
+
+                    //if (selg == null)
+                    //{
+                    //    List<Todo> lists = db.Todoes.SqlQuery(sb.ToString()).ToList(); //change table name
+                    //    return View(lists);
+                    //}
+
+                    //else
+                    //{
+                    //    var groups = from g in db.Todoes
+                    //                 select g;
+                    //    var prins = from pr in db.Todoes
+                    //                select pr;
+                    //    /*  var osrs = from o in db.Strategies
+                    //                 select o;
+                    //      var statuss = from s in db.Strategies
+                    //                    select s; */
+
+                    //    List<SelectListItem> groupListItems = db.Todoes.Where(w => w.Group != null).Select(group => new SelectListItem { Value = group.Group, Text = group.Group }).Distinct().ToList();
+                    //    ViewBag.Groupddl = new SelectList(groupListItems, "Value", "Text").Distinct();
+
+                    //    //List<SelectListItem> prinListItems = db.Todoes.Where(w => w.Principal != null).Select(prin => new SelectListItem { Value = prin.Principal, Text = prin.Principal }).Distinct().ToList();
+                    //    //ViewBag.Prinddl = new SelectList(prinListItems, "Value", "Text").Distinct();
+
+                    //    //List<SelectListItem> osrListItems = db.Todoes.Where(w => w.OSR != null).Select(osr => new SelectListItem { Value = osr.OSR, Text = osr.OSR }).Distinct().ToList();
+                    //    //ViewBag.OSRddl = new SelectList(osrListItems, "Value", "Text").Distinct();
+
+                    //    List<SelectListItem> statusListItems = db.Todoes.Where(w => w.Status != null).Select(status => new SelectListItem { Value = status.Status, Text = status.Status }).Distinct().ToList();
+                    //    ViewBag.Statusddl = new SelectList(statusListItems, "Value", "Text").Distinct();
+
+
+
+
+                    //    //if all filters are null
+                    //    //if (Groupddl == null && Statusddl == null)
+                    //    if (gr == null && Statusddl == null)
+                    //    {
+                    //        return View(db.Todoes.ToList());
+                    //    }
+
+                    //    //returns same search filter if a strategy was selected beforehand
+                    //    if (stratvar != null)
+                    //    {
+                    //        if (gr == null)//checks if there is a strategy already selected
+                    //        {
+                    //            //set the filters to the sessions
+                    //            //Prinddl = Session["filtprins"].ToString();
+                    //            Groupddl = Session["filtgroup"].ToString();
+                    //            Statusddl = Session["filtstatus"].ToString();
+                    //            //OSRddl = Session["filtosr"].ToString();
+                    //        }
+                    //        //  return View(group.ToList());
+
+                    //        stratvar = null;
+                    //    };
+
+
+                    //    //if (prin != null && group != null && osr != null && status != null)
+                    //    //if (Prinddl != null && Groupddl != null && OSRddl != null && Statusddl != null)
+                    //    if (gr != null && Statusddl != null)
+                    //    {
+                    //        prins = prins.Where(gpr => gpr.Group.Contains(Groupddl) && gpr.Status.Contains(Statusddl));
+                    //        //Session["filtprins"] = Prinddl;
+                    //        Session["filtgroup"] = Groupddl;
+                    //        Session["filtstatus"] = Statusddl;
+                    //        //Session["filtosr"] = OSRddl;
+
+                    //        stratvar = null;
+
+                    //        return View(prins.ToList());
+                    //    }
 
 
 

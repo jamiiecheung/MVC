@@ -170,5 +170,22 @@ namespace WebApplication2.Controllers
                 return RedirectToAction("Login");
             }
         }
+
+
+        public ActionResult Logout()
+        {
+            if (Session["UserId"] != null)
+            {
+                Session["UserId"] = null;
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+
+
     }
 }

@@ -11,6 +11,10 @@ using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Net.Mail;
+//using Microsoft.Office.Interop.Outlook;
+using Outlook = Microsoft.Office.Interop.Outlook;
+//using Outlook;
+//using OutLookApp = Outlook.Application;
 
 namespace WebApplication2.Controllers
 {
@@ -119,26 +123,28 @@ namespace WebApplication2.Controllers
                             return View(db.Strategies.ToList());
                         }
 
-                        //returns same search filter if a strategy was selected beforehand
-                        if (stratvar != null)
-                        {
-                            if (Prinddl == null)//checks if there is a strategy already selected
-                            {
-                                //set the filters to the sessions
-                                //if (Prinddl == null)
-                                //{
-                                //    Prinddl = "";
-                                //    Session["fltprins"] = "";
-                                //}
-                                Prinddl = Session["filtprins"].ToString();
-                                Groupddl = Session["filtgroup"].ToString();
-                                Statusddl = Session["filtstatus"].ToString();
-                                OSRddl = Session["filtosr"].ToString();
-                            }
-                            //  return View(group.ToList());
+                        ////returns same search filter if a strategy was selected beforehand
+                        ////if (stratvar != null)
+                        //    if (stratvar != null)
+                        //    {
 
-                            stratvar = null;
-                        };
+                        //    if (Prinddl == null)//checks if there is a strategy already selected
+                        //    {
+                        //        //set the filters to the sessions
+                        //        //if (Prinddl == null)
+                        //        //{
+                        //        //    Prinddl = "";
+                        //        //    Session["fltprins"] = "";
+                        //        //}
+                        //        Prinddl = Session["filtprins"].ToString();
+                        //        Groupddl = Session["filtgroup"].ToString();
+                        //        Statusddl = Session["filtstatus"].ToString();
+                        //        OSRddl = Session["filtosr"].ToString();
+                        //    }
+                        //    //  return View(group.ToList());
+
+                        //    stratvar = null;
+                        //};
 
 
                         //if (prin != null && group != null && osr != null && status != null)
@@ -277,6 +283,40 @@ namespace WebApplication2.Controllers
                 TempData["perm"] = p;
                 //ViewBag.Statusselected = strat.Status;
 
+
+
+                int userid = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
+                String emailacc = db.UserAccounts.Find(userid).Email.ToString(); // Use the id to get the associated email address
+                string osrid = strat.OSR; // Get the OSR initials
+                UserAccount item = db.UserAccounts.FirstOrDefault(i => i.OSR == osrid); // Get all the user account information based that matches the osrid
+                ViewBag.EmailTo = item.Email;
+
+
+                string body = "";
+
+                     //if (strat.FollowUpDate == null)
+                    //{
+                    //    body = "<br/><br/>" + "<b>Create Date: </b>" + strat.CreateDate.ToString("MM/dd/yy") + "<br/>" + "<b>Updated: </b>" + strat.Updated + "<br/>" + "<b>Customer: </b>" + strat.Customer + "<br/>" + "<b>End Product: </b>" + strat.EndProduct + "<br/>" + "<b>OSR: </b>" + strat.OSR + "<br/>" + "<b>Principal: </b>" + strat.Principal + "<br/>" + "<b>Product: </b>" + strat.Product + "<br/>" + "<b>Followup Date: </b>" + "<br/>" + "<b>Value: </b>" + strat.Value + "<br/>" + "<b>Status: </b>" + strat.Status + "<br/>" + "<b>Next Action: </b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: </b>" + strat.ManagerComment + "<br/>" + "<b>History: </b>" + strat.History + "<br/>" + "<b>Group: </b>" + strat.Group;
+                    //}
+                    //else
+                    //{
+                    //    body = "<br/><br/>" + "<b>Create Date: &emsp;&emsp;&emsp;&nbsp;&nbsp;</b>" + strat.CreateDate.ToString("MM/dd/yy") + "<br/>" + "<b>Updated: &emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>" + strat.Updated + "<br/>" + "<b>Customer: &emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;</b>" + strat.Customer + "<br/>" + "<b>End Product: &emsp;&emsp;&emsp;&nbsp</b>" + strat.EndProduct + "<br/>" + "<b>OSR: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;</b>" + strat.OSR + "<br/>" + "<b>Principal: &emsp;&emsp;&emsp;&emsp;&emsp;</b>" + strat.Principal + "<br/>" + "<b>Product: &emsp;&emsp;&emsp;&emsp;&nbsp;</b>" + strat.Product + "<br/>" + "<b>Followup Date: &emsp;&emsp;&nbsp;</b>" + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "<br/>" + "<b>Value: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;</b>" + strat.Value + "<br/>" + "<b>Status: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</b>" + strat.Status + "<br/>" + "<b>Next Action: &emsp;&emsp;&ensp;&nbsp;&nbsp;&nbsp;</b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: &emsp;</b>" + strat.ManagerComment + "<br/>" + "<b>History: &emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;</b>" + strat.History + "<br/>" + "<b>Group: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp</b>" + strat.Group;
+                    //}
+
+
+                if (strat.FollowUpDate == null)
+                {
+                    body = "%0D%0A" + "Create Date: " + strat.CreateDate.ToString("MM/dd/yy") + "%0D%0A" + "Updated: " + strat.Updated + "%0D%0A" + "Customer: " + strat.Customer + "%0D%0A" + "End Product: " + strat.EndProduct + "%0D%0A" + "OSR: " + strat.OSR + "%0D%0A" + "Principal: " + strat.Principal + "%0D%0A" + "Product: " + strat.Product + "%0D%0A" + "Followup Date: " + "%0D%0A" + "Value: " + strat.Value + "%0D%0A" + "Status: " + strat.Status + "%0D%0A" + "Next Action: " + strat.NextAction + "%0D%0A" + "Latest Comments: " + strat.ManagerComment + "%0D%0A" + "History: " + strat.History + "%0D%0A" + "Group: " + strat.Group;
+                }
+                else
+                {
+                    body = "%0D%0A" + "Create Date: " + strat.CreateDate.ToString("MM/dd/yy") + "%0D%0A" + "Updated: " + strat.Updated + "%0D%0A" + "Customer: " + strat.Customer + "%0D%0A" + "End Product: " + strat.EndProduct + "%0D%0A" + "OSR: " + strat.OSR + "%0D%0A" + "Principal: " + strat.Principal + "%0D%0A" + "Product: " + strat.Product + "%0D%0A" + "Followup Date: " + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "%0D%0A" + "Value: " + strat.Value + "%0D%0A" + "Status: " + strat.Status + "%0D%0A" + "Next Action: " + strat.NextAction + "%0D%0A" + "Latest Comments: " + strat.ManagerComment + "%0D%0A" + "History: " + strat.History + "%0D%0A" + "Group: " + strat.Group;
+                }
+
+                ViewBag.Body = body;
+
+
+
                 return View(strat);
             }
             else
@@ -297,6 +337,11 @@ namespace WebApplication2.Controllers
                 stratvar = strat.ToString();
                 stratvariable = stratvariable.Where(s => s.Group.Contains(stratvar));
 
+
+
+                    //int id = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
+                    //String emailacc = db.UserAccounts.Find(id).Email.ToString(); // Use the id to get the associated email address
+                //ViewBag.EmailTo = emailacc;
 
 
                 //var x = strat.Status;
@@ -325,6 +370,65 @@ namespace WebApplication2.Controllers
                 return RedirectToAction("Login", "Account");
             }
         }
+
+
+        // GET: Todoes/Delete/5
+        public ActionResult Delete(int? id)
+        {
+
+            if (Session["UserId"] != null)
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Strategy strat = db.Strategies.Find(id);
+                if (strat == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(strat);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+
+        }
+
+        // POST: Todoes/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+
+            if (Session["UserId"] != null)
+            {
+                Strategy strat = db.Strategies.Find(id);
+                db.Strategies.Remove(strat);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+
+        }
+
+
 
         public ActionResult MeetingSch(int? id, string nextactionold)
         {
@@ -523,116 +627,332 @@ namespace WebApplication2.Controllers
 
 
 
-        public ActionResult Email(int? id, FormCollection form, string mailMessage)
-        {
-            if (Session["UserId"] != null)
-            {
-                Strategy strat = db.Strategies.Find(id);
-
-                string osrid = strat.OSR; // Get the OSR initials
-                UserAccount item = db.UserAccounts.FirstOrDefault(i => i.OSR == osrid); // Get all the user account information based that matches the osrid
-                TempData["OSREmail"] = item.Email; //put tempdata and store osr email address in it
-
-
-                if (strat.FollowUpDate == null)
-                {
-                    TempData["message"] = "Create Date: \t\t" + strat.CreateDate.ToString("MM/dd/yy") + "\r\nUpdated: \t\t" + strat.Updated.Value.ToString("MM/dd/yy") + "\r\nCustomer: \t\t" + strat.Customer + "\r\nEnd Product: \t\t" + strat.EndProduct + "\r\nOSR: \t\t\t" + strat.OSR + "\r\nPrincipal: \t\t" + strat.Principal + "\r\nProduct: \t\t" + strat.Product + "\r\nFollowup Date: \t" + "\r\nValue: \t\t\t" + strat.Value + "\r\nStatus: \t\t\t" + strat.Status + "\r\nNext Action: \t\t" + strat.NextAction + "\r\nLatest Comments: \t" + strat.ManagerComment + "\r\nHistory: \t\t\t" + strat.History + "\r\nGroup: \t\t\t" + strat.Group;
-                }
-                else
-                {
-                    //TempData["Jamie"] = "jcheung@sjassoc.com";
-                    TempData["message"] = "Create Date: \t\t" + strat.CreateDate.ToString("MM/dd/yy") + "\r\nUpdated: \t\t" + strat.Updated.Value.ToString("MM/dd/yy") + "\r\nCustomer: \t\t" + strat.Customer + "\r\nEnd Product: \t\t" + strat.EndProduct + "\r\nOSR: \t\t\t" + strat.OSR + "\r\nPrincipal: \t\t" + strat.Principal + "\r\nProduct: \t\t" + strat.Product + "\r\nFollowup Date: \t" + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "\r\nValue: \t\t\t" + strat.Value + "\r\nStatus: \t\t\t" + strat.Status + "\r\nNext Action: \t\t" + strat.NextAction + "\r\nLatest Comments: \t" + strat.ManagerComment + "\r\nHistory: \t\t\t" + strat.History + "\r\nGroup: \t\t\t" + strat.Group;
-                }
-                TempData["id"] = id;
-
-                return View(strat);
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
-        }
-
-        private void SendHtmlFormattedEmail(string toAddress, string messageSubject, string messageBody)
-        {
-            int id = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
-            String emailacc = db.UserAccounts.Find(id).Email.ToString(); // Use the id to get the associated email address
-            String passw = db.UserAccounts.Find(id).epass.ToString(); // Use the id to get the associated email address
-            string senderID = "";
-            string senderPassword = "";
-
-            string result = "Message Successfully Sent!!!";
 
 
 
-            //toAddress = dropdown;
-
-            //catching if client or SJ Assoc.
-            if (passw == null)
-            {
-                senderID = "jcheung@sjassoc.com";// use sender’s email id here..
-                senderPassword = "1Direction!!"; // sender password here…
-            }
-            else
-            {
-                senderID = emailacc;// use sender’s email id here..
-                senderPassword = passw; // sender password here…
-            }
-
-            Strategy strat = db.Strategies.Find(TempData["id"]);
-            MailMessage mailMessage = new MailMessage();
+        //public void Button1_Click(object sender, EventArgs e)
+        //{
+        //    string email = "abc@abc.com";
+        //    var page = System.Web.HttpContext.Current.CurrentHandler as Page;
+        //    page.ClientScript.RegisterStartupScript(this.GetType(), "mailto", "parent.location='mailto:" + email + "'", true);
+        //}
 
 
-            mailMessage.From = new MailAddress(senderID);
-            mailMessage.Subject = messageSubject;
 
-            mailMessage.Body = Convert.ToString(TempData["message"]);
-            mailMessage.IsBodyHtml = true;
-            //mailMessage.Body = messageBody;
 
-            if (strat.FollowUpDate == null)
-            {
-                mailMessage.Body = messageBody + "<br/><br/>" + "<b>Create Date: </b>" + strat.CreateDate.ToString("MM/dd/yy") + "<br/>" + "<b>Updated: </b>" + strat.Updated + "<br/>" + "<b>Customer: </b>" + strat.Customer + "<br/>" + "<b>End Product: </b>" + strat.EndProduct + "<br/>" + "<b>OSR: </b>" + strat.OSR + "<br/>" + "<b>Principal: </b>" + strat.Principal + "<br/>" + "<b>Product: </b>" + strat.Product + "<br/>" + "<b>Followup Date: </b>" + "<br/>" + "<b>Value: </b>" + strat.Value + "<br/>" + "<b>Status: </b>" + strat.Status + "<br/>" + "<b>Next Action: </b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: </b>" + strat.ManagerComment + "<br/>" + "<b>History: </b>" + strat.History + "<br/>" + "<b>Group: </b>" + strat.Group;
-            }
-            else
-            {
-                mailMessage.Body = messageBody + "<br/><br/>" + "<b>Create Date: &emsp;&emsp;&emsp;&nbsp;&nbsp;</b>" + strat.CreateDate.ToString("MM/dd/yy") + "<br/>" + "<b>Updated: &emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>" + strat.Updated + "<br/>" + "<b>Customer: &emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;</b>" + strat.Customer + "<br/>" + "<b>End Product: &emsp;&emsp;&emsp;&nbsp</b>" + strat.EndProduct + "<br/>" + "<b>OSR: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;</b>" + strat.OSR + "<br/>" + "<b>Principal: &emsp;&emsp;&emsp;&emsp;&emsp;</b>" + strat.Principal + "<br/>" + "<b>Product: &emsp;&emsp;&emsp;&emsp;&nbsp;</b>" + strat.Product + "<br/>" + "<b>Followup Date: &emsp;&emsp;&nbsp;</b>" + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "<br/>" + "<b>Value: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;</b>" + strat.Value + "<br/>" + "<b>Status: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</b>" + strat.Status + "<br/>" + "<b>Next Action: &emsp;&emsp;&ensp;&nbsp;&nbsp;&nbsp;</b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: &emsp;</b>" + strat.ManagerComment + "<br/>" + "<b>History: &emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;</b>" + strat.History + "<br/>" + "<b>Group: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp</b>" + strat.Group;
 
-            }
-           // mailMessage.Body = messageBody + "<br/><br/>" + "<b>Create Date: </b>" + strat.CreateDate.ToString("MM/dd/yy") + "<br/>" + "<b>Updated: </b>" + strat.Updated + "<br/>" + "<b>Customer: </b>" + strat.Customer + "<br/>" + "<b>End Product: </b>" + strat.EndProduct + "<br/>" + "<b>OSR: </b>" + strat.OSR + "<br/>" + "<b>Principal: </b>" + strat.Principal + "<br/>" + "<b>Product: </b>" + strat.Product + "<br/>" + "<b>Followup Date: </b>" + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "<br/>" + "<b>Value: </b>" + strat.Value + "<br/>" + "<b>Status: </b>" + strat.Status + "<br/>" + "<b>Next Action: </b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: </b>" + strat.ManagerComment + "<br/>" + "<b>History: </b>" + strat.History + "<br/>" + "<b>Group: </b>" + strat.Group;
-            mailMessage.To.Add(toAddress);
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = "smtp.office365.com";
-            smtp.EnableSsl = true;
-            System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
-            NetworkCred.UserName = senderID;
-            NetworkCred.Password = senderPassword;
-            smtp.UseDefaultCredentials = true;
-            smtp.Credentials = NetworkCred;
-            smtp.Port = 25;
-            smtp.Send(mailMessage);
-        }
 
-        [HttpPost]
-        //string txtsubject, string txtto, string txtbody, 
-        public ActionResult Send(FormCollection form)
-        {
-            if (Session["UserId"] != null)
-            {
+        //public ActionResult Email(int? id, FormCollection form, string mailMessage)
+        //{
+        //if (Session["UserId"] != null)
+        //{
+        // Strategy strat = db.Strategies.Find(id);
 
-                //string dropdown = form["txtto"];
-                //form["txtto"] = dropdown;
+        //                string osrid = strat.OSR; // Get the OSR initials
+        //              UserAccount item = db.UserAccounts.FirstOrDefault(i => i.OSR == osrid); // Get all the user account information based that matches the osrid
+        //            TempData["OSREmail"] = item.Email; //put tempdata and store osr email address in it
+        //
+        //
+        //          if (strat.FollowUpDate == null)
+        //        {
+        //           TempData["message"] = "Create Date: \t\t" + strat.CreateDate.ToString("MM/dd/yy") + "\r\nUpdated: \t\t" + strat.Updated.Value.ToString("MM/dd/yy") + "\r\nCustomer: \t\t" + strat.Customer + "\r\nEnd Product: \t\t" + strat.EndProduct + "\r\nOSR: \t\t\t" + strat.OSR + "\r\nPrincipal: \t\t" + strat.Principal + "\r\nProduct: \t\t" + strat.Product + "\r\nFollowup Date: \t" + "\r\nValue: \t\t\t" + strat.Value + "\r\nStatus: \t\t\t" + strat.Status + "\r\nNext Action: \t\t" + strat.NextAction + "\r\nLatest Comments: \t" + strat.ManagerComment + "\r\nHistory: \t\t\t" + strat.History + "\r\nGroup: \t\t\t" + strat.Group;
+        //         }
+        //        else
+        //      {
+        //        //TempData["Jamie"] = "jcheung@sjassoc.com";
+        //      TempData["message"] = "Create Date: \t\t" + strat.CreateDate.ToString("MM/dd/yy") + "\r\nUpdated: \t\t" + strat.Updated.Value.ToString("MM/dd/yy") + "\r\nCustomer: \t\t" + strat.Customer + "\r\nEnd Product: \t\t" + strat.EndProduct + "\r\nOSR: \t\t\t" + strat.OSR + "\r\nPrincipal: \t\t" + strat.Principal + "\r\nProduct: \t\t" + strat.Product + "\r\nFollowup Date: \t" + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "\r\nValue: \t\t\t" + strat.Value + "\r\nStatus: \t\t\t" + strat.Status + "\r\nNext Action: \t\t" + strat.NextAction + "\r\nLatest Comments: \t" + strat.ManagerComment + "\r\nHistory: \t\t\t" + strat.History + "\r\nGroup: \t\t\t" + strat.Group;
+        //           }
+        //         TempData["id"] = id;
 
-                //SendHtmlFormattedEmail(form["txtto"], form["txtsubject"], form["txtbody"]);
-                SendHtmlFormattedEmail(form["txtto"], form["txtsubject"], form["txtbody"]);
-                return RedirectToAction("Index", "Strategy");
+        //       return View(strat);
+        // }
+        // else
+        //{
+        //   return RedirectToAction("Login", "Account");
+        //}
+        //}
 
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
-        }
+        //private void SendHtmlFormattedEmail(string toAddress, string messageSubject, string messageBody)
+        //{
+        //  int id = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
+        //  String emailacc = db.UserAccounts.Find(id).Email.ToString(); // Use the id to get the associated email address
+        //  String passw = db.UserAccounts.Find(id).epass.ToString(); // Use the id to get the associated email address
+        //  string senderID = "";
+        //  string senderPassword = "";
+
+        // string result = "Message Successfully Sent!!!";
+
+
+
+        // //toAddress = dropdown;
+
+        //  //catching if client or SJ Assoc.
+        //  if (passw == null)
+        //   {
+        //     senderID = "jcheung@sjassoc.com";// use sender’s email id here..
+        //    senderPassword = "1Direction!!"; // sender password here…
+        // }
+        //   else
+        //  {
+        //       senderID = emailacc;// use sender’s email id here..
+        //        senderPassword = passw; // sender password here…
+        //    }
+
+        //    Strategy strat = db.Strategies.Find(TempData["id"]);
+        //   MailMessage mailMessage = new MailMessage();
+
+
+        //    mailMessage.From = new MailAddress(senderID);
+        //      mailMessage.Subject = messageSubject;
+
+        //      mailMessage.Body = Convert.ToString(TempData["message"]);
+        //      mailMessage.IsBodyHtml = true;
+        //      //mailMessage.Body = messageBody;
+
+        //      if (strat.FollowUpDate == null)
+        //      {
+        //          mailMessage.Body = messageBody + "<br/><br/>" + "<b>Create Date: </b>" + strat.CreateDate.ToString("MM/dd/yy") + "<br/>" + "<b>Updated: </b>" + strat.Updated + "<br/>" + "<b>Customer: </b>" + strat.Customer + "<br/>" + "<b>End Product: </b>" + strat.EndProduct + "<br/>" + "<b>OSR: </b>" + strat.OSR + "<br/>" + "<b>Principal: </b>" + strat.Principal + "<br/>" + "<b>Product: </b>" + strat.Product + "<br/>" + "<b>Followup Date: </b>" + "<br/>" + "<b>Value: </b>" + strat.Value + "<br/>" + "<b>Status: </b>" + strat.Status + "<br/>" + "<b>Next Action: </b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: </b>" + strat.ManagerComment + "<br/>" + "<b>History: </b>" + strat.History + "<br/>" + "<b>Group: </b>" + strat.Group;
+        //      }
+        //      else
+        //     {
+        //          mailMessage.Body = messageBody + "<br/><br/>" + "<b>Create Date: &emsp;&emsp;&emsp;&nbsp;&nbsp;</b>" + strat.CreateDate.ToString("MM/dd/yy") + "<br/>" + "<b>Updated: &emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>" + strat.Updated + "<br/>" + "<b>Customer: &emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;</b>" + strat.Customer + "<br/>" + "<b>End Product: &emsp;&emsp;&emsp;&nbsp</b>" + strat.EndProduct + "<br/>" + "<b>OSR: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;</b>" + strat.OSR + "<br/>" + "<b>Principal: &emsp;&emsp;&emsp;&emsp;&emsp;</b>" + strat.Principal + "<br/>" + "<b>Product: &emsp;&emsp;&emsp;&emsp;&nbsp;</b>" + strat.Product + "<br/>" + "<b>Followup Date: &emsp;&emsp;&nbsp;</b>" + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "<br/>" + "<b>Value: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;</b>" + strat.Value + "<br/>" + "<b>Status: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</b>" + strat.Status + "<br/>" + "<b>Next Action: &emsp;&emsp;&ensp;&nbsp;&nbsp;&nbsp;</b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: &emsp;</b>" + strat.ManagerComment + "<br/>" + "<b>History: &emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;</b>" + strat.History + "<br/>" + "<b>Group: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp</b>" + strat.Group;
+        //      }
+        // mailMessage.Body = messageBody + "<br/><br/>" + "<b>Create Date: </b>" + strat.CreateDate.ToString("MM/dd/yy") + "<br/>" + "<b>Updated: </b>" + strat.Updated + "<br/>" + "<b>Customer: </b>" + strat.Customer + "<br/>" + "<b>End Product: </b>" + strat.EndProduct + "<br/>" + "<b>OSR: </b>" + strat.OSR + "<br/>" + "<b>Principal: </b>" + strat.Principal + "<br/>" + "<b>Product: </b>" + strat.Product + "<br/>" + "<b>Followup Date: </b>" + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "<br/>" + "<b>Value: </b>" + strat.Value + "<br/>" + "<b>Status: </b>" + strat.Status + "<br/>" + "<b>Next Action: </b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: </b>" + strat.ManagerComment + "<br/>" + "<b>History: </b>" + strat.History + "<br/>" + "<b>Group: </b>" + strat.Group;
+        //   mailMessage.To.Add(toAddress);
+        //    SmtpClient smtp = new SmtpClient();
+        //     smtp.Host = "smtp.office365.com";
+        //      smtp.EnableSsl = true;
+        //      System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+        //      NetworkCred.UserName = senderID;
+        //      NetworkCred.Password = senderPassword;
+        //      smtp.UseDefaultCredentials = true;
+        //      smtp.Credentials = NetworkCred;
+        //      smtp.Port = 25;
+        //      smtp.Send(mailMessage);
+        //  }
+
+
+
+
+
+
+
+
+
+
+
+
+        //           public ActionResult Email(int? id, FormCollection form, string mailMessage)
+        //   {
+        //       if (Session["UserId"] != null)
+        //       {
+        //           Strategy strat = db.Strategies.Find(id);
+
+        //           string osrid = strat.OSR; // Get the OSR initials
+        //           UserAccount item = db.UserAccounts.FirstOrDefault(i => i.OSR == osrid); // Get all the user account information based that matches the osrid
+        //           TempData["OSREmail"] = item.Email; //put tempdata and store osr email address in it
+
+
+        //           if (strat.FollowUpDate == null)
+        //           {
+        //               TempData["message"] = "Create Date: \t\t" + strat.CreateDate.ToString("MM/dd/yy") + "\r\nUpdated: \t\t" + strat.Updated.Value.ToString("MM/dd/yy") + "\r\nCustomer: \t\t" + strat.Customer + "\r\nEnd Product: \t\t" + strat.EndProduct + "\r\nOSR: \t\t\t" + strat.OSR + "\r\nPrincipal: \t\t" + strat.Principal + "\r\nProduct: \t\t" + strat.Product + "\r\nFollowup Date: \t" + "\r\nValue: \t\t\t" + strat.Value + "\r\nStatus: \t\t\t" + strat.Status + "\r\nNext Action: \t\t" + strat.NextAction + "\r\nLatest Comments: \t" + strat.ManagerComment + "\r\nHistory: \t\t\t" + strat.History + "\r\nGroup: \t\t\t" + strat.Group;
+        //           }
+        //           else
+        //           {
+        //               //TempData["Jamie"] = "jcheung@sjassoc.com";
+        //               TempData["message"] = "Create Date: \t\t" + strat.CreateDate.ToString("MM/dd/yy") + "\r\nUpdated: \t\t" + strat.Updated.Value.ToString("MM/dd/yy") + "\r\nCustomer: \t\t" + strat.Customer + "\r\nEnd Product: \t\t" + strat.EndProduct + "\r\nOSR: \t\t\t" + strat.OSR + "\r\nPrincipal: \t\t" + strat.Principal + "\r\nProduct: \t\t" + strat.Product + "\r\nFollowup Date: \t" + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "\r\nValue: \t\t\t" + strat.Value + "\r\nStatus: \t\t\t" + strat.Status + "\r\nNext Action: \t\t" + strat.NextAction + "\r\nLatest Comments: \t" + strat.ManagerComment + "\r\nHistory: \t\t\t" + strat.History + "\r\nGroup: \t\t\t" + strat.Group;
+        //           }
+        //           TempData["id"] = id;
+
+        //           return View(strat);
+        //      }
+        //       else
+        //       {
+        //           return RedirectToAction("Login", "Account");
+        //       }
+        //   }
+
+        //  private void SendHtmlFormattedEmail(string toAddress, string messageSubject, string messageBody)
+        //   {
+        //       int id = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
+        //       String emailacc = db.UserAccounts.Find(id).Email.ToString(); // Use the id to get the associated email address
+        //       String passw = db.UserAccounts.Find(id).epass.ToString(); // Use the id to get the associated email address
+        //       string senderID = "";
+        //       string senderPassword = "";
+
+        //       string result = "Message Successfully Sent!!!";
+
+
+
+        //       //toAddress = dropdown;
+
+        //     //catching if client or SJ Assoc.
+        //       if (passw == null)
+        //       {
+        //           senderID = "jcheung@sjassoc.com";// use sender’s email id here..
+        //           senderPassword = "1Direction!!"; // sender password here…
+        //       }
+        //       else
+        //       {
+        //           senderID = emailacc;// use sender’s email id here..
+        //           senderPassword = passw; // sender password here…
+        //       }
+
+        //       Strategy strat = db.Strategies.Find(TempData["id"]);
+
+
+        //       Outlook.Application outlookApp = new Outlook.Application();
+        //       Outlook.MailItem mailItem = (Outlook.MailItem)outlookApp.CreateItem(Outlook.OlItemType.olMailItem);
+        //       mailItem.To = "jcheung@sjassoc.com";
+        //       mailItem.Subject = messageSubject;
+        //       mailItem.HTMLBody = true.ToString();
+        //       if (strat.FollowUpDate == null)
+        //       {
+        //           mailItem.Body = messageBody + "<br/><br/>" + "<b>Create Date: </b>" + strat.CreateDate.ToString("MM/dd/yy") + "<br/>" + "<b>Updated: </b>" + strat.Updated + "<br/>" + "<b>Customer: </b>" + strat.Customer + "<br/>" + "<b>End Product: </b>" + strat.EndProduct + "<br/>" + "<b>OSR: </b>" + strat.OSR + "<br/>" + "<b>Principal: </b>" + strat.Principal + "<br/>" + "<b>Product: </b>" + strat.Product + "<br/>" + "<b>Followup Date: </b>" + "<br/>" + "<b>Value: </b>" + strat.Value + "<br/>" + "<b>Status: </b>" + strat.Status + "<br/>" + "<b>Next Action: </b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: </b>" + strat.ManagerComment + "<br/>" + "<b>History: </b>" + strat.History + "<br/>" + "<b>Group: </b>" + strat.Group;
+        //       }
+        //       else
+        //      {
+        //         mailItem.Body = messageBody + "<br/><br/>" + "<b>Create Date: &emsp;&emsp;&emsp;&nbsp;&nbsp;</b>" + strat.CreateDate.ToString("MM/dd/yy") + "<br/>" + "<b>Updated: &emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>" + strat.Updated + "<br/>" + "<b>Customer: &emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;</b>" + strat.Customer + "<br/>" + "<b>End Product: &emsp;&emsp;&emsp;&nbsp</b>" + strat.EndProduct + "<br/>" + "<b>OSR: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;</b>" + strat.OSR + "<br/>" + "<b>Principal: &emsp;&emsp;&emsp;&emsp;&emsp;</b>" + strat.Principal + "<br/>" + "<b>Product: &emsp;&emsp;&emsp;&emsp;&nbsp;</b>" + strat.Product + "<br/>" + "<b>Followup Date: &emsp;&emsp;&nbsp;</b>" + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "<br/>" + "<b>Value: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;</b>" + strat.Value + "<br/>" + "<b>Status: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</b>" + strat.Status + "<br/>" + "<b>Next Action: &emsp;&emsp;&ensp;&nbsp;&nbsp;&nbsp;</b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: &emsp;</b>" + strat.ManagerComment + "<br/>" + "<b>History: &emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;</b>" + strat.History + "<br/>" + "<b>Group: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp</b>" + strat.Group;
+        //     }
+        //      // body, bcc etc...
+        //      mailItem.Display(true);
+
+        // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //public ActionResult Email(int? id, FormCollection form, string mailMessage)
+        //{
+         //   if (Session["UserId"] != null)
+         //   {
+         //       Strategy strat = db.Strategies.Find(id);
+
+         //       string osrid = strat.OSR; // Get the OSR initials
+         //       UserAccount item = db.UserAccounts.FirstOrDefault(i => i.OSR == osrid); // Get all the user account information based that matches the osrid
+         //       TempData["OSREmail"] = item.Email; //put tempdata and store osr email address in it
+
+
+         //       if (strat.FollowUpDate == null)
+         //       {
+        //            TempData["message"] = "Create Date: \t\t" + strat.CreateDate.ToString("MM/dd/yy") + "\r\nUpdated: \t\t" + strat.Updated.Value.ToString("MM/dd/yy") + "\r\nCustomer: \t\t" + strat.Customer + "\r\nEnd Product: \t\t" + strat.EndProduct + "\r\nOSR: \t\t\t" + strat.OSR + "\r\nPrincipal: \t\t" + strat.Principal + "\r\nProduct: \t\t" + strat.Product + "\r\nFollowup Date: \t" + "\r\nValue: \t\t\t" + strat.Value + "\r\nStatus: \t\t\t" + strat.Status + "\r\nNext Action: \t\t" + strat.NextAction + "\r\nLatest Comments: \t" + strat.ManagerComment + "\r\nHistory: \t\t\t" + strat.History + "\r\nGroup: \t\t\t" + strat.Group;
+        //        }
+         //       else
+         //       {
+         //           //TempData["Jamie"] = "jcheung@sjassoc.com";
+         //           TempData["message"] = "Create Date: \t\t" + strat.CreateDate.ToString("MM/dd/yy") + "\r\nUpdated: \t\t" + strat.Updated.Value.ToString("MM/dd/yy") + "\r\nCustomer: \t\t" + strat.Customer + "\r\nEnd Product: \t\t" + strat.EndProduct + "\r\nOSR: \t\t\t" + strat.OSR + "\r\nPrincipal: \t\t" + strat.Principal + "\r\nProduct: \t\t" + strat.Product + "\r\nFollowup Date: \t" + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "\r\nValue: \t\t\t" + strat.Value + "\r\nStatus: \t\t\t" + strat.Status + "\r\nNext Action: \t\t" + strat.NextAction + "\r\nLatest Comments: \t" + strat.ManagerComment + "\r\nHistory: \t\t\t" + strat.History + "\r\nGroup: \t\t\t" + strat.Group;
+         //       }
+          //      TempData["id"] = id;
+
+         //       return View(strat);
+         //   }
+         //   else
+         //   {
+         //       return RedirectToAction("Login", "Account");
+          //  }
+       // }
+
+        //private void SendHtmlFormattedEmail(string toAddress, string messageSubject, string messageBody)
+        //{
+        //    int id = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
+        //    String emailacc = db.UserAccounts.Find(id).Email.ToString(); // Use the id to get the associated email address
+        //    String passw = db.UserAccounts.Find(id).epass.ToString(); // Use the id to get the associated email address
+        //    string senderID = "";
+        //    string senderPassword = "";
+
+         //   string result = "Message Successfully Sent!!!";
+
+
+
+          //  //toAddress = dropdown;
+
+         //   //catching if client or SJ Assoc.
+        //    if (passw == null)
+        //    {
+        //        //senderID = "jcheung@sjassoc.com";// use sender’s email id here..
+        //        //senderPassword = "1Direction!!"; // sender password here…
+        //    }
+        //    else
+        //    {
+        //        senderID = emailacc;// use sender’s email id here..
+        //        senderPassword = passw; // sender password here…
+        //    }
+
+        //    Strategy strat = db.Strategies.Find(TempData["id"]);
+
+
+        //    System.Net.Mail.MailMessage mailItem = new System.Net.Mail.MailMessage();
+        //    SmtpClient SmtpServer = new SmtpClient("smtpclientaddresshere");
+        //    mailItem.To.Add("jcheung@sjassoc.com");
+        //    mailItem.From = new MailAddress("jcheung@sjassoc.com");
+        //    mailItem.Subject = messageSubject;
+        //    mailItem.IsBodyHtml = true;
+       //     if (strat.FollowUpDate == null)
+        //    {
+        //        mailItem.Body = messageBody + "<br/><br/>" + "<b>Create Date: </b>" + strat.CreateDate.ToString("MM/dd/yy") + "<br/>" + "<b>Updated: </b>" + strat.Updated + "<br/>" + "<b>Customer: </b>" + strat.Customer + "<br/>" + "<b>End Product: </b>" + strat.EndProduct + "<br/>" + "<b>OSR: </b>" + strat.OSR + "<br/>" + "<b>Principal: </b>" + strat.Principal + "<br/>" + "<b>Product: </b>" + strat.Product + "<br/>" + "<b>Followup Date: </b>" + "<br/>" + "<b>Value: </b>" + strat.Value + "<br/>" + "<b>Status: </b>" + strat.Status + "<br/>" + "<b>Next Action: </b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: </b>" + strat.ManagerComment + "<br/>" + "<b>History: </b>" + strat.History + "<br/>" + "<b>Group: </b>" + strat.Group;
+        //    }
+        //    else
+        //    {
+        //        mailItem.Body = messageBody + "<br/><br/>" + "<b>Create Date: &emsp;&emsp;&emsp;&nbsp;&nbsp;</b>" + strat.CreateDate.ToString("MM/dd/yy") + "<br/>" + "<b>Updated: &emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>" + strat.Updated + "<br/>" + "<b>Customer: &emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;</b>" + strat.Customer + "<br/>" + "<b>End Product: &emsp;&emsp;&emsp;&nbsp</b>" + strat.EndProduct + "<br/>" + "<b>OSR: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;</b>" + strat.OSR + "<br/>" + "<b>Principal: &emsp;&emsp;&emsp;&emsp;&emsp;</b>" + strat.Principal + "<br/>" + "<b>Product: &emsp;&emsp;&emsp;&emsp;&nbsp;</b>" + strat.Product + "<br/>" + "<b>Followup Date: &emsp;&emsp;&nbsp;</b>" + strat.FollowUpDate.Value.ToString("MM/dd/yy") + "<br/>" + "<b>Value: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;</b>" + strat.Value + "<br/>" + "<b>Status: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</b>" + strat.Status + "<br/>" + "<b>Next Action: &emsp;&emsp;&ensp;&nbsp;&nbsp;&nbsp;</b>" + strat.NextAction + "<br/>" + "<b>Latest Comments: &emsp;</b>" + strat.ManagerComment + "<br/>" + "<b>History: &emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;</b>" + strat.History + "<br/>" + "<b>Group: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp</b>" + strat.Group;
+        //    }
+        //    // body, bcc etc...
+         //   //mailItem.Display(true);
+         //   SmtpServer.Credentials = new System.Net.NetworkCredential("mysmtpserver@something.com", "");
+         //   SmtpServer.Send(mailItem);
+       // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //[HttpPost]
+        ////string txtsubject, string txtto, string txtbody, 
+        //public ActionResult Send(FormCollection form)
+        //{
+        //    if (Session["UserId"] != null)
+        //    {
+
+        //        //string dropdown = form["txtto"];
+        //        //form["txtto"] = dropdown;
+
+        //        //SendHtmlFormattedEmail(form["txtto"], form["txtsubject"], form["txtbody"]);
+        //        SendHtmlFormattedEmail(form["txtto"], form["txtsubject"], form["txtbody"]);
+        //        return RedirectToAction("Index", "Strategy");
+
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Login", "Account");
+        //    }
+        //}
 
 
     }
