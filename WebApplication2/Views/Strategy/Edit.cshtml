@@ -103,7 +103,7 @@
             <td>
                 @*<button class="btn btn-default" type="button" value="Email" name="Email" onclick="location.href='@Url.Action("Email", "Strategy", new {id = Model.StrategyId})'">Email</button>*@
                 @*<button class="btn btn-default" type="button" value="Email" name="Email" onclick="location.href='@Url.Action("Button1_Click", "Strategy", new {id = Model.StrategyId})'">Email</button>*@
-                <a href="mailto:@{@ViewBag.EmailTo}?body=@{@ViewBag.Body}"><button class="btn btn-default" type="button">Email</button></a>
+                <a href="mailto:@{@ViewBag.EmailTo}?subject=@{@ViewBag.Subject}&body=@{@ViewBag.Body}"><button class="btn btn-default" type="button">Email</button></a>
 
             </td>
         </tr>

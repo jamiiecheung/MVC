@@ -315,6 +315,9 @@ namespace WebApplication2.Controllers
 
                 ViewBag.Body = body;
 
+                ViewBag.Subject = "SJ App Request - Customer: " + strat.Customer + " Principal: " + strat.Principal + " Product: " + strat.Product;
+
+
 
 
                 return View(strat);
