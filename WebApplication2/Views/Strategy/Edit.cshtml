@@ -30,6 +30,9 @@
     .noleftpadding {
         padding-left: 0 !important;
     }
+    .norightpadding {
+        padding-right: 0 !important;
+    }
 
     .labelleft {
         text-align: left;
@@ -44,12 +47,12 @@
     }
 
     textarea {
-        width: 400px;
+        width: 1000px;
         height: 200px;
     }
 
     .minlength {
-        min-height: 500px;
+        min-height: 500px
     }
 </style>
 
@@ -104,7 +107,6 @@
                 @*<button class="btn btn-default" type="button" value="Email" name="Email" onclick="location.href='@Url.Action("Email", "Strategy", new {id = Model.StrategyId})'">Email</button>*@
                 @*<button class="btn btn-default" type="button" value="Email" name="Email" onclick="location.href='@Url.Action("Button1_Click", "Strategy", new {id = Model.StrategyId})'">Email</button>*@
                 <a href="mailto:@{@ViewBag.EmailTo}?subject=@{@ViewBag.Subject}&body=@{@ViewBag.Body}"><button class="btn btn-default" type="button">Email</button></a>
-
             </td>
         </tr>
 
@@ -124,11 +126,28 @@
         </div>
 
 
+
+
+
         <div class="form-group">
             @Html.LabelFor(model => model.Customer, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
                 @Html.EditorFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control nomargin" } })
                 @Html.ValidationMessageFor(model => model.Customer, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-2">
+                @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.Status, "Status", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-1 noleftpadding" })
+                <div class=" input-group col-md-11">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -138,17 +157,61 @@
                 @Html.EditorFor(model => model.EndProduct, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.EndProduct, "", new { @class = "text-danger" })
             </div>
-            <div class="col-md-9"></div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Principal, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.Principal, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Principal, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-9"></div>
+            </div>
+
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Principal, htmlAttributes: new { @class = "control-label col-md-2" })
+
+
+
+
+
+
+
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.Product, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
-                @Html.EditorFor(model => model.Principal, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Principal, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Product, new { htmlAttributes = new { @class = "form-control nomargin" } })
+                @Html.ValidationMessageFor(model => model.Product, "", new { @class = "text-danger" })
             </div>
-            <div class="col-md-9"></div>
-        </div>
+            @Html.LabelFor(model => model.FollowUpDate, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-2">
+                <div class="input-group date" data-provide="datepicker">
+                    @Html.EditorFor(model => model.FollowUpDate, new { htmlAttributes = new { @class = "form-control" } })
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.NextAction, htmlAttributes: new { @class = "control-label col-md-1 noleftpadding" })
+                <div class=" input-group col-md-11">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.NextAction, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NextAction, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+
+
+
+
+
+
+
+
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.Product, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -156,9 +219,9 @@
                 @Html.EditorFor(model => model.Product, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Product, "", new { @class = "text-danger" })
             </div>
-            <div class="col-md-5">
-                @Html.LabelFor(model => model.FollowUpDate, htmlAttributes: new { @class = "control-label col-md-1 noleftpadding" })
-                <div class=" input-group noleftpadding col-md-4">
+            <div class="col-md-2 nopadding">
+                @Html.LabelFor(model => model.FollowUpDate, htmlAttributes: new { @class = "control-label col-md-3 noleftpadding" })
+                <div class=" input-group nopadding col-md-9">
 
                     <div>
                         <div class="input-group date" data-provide="datepicker">
@@ -175,9 +238,19 @@
                 </div>
 
             </div>
+            <div class="col-md-3 nopadding">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NextAction, htmlAttributes: new { @class = "control-label col-md-4 norightpadding" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.NextAction, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NextAction, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-9"></div>
+                </div>
+            </div>
         </div>
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
                 @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
@@ -190,62 +263,82 @@
             @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
                 @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.Status, "Status", "Text"), new { @class = "form-control" })
-                @*@Html.DropDownList(m => m.Status, Model., Model.Status, new {@class = "form-control" })*@
                 @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-9"></div>
-        </div>
+        </div>*@
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.NextAction, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
                 @Html.EditorFor(model => model.NextAction, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.NextAction, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-9"></div>
-        </div>
+        </div>*@
 
 
         <div class="form-group">
             @Html.LabelFor(model => model.ManagerComment, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-lg-3">
-                @*<textarea class="form-control" rows="5" id="comment">@Html.TextAreaFor(model => model.ManagerComment, 7, 33, null)</textarea>*@
-                @*<textarea class="form-control" rows="7">@Html.TextAreaFor(model => model.ManagerComment, null) </textarea>*@
-                @Html.TextAreaFor(model => model.ManagerComment, 7, 50, new { htmlAttributes = new { @class = "form-control , minlength" } })
-
+            <div class="col-lg-9">
+                @Html.TextAreaFor(model => model.ManagerComment, 100, 50, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
                 @Html.ValidationMessageFor(model => model.ManagerComment, "", new { @class = "text-danger" })
+                <div class="col-lg-3">
+                    <p style="white-space: pre-line">
+                        <input value="Update" class="btn btn-default" onclick="location.href='@Url.Action("Update", "Strategy", new {id = Model.StrategyId})'" />
+                    </p>
+                </div>
             </div>
-
-            @*<div class="col-lg-9">*@
-            <br />
-            <div class="col-lg-2">
-                <input value="Meeting Scheduled" class="btn btn-default" onclick="location.href='@Url.Action("MeetingSch", "Strategy", new {id = Model.StrategyId})'" />
-            </div>
-            <div class="col-lg-2">
-                <input value="Need to schedule visit" class="btn btn-default" onclick="location.href='@Url.Action("SchVisit", "Strategy", new {id = Model.StrategyId})'" />
-            </div>
-            <div class="col-lg-2">
-                <input value="Need to schedule eMeeting" class="btn btn-default" onclick="location.href='@Url.Action("ScheMeet", "Strategy", new {id = Model.StrategyId})'" />
-            </div>
-            <div class="col-lg-2">
-                <input value="No action at this time, followup planned" class="btn btn-default" onclick="location.href='@Url.Action("NoAct", "Strategy", new {id = Model.StrategyId})'" />
-            </div>
-            <div class="col-lg-2">
-                <input value="Samples Requested" class="btn btn-default" onclick="location.href='@Url.Action("SampReq", "Strategy", new {id = Model.StrategyId})'" />
-            </div>
-            <div class="col-lg-2">
-                <input value="Evaluating Samples" class="btn btn-default" onclick="location.href='@Url.Action("EvalSamp", "Strategy", new {id = Model.StrategyId})'" />
-            </div>
-            <div class="col-lg-2">
-                <input value="Need to Confirm CEM location" class="btn btn-default" onclick="location.href='@Url.Action("ConfirmCEM", "Strategy", new {id = Model.StrategyId})'" />
-            </div>
-            @*</div>*@
         </div>
+
+        @*<div class="col-lg-9">*@
+
+        <div class="form-group col-lg-12">
+            @*<p style="white-space: pre-line">*@
+                <div class="col-lg-3">
+                    @*<p style="white-space: pre-line">*@
+                    <input value="Meeting Scheduled" class="btn btn-default" onclick="location.href='@Url.Action("MeetingSch", "Strategy", new {id = Model.StrategyId})'" />
+                    @*</p>*@
+                </div>
+                <div class="col-lg-3">
+                    @*<p style="white-space: pre-line">*@
+                    <input value="Need to schedule visit" class="btn btn-default" onclick="location.href='@Url.Action("SchVisit", "Strategy", new {id = Model.StrategyId})'" />
+                    @*</p>*@
+                </div>
+                <div class="col-lg-3">
+                    @*<p style="white-space: pre-line">*@
+                    <input value="Need to schedule eMeeting" class="btn btn-default" onclick="location.href='@Url.Action("ScheMeet", "Strategy", new {id = Model.StrategyId})'" />
+                    @*</p>*@
+                </div>
+                <div class="col-lg-3">
+                    @*<p style="white-space: pre-line">*@
+                    <input value="No action at this time, followup planned" class="btn btn-default" onclick="location.href='@Url.Action("NoAct", "Strategy", new {id = Model.StrategyId})'" />
+                    @*</p>*@
+                </div>
+                <div class="col-lg-3">
+                    @*<p style="white-space: pre-line">*@
+                    <input value="Samples Requested" class="btn btn-default" onclick="location.href='@Url.Action("SampReq", "Strategy", new {id = Model.StrategyId})'" />
+                    @*</p>*@
+                </div>
+                <div class="col-lg-3">
+                    @*<p style="white-space: pre-line">*@
+                    <input value="Evaluating Samples" class="btn btn-default" onclick="location.href='@Url.Action("EvalSamp", "Strategy", new {id = Model.StrategyId})'" />
+                    @*</p>*@
+                </div>
+                <div class="col-lg-3">
+                    @*<p style="white-space: pre-line">*@
+                    <input value="Need to Confirm CEM location" class="btn btn-default" onclick="location.href='@Url.Action("ConfirmCEM", "Strategy", new {id = Model.StrategyId})'" />
+                    @*</p>*@
+                </div>
+                @*</p>*@
+        </div>
+
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.History, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-                @Html.TextAreaFor(model => model.History, 7, 33, null)
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.History, 100, 50, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
                 @Html.ValidationMessageFor(model => model.History, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -267,14 +360,14 @@
 <a href="javascript:void(0);" onclick="history.go(-1);">Back</a>
 
 @*<div>
-    <input type="submit" value="Go Back" name="Cancel" onclick="return goBack()">
+        <input type="submit" value="Go Back" name="Cancel" onclick="return goBack()">
 
 
-</div>
-<script>
-    function goBack() { window.history.back(); }
+    </div>
+    <script>
+        function goBack() { window.history.back(); }
 
-</script>*@
+    </script>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

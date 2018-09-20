@@ -21,6 +21,7 @@ namespace WebApplication2.Models
         public int StrategyId { get; set; }
         public string Customer { get; set; }
         public string EndProduct { get; set; }
+        [DisplayName("Program")]
         public string Product { get; set; }
         public string Status { get; set; }
         public string NextAction { get; set; }
