@@ -34,6 +34,10 @@
         padding-right: 0 !important;
     }
 
+    .leftpadding {
+        padding-left:inherit;
+    }
+
     .labelleft {
         text-align: left;
     }
@@ -104,8 +108,6 @@
                 </div>
             </td>
             <td>
-                @*<button class="btn btn-default" type="button" value="Email" name="Email" onclick="location.href='@Url.Action("Email", "Strategy", new {id = Model.StrategyId})'">Email</button>*@
-                @*<button class="btn btn-default" type="button" value="Email" name="Email" onclick="location.href='@Url.Action("Button1_Click", "Strategy", new {id = Model.StrategyId})'">Email</button>*@
                 <a href="mailto:@{@ViewBag.EmailTo}?subject=@{@ViewBag.Subject}&body=@{@ViewBag.Body}"><button class="btn btn-default" type="button">Email</button></a>
             </td>
         </tr>
@@ -127,23 +129,21 @@
 
 
 
-
-
         <div class="form-group">
             @Html.LabelFor(model => model.Customer, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
                 @Html.EditorFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control nomargin" } })
                 @Html.ValidationMessageFor(model => model.Customer, "", new { @class = "text-danger" })
             </div>
-            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-1" })
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-1 norightpadding" })
             <div class="col-md-2">
                 @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.Status, "Status", "Text"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-3">
-                @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-1 noleftpadding" })
-                <div class=" input-group col-md-11">
-                    <div class="col-md-10">
+                @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-3 noleftpadding" })
+                <div class=" input-group col-md-6 nopadding">
+                    <div class="col-md-12 nopadding">
                         @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
                     </div>
@@ -285,7 +285,7 @@
                 @Html.ValidationMessageFor(model => model.ManagerComment, "", new { @class = "text-danger" })
                 <div class="col-lg-3">
                     <p style="white-space: pre-line">
-                        <input value="Update" class="btn btn-default" onclick="location.href='@Url.Action("Update", "Strategy", new {id = Model.StrategyId})'" />
+                        <input value="New Update" class="btn btn-default" onclick="location.href='@Url.Action("Update", "Strategy", new {id = Model.StrategyId})'" />
                     </p>
                 </div>
             </div>

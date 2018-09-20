@@ -326,24 +326,32 @@ namespace WebApplication2.Controllers
 
 
 
+
+
+
                 if (strat.ManagerComment == null)
                 {
-                    //strat.ManagerComment = strat.Updated.Value.ToString("MM/dd/yy");
-                    //db.Entry(strat).State = EntityState.Modified;
+                    strat.Updated = DateTime.Now;
+                    strat.ManagerComment = strat.Updated.Value.ToString("MM/dd/yy");
+                    db.Entry(strat).State = EntityState.Modified;
 
-
-                    if (strat.ManagerComment.Length <= 10)
-                    {
+                    if (strat.ManagerComment.Length <= 10 && strat.ManagerComment != null)
+                {
                         //strat.ManagerComment = null;
                         //db.SaveChanges();
+                        strat.Updated = DateTime.Now;
                         strat.ManagerComment = strat.Updated.Value.ToString("MM/dd/yy");
-                        db.Entry(strat).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
+                    db.Entry(strat).State = EntityState.Modified;
                     db.SaveChanges();
                 }
 
-                
+                }
+
+
+
+
+                db.SaveChanges();
+
                 return View(strat);
             }
             else
@@ -381,6 +389,28 @@ namespace WebApplication2.Controllers
                     //Groupddl = Session["filtgroup"].ToString();
                     //Statusddl = Session["filtstatus"].ToString();
                     //OSRddl = Session["filtosr"].ToString();
+
+
+                    if (strat.ManagerComment.Length <= 10 && strat.ManagerComment != null)
+                    {
+                        strat.Updated = DateTime.Now;
+                        //strat.ManagerComment = null;
+                        //db.SaveChanges();
+                        strat.ManagerComment = strat.Updated.Value.ToString("MM/dd/yy");
+
+
+
+
+                        db.Entry(strat).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        db.Entry(strat).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+
 
                     db.Entry(strat).State = EntityState.Modified;
                     db.SaveChanges();
@@ -429,7 +459,6 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-
             if (Session["UserId"] != null)
             {
                 Strategy strat = db.Strategies.Find(id);
@@ -441,19 +470,18 @@ namespace WebApplication2.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-
         }
 
         protected override void Dispose(bool disposing)
         {
-
             if (disposing)
             {
                 db.Dispose();
             }
             base.Dispose(disposing);
-
         }
+
+
 
 
 
@@ -462,53 +490,28 @@ namespace WebApplication2.Controllers
         public ActionResult Update(int? id, string commentold, [Bind(Include = "ManagerComment")] Strategy strat, string stratvar)
         {
             strat = db.Strategies.FirstOrDefault(x => x.StrategyId == id);
-            var stratvariable = from s in db.Strategies
-                                select s;
-            stratvar = strat.ToString();
-            stratvariable = stratvariable.Where(s => s.Group.Contains(stratvar));
-            if (ModelState.IsValid)
-            {
-                db.Entry(strat).State = EntityState.Modified;
-                db.SaveChanges();
-            }
 
             int uid = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
             String em = db.UserAccounts.Find(uid).Email.ToString(); // Use the id to get the associated email address
             UserAccount emailListItem = db.UserAccounts.First(x => x.Email == em); // Use the email address to get the associated emaillist object which holds the group
 
-
-
             commentold = strat.ManagerComment;
             strat.Updated = DateTime.Now;
-
 
             if (strat.ManagerComment == null)
             {
                 strat.ManagerComment = strat.Updated.Value.ToString("MM/dd/yy");
                 db.Entry(strat).State = EntityState.Modified;
                 db.SaveChanges();
-
-
             }
 
             else
             {
-
                 strat.ManagerComment = strat.Updated.Value.ToString("MM/dd/yy"); ;
                 strat.History = commentold + "\r\n" + strat.History;
                 db.Entry(strat).State = EntityState.Modified;
                 db.SaveChanges();
-
-
             }
-
-
-
-
-
-
-
-
 
             return RedirectToAction("Edit", "Strategy", new { id });
         }
@@ -518,11 +521,8 @@ namespace WebApplication2.Controllers
 
 
 
-
-
         public ActionResult MeetingSch(int? id, string nextactionold)
         {
-
 
             int uid = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
             String em = db.UserAccounts.Find(uid).Email.ToString(); // Use the id to get the associated email address
