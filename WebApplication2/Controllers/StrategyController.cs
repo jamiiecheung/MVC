@@ -23,8 +23,8 @@ namespace WebApplication2.Controllers
         private sjassoc_dbEntities db = new sjassoc_dbEntities();
 
         // GET: Todoes
-        public ActionResult Index(string Groupddl, string Statusddl, string Prinddl, string OSRddl, string osrsel, string prinsel, string statussel, string groupsel,
-            string statusdrop, string groupnew, string stratvar, string fltstring, Strategy selg, FormCollection form)
+        public ActionResult Index(string Groupddl, string Statusddl, string Prinddl, string OSRddl, string Customerddl, string osrsel, string prinsel, string statussel, string groupsel, string customersel,
+            string statusdrop, string groupnew, string sortOrder, string stratvar, string fltstring, Strategy selg, FormCollection form)
         {
 
             if (Session["UserId"] != null)
@@ -114,11 +114,31 @@ namespace WebApplication2.Controllers
                         List<SelectListItem> statusListItems = db.Strategies.Where(w => w.Status != null).Select(status => new SelectListItem { Value = status.Status, Text = status.Status }).Distinct().ToList();
                         ViewBag.Statusddl = new SelectList(statusListItems, "Value", "Text").Distinct();
 
+                        List<SelectListItem> customerListItems = db.Strategies.Where(w => w.Customer != null).Select(status => new SelectListItem { Value = status.Customer, Text = status.Customer}).Distinct().ToList();
+                        ViewBag.Customerddl = new SelectList(customerListItems, "Value", "Text").Distinct();
 
 
+                        //string customerName = Session["Customer"].ToString();
+
+//                        // Convert sort order
+//                        ViewBag.CustomerSort = sortOrder == "Name" ? "Name_desc" : "Name";
+
+//                        var model = from t in db.Strategies
+//                                    where t.Customer == customerName
+//                                    select t;
+
+//                        switch (sortOrder)
+//                        {
+//                            case "Name_desc":
+//                                model = model.OrderByDescending(t => t.Customer);
+//                                break;
+//                            case "Name":
+//                                model = model.OrderBy(t => t.Customer);
+//                                break;
+//                        }
 
                         //if all filters are null
-                        if (Groupddl == null && stratvar == null && Prinddl == null && OSRddl == null && Statusddl == null)
+                        if (Groupddl == null && stratvar == null && Prinddl == null && OSRddl == null && Statusddl == null && Customerddl == null)
                         {
                             return View(db.Strategies.ToList());
                         }
@@ -148,13 +168,14 @@ namespace WebApplication2.Controllers
 
 
                         //if (prin != null && group != null && osr != null && status != null)
-                        if (Prinddl != null && Groupddl != null && OSRddl != null && Statusddl != null)
+                        if (Prinddl != null && Groupddl != null && OSRddl != null && Statusddl != null && Customerddl != null)
                         {
-                            prins = prins.Where(gpr => gpr.Principal.Contains(Prinddl) && gpr.Group.Contains(Groupddl) && gpr.OSR.Contains(OSRddl) && gpr.Status.Contains(Statusddl));
+                            prins = prins.Where(gpr => gpr.Principal.Contains(Prinddl) && gpr.Group.Contains(Groupddl) && gpr.OSR.Contains(OSRddl) && gpr.Status.Contains(Statusddl) && gpr.Customer.Contains(Customerddl));
                             Session["filtprins"] = Prinddl;
                             Session["filtgroup"] = Groupddl;
                             Session["filtstatus"] = Statusddl;
                             Session["filtosr"] = OSRddl;
+                            Session["filtcustomer"] = Customerddl;
 
                             stratvar = null;
 

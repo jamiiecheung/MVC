@@ -5,7 +5,7 @@
 }
 <h2>Strategy</h2>
 
-<div class="col-md-6">
+<div class="col-md-3">
     @Html.ActionLink("Create New", "Create")
 </div>
 <div class="col-md-6">
@@ -27,6 +27,9 @@
                     <td>Status</td>
                     <td>@Html.DropDownList("Statusddl", null, "Select")</td>
 
+                    <td>Customer</td>
+                    <td>@Html.DropDownList("Customerddl", null, "Select")</td>
+
                     <td>
                         <input type="submit" value="Search" onclick="location.href='@Url.Action("Index", "Strategy")'" />
                     </td>
@@ -45,6 +48,7 @@
 <table class="table">
     <tr>
         <th>
+            @*<a href="@Url.Action("Strategy", "Index", new { userName = Session["UserName"], new { sortOrder = ViewBag.CustomerSort })">Customer</a>*@
             @Html.DisplayNameFor(model => model.Customer)
         </th>
         <th>
