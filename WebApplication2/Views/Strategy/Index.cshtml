@@ -48,8 +48,8 @@
 <table class="table">
     <tr>
         <th>
-            @*<a href="@Url.Action("Strategy", "Index", new { userName = Session["UserName"], new { sortOrder = ViewBag.CustomerSort })">Customer</a>*@
-            @Html.DisplayNameFor(model => model.Customer)
+            <a href="@Url.Action("Index", "Strategy", new { sortOrder = ViewBag.CustomerSort })">Customer</a>
+            @*@Html.DisplayNameFor(model => model.Customer)*@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Product)
