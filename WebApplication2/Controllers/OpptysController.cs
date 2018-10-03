@@ -80,7 +80,7 @@ namespace WebApplication2.Models
                     string p = emailListItem.Perm;
                     string gr = emailListItem.Group;
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("SELECT * FROM dbo.Strategy WHERE "); //change table name for whatever you need returned
+                    sb.Append("SELECT * FROM dbo.Opptys1 WHERE "); //change table name for whatever you need returned
                     foreach (char c in p.ToCharArray())
                     {
                         if (Groupddl == null)
@@ -170,7 +170,7 @@ namespace WebApplication2.Models
                     string p = emailListItem.Perm;
                     string gr = emailListItem.Group;
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("SELECT * FROM dbo.Strategy WHERE "); //change table name for whatever you need returned
+                    sb.Append("SELECT * FROM dbo.Opptys1 WHERE "); //change table name for whatever you need returned
                     foreach (char c in p.ToCharArray())
                     {
                         if (Groupddl == null)
