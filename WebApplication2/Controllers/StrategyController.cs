@@ -37,11 +37,13 @@ namespace WebApplication2.Controllers
 
                 string perm = emailListItem.Perm;
 
+
                 if (perm == null)
                 {
                     perm = "0";
                 }
                 ViewData["perm"] = perm;
+
 
                 // if external
                 if (!emailListItem.IntExt)
@@ -62,8 +64,128 @@ namespace WebApplication2.Controllers
                             }
                         }
                     }
-                    return View(list);
 
+
+                    ViewBag.CustomerSort = sortOrder == "Name" ? "Name_desc" : "Name";
+
+                    var model = from t in list
+                                select t;
+
+
+                    switch (sortOrder)
+                    {
+                        case "Name_desc":
+                            model = model.OrderByDescending(t => t.Customer);
+                            break;
+                        case "Name":
+                            model = model.OrderBy(t => t.Customer);
+                            break;
+                    }
+
+
+
+
+                    string p = emailListItem.Perm;
+                    string gr = emailListItem.Group;
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("SELECT * FROM dbo.Strategy WHERE "); //change table name for whatever you need returned
+                    foreach (char c in p.ToCharArray())
+                    {
+                        if (Groupddl == null)
+                        {
+                            sb.Append("Perm LIKE '%");
+                            sb.Append(c);
+                            sb.Append("%' OR ");
+                        }
+
+                    }
+                    sb.Length = sb.Length - 4;
+
+
+                    if (selg == null)
+                    {
+                        List<Strategy> list1 = db.Strategies.SqlQuery(sb.ToString()).ToList(); //change table name
+                        return View(list1);
+                    }
+
+                    else
+                {
+                        var groups = from g in list
+                                     select g;
+                        var prins = from pr in list
+                                    select pr;
+                        /*  var osrs = from o in db.Strategies
+                                     select o;
+                          var statuss = from s in db.Strategies
+                                        select s; */
+
+       
+
+                        List<SelectListItem> groupListItems = list.Select(w => w.Group).Where(g => g != null).Distinct().Select(g => new SelectListItem { Value = g, Text = g }).ToList();
+                        ViewBag.Groupddl = new SelectList(groupListItems, "Value", "Text").Distinct();
+
+                        List<SelectListItem> prinListItems = list.Select(w => w.Principal).Where(pr => pr != null).Distinct().Select(pr => new SelectListItem { Value = pr, Text = pr }).ToList();
+                        ViewBag.Prinddl = new SelectList(prinListItems, "Value", "Text").Distinct();
+
+                        List<SelectListItem> osrListItems = list.Select(w => w.OSR).Where(o => o != null).Distinct().Select(o => new SelectListItem { Value = o, Text = o }).ToList();
+                        ViewBag.OSRddl = new SelectList(osrListItems, "Value", "Text").Distinct();
+
+                        List<SelectListItem> statusListItems = list.Select(w => w.Status).Where(g => g!= null).Distinct().Select(g => new SelectListItem { Value = g, Text = g }).ToList();
+                        ViewBag.Statusddl = new SelectList(statusListItems, "Value", "Text").Distinct();
+
+                        List<SelectListItem> customerListItems = list.Select(w => w.Customer).Where(c => c != null).Distinct().Select(c => new SelectListItem { Value = c, Text = c }).ToList();
+                        ViewBag.Customerddl = new SelectList(customerListItems, "Value", "Text").Distinct();
+
+
+
+                        //List<SelectListItem> groupListItems = list.Where(w => w.Group != null).Select(group => new SelectListItem { Value = group.Group, Text = group.Group }).Distinct().ToList();
+                        //ViewBag.Groupddl = new SelectList(groupListItems, "Value", "Text").Distinct();
+
+                        //List<SelectListItem> prinListItems = list.Where(w => w.Principal != null).Select(prin => new SelectListItem { Value = prin.Principal, Text = prin.Principal }).Distinct().ToList();
+                        //ViewBag.Prinddl = new SelectList(prinListItems, "Value", "Text").Distinct();
+
+                        //List<SelectListItem> osrListItems = list.Where(w => w.OSR != null).Select(osr => new SelectListItem { Value = osr.OSR, Text = osr.OSR }).Distinct().ToList();
+                        //ViewBag.OSRddl = new SelectList(osrListItems, "Value", "Text").Distinct();
+
+                        //List<SelectListItem> statusListItems = list.Where(w => w.Status != null).Select(status => new SelectListItem { Value = status.Status, Text = status.Status }).Distinct().ToList();
+                        //ViewBag.Statusddl = new SelectList(statusListItems, "Value", "Text").Distinct();
+
+                        //List<SelectListItem> customerListItems = list.Where(w => w.Customer != null).Select(cust => new SelectListItem { Value = cust.Customer, Text = cust.Customer }).Distinct().ToList();
+                        //ViewBag.Customerddl = new SelectList(customerListItems, "Value", "Text").Distinct();
+
+
+                        //if all filters are null
+                        if (Groupddl == null && stratvar == null && Prinddl == null && OSRddl == null && Statusddl == null && Customerddl == null)
+                        {
+                            if (sortOrder == null)
+                            {
+                                return View(model.ToList());
+                            }
+                            else
+                            {
+                                return View(model.ToList());
+                            }
+                        }
+
+
+                        //if (prin != null && group != null && osr != null && status != null)
+                        if (Prinddl != null && Groupddl != null && OSRddl != null && Statusddl != null && Customerddl != null)
+                        {
+                            prins = prins.Where(gpr => gpr.Principal.Contains(Prinddl) && gpr.Group.Contains(Groupddl) && gpr.OSR.Contains(OSRddl) && gpr.Status.Contains(Statusddl) && gpr.Customer.Contains(Customerddl));
+                            Session["filtprins"] = Prinddl;
+                            Session["filtgroup"] = Groupddl;
+                            Session["filtstatus"] = Statusddl;
+                            Session["filtosr"] = OSRddl;
+                            Session["filtcustomer"] = Customerddl;
+
+                            stratvar = null;
+
+                            return View(prins.ToList());
+                        }
+
+
+                        return View(model);
+                    }
                 }
                 else
                 {
@@ -114,28 +236,19 @@ namespace WebApplication2.Controllers
                         List<SelectListItem> statusListItems = db.Strategies.Where(w => w.Status != null).Select(status => new SelectListItem { Value = status.Status, Text = status.Status }).Distinct().ToList();
                         ViewBag.Statusddl = new SelectList(statusListItems, "Value", "Text").Distinct();
 
-                        List<SelectListItem> customerListItems = db.Strategies.Where(w => w.Customer != null).Select(status => new SelectListItem { Value = status.Customer, Text = status.Customer }).Distinct().ToList();
+                        List<SelectListItem> customerListItems = db.Strategies.Where(w => w.Customer != null).Select(cust => new SelectListItem { Value = cust.Customer, Text = cust.Customer }).Distinct().ToList();
                         ViewBag.Customerddl = new SelectList(customerListItems, "Value", "Text").Distinct();
-
-
-
-
-                        //if (Session["UserID"] != null)
-                        //{
-
-                        //if (Session["Customer"] == null)
-                        //{
-
-                        //}
-                        //customerName = Session["Customer"].ToString();
 
 
                         // Convert sort order
                         ViewBag.CustomerSort = sortOrder == "Name" ? "Name_desc" : "Name";
 
+
+
                         var model = from t in db.Strategies
-                                    //where t.Customer == customerName
                                     select t;
+
+
 
                         switch (sortOrder)
                         {

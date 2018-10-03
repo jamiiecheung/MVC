@@ -9,35 +9,40 @@
     @Html.ActionLink("Create New", "Create")
 </div>
 <div class="col-md-6">
-    @if ((ViewData["perm"]).ToString() != "0")
-    {
-        using (Html.BeginForm())
+
+
+        @if ((ViewData["perm"]).ToString() != "0")
         {
-            <table>
-                <tr>
-                    <td>Group</td>
-                    <td>@Html.DropDownList("Groupddl", null, "Select")</td>
+            using (Html.BeginForm())
+            {
 
-                    <td>Principal</td>
-                    <td>@Html.DropDownList("Prinddl", null, "Select")</td>
+                <table>
+                    <tr>
 
-                    <td>OSR</td>
-                    <td>@Html.DropDownList("OSRddl", null, "Select")</td>
+                            <td>Group</td>
+                            <td>@Html.DropDownList("Groupddl", null, "Select")</td>
+   
+                            <td>Principal</td>
+                            <td>@Html.DropDownList("Prinddl", null, "Select")</td>
+    
+                            <td>OSR</td>
+                            <td>@Html.DropDownList("OSRddl", null, "Select")</td>
+              
+                            <td>Status</td>
+                            <td>@Html.DropDownList("Statusddl", null, "Select")</td>
+                      
+                            <td>Customer</td>
+                            <td>@Html.DropDownList("Customerddl", null, "Select")</td>
+                      
+                            <td>
+                                <input type="submit" value="Search" onclick="location.href='@Url.Action("Index", "Strategy")'" />
+                            </td>
+                        
+                        </tr>
+                </table>
+            }
 
-                    <td>Status</td>
-                    <td>@Html.DropDownList("Statusddl", null, "Select")</td>
-
-                    <td>Customer</td>
-                    <td>@Html.DropDownList("Customerddl", null, "Select")</td>
-
-                    <td>
-                        <input type="submit" value="Search" onclick="location.href='@Url.Action("Index", "Strategy")'" />
-                    </td>
-                </tr>
-            </table>
         }
-
-    }
     else if ((ViewData["perm"]).ToString() == "0")
     {
 
@@ -48,7 +53,7 @@
 <table class="table">
     <tr>
         <th>
-            <a href="@Url.Action("Index", "Strategy", new { sortOrder = ViewBag.CustomerSort })">Customer</a>
+            <a href="@Url.Action("Index", "Strategy", new { sortOrder = ViewBag.CustomerSort })">Customer (Click Here to Sort)</a>
             @*@Html.DisplayNameFor(model => model.Customer)*@
         </th>
         <th>
@@ -112,7 +117,7 @@
                 @Html.ActionLink("Edit", "Edit", new { id = item.StrategyId, group = item.Group }) |
                 @*@Html.ActionLink("Details", "Details", new { id = item.StrategyId })*@
                 @*|*@
-                @Html.ActionLink("Delete", "Delete", new { id=item.StrategyId })
+                @Html.ActionLink("Delete", "Delete", new { id = item.StrategyId })
             </td>
         </tr>
     }
