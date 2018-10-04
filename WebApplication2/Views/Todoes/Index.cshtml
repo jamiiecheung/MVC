@@ -10,7 +10,7 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
-@if ((ViewData["groupuser"]).ToString() == "Wachtel")
+@*@if ((ViewData["groupuser"]).ToString() == "Wachtel")
 {
     using (Html.BeginForm())
     {
@@ -25,7 +25,7 @@
                 <td>OSR</td>
                 <td>@Html.DropDownList("OSRddl", null, "Select")</td>*@
 
-                <td>Status</td>
+                @*<td>Status</td>
                 <td>@Html.DropDownList("Statusddl", null, "Select")</td>
 
                 <td>
@@ -39,7 +39,7 @@
 else if ((ViewData["groupuser"]).ToString() == null)
 {
 
-}
+}*@
 
 
 <table class="table">
