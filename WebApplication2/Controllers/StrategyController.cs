@@ -495,6 +495,19 @@ namespace WebApplication2.Controllers
                 stratvariable = stratvariable.Where(s => s.Group.Contains(stratvar));
 
 
+                var options = new List<Strategy>();
+
+                options.Add(new Strategy() { Status = "New Request", Text = "New Request" });
+                options.Add(new Strategy() { Status = "Reviewed", Text = "Reviewed" });
+                options.Add(new Strategy() { Status = "Started", Text = "Started" });
+                options.Add(new Strategy() { Status = "In Progress", Text = "In Progress" });
+                options.Add(new Strategy() { Status = "Completed", Text = "Completed" });
+
+                ViewBag.Status = options;
+
+
+
+
                 //int id = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
                 //String emailacc = db.UserAccounts.Find(id).Email.ToString(); // Use the id to get the associated email address
                 //ViewBag.EmailTo = emailacc;
@@ -539,9 +552,11 @@ namespace WebApplication2.Controllers
 
                     db.Entry(strat).State = EntityState.Modified;
                     db.SaveChanges();
+                    //return View(strat);
                     return RedirectToAction("Index", new { stratvar = strat.Group });
                 }
-
+                db.Entry(strat).State = EntityState.Modified;
+                db.SaveChanges();
                 return View(strat);
             }
             else
