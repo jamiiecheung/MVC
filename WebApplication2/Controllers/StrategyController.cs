@@ -435,6 +435,10 @@ namespace WebApplication2.Controllers
                 strat.Updated = DateTime.Now;
                 //string updatedate = strat.Updated.ToString("MM/dd/yy");
 
+
+                //strat.Value = 
+
+
                 string body = "";
 
                 if (strat.FollowUpDate == null)

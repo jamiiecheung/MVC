@@ -38,6 +38,7 @@ namespace WebApplication2.Models
         public string ManagerComment { get; set; }
         public string OSR { get; set; }
         public string Principal { get; set; }
+        [DisplayFormat(DataFormatString = "{0:C0}", ApplyFormatInEditMode = true)]
         public Nullable<decimal> Value { get; set; }
         public string Group { get; set; }
         public string Text { get; internal set; }
