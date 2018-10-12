@@ -34,11 +34,11 @@ namespace WebApplication2.Models
         [DisplayName("F/U")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy}")]
         public Nullable<System.DateTime> FollowUpDate { get; set; }
-        [DisplayName("Latest Comments")]
+        [DisplayName("Latest Comments (1000 Characters Max)")]
         public string ManagerComment { get; set; }
         public string OSR { get; set; }
         public string Principal { get; set; }
-        [DisplayFormat(DataFormatString = "{0:C0}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:C0}", ApplyFormatInEditMode = false)]
         public Nullable<decimal> Value { get; set; }
         public string Group { get; set; }
         public string Text { get; internal set; }

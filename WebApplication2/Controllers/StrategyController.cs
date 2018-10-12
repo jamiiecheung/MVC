@@ -109,7 +109,7 @@ namespace WebApplication2.Controllers
                     }
 
                     else
-                {
+                    {
                         var groups = from g in list
                                      select g;
                         var prins = from pr in list
@@ -119,7 +119,7 @@ namespace WebApplication2.Controllers
                           var statuss = from s in db.Strategies
                                         select s; */
 
-       
+
 
                         List<SelectListItem> groupListItems = list.Select(w => w.Group).Where(g => g != null).Distinct().Select(g => new SelectListItem { Value = g, Text = g }).ToList();
                         ViewBag.Groupddl = new SelectList(groupListItems, "Value", "Text").Distinct();
@@ -130,7 +130,7 @@ namespace WebApplication2.Controllers
                         List<SelectListItem> osrListItems = list.Select(w => w.OSR).Where(o => o != null).Distinct().Select(o => new SelectListItem { Value = o, Text = o }).ToList();
                         ViewBag.OSRddl = new SelectList(osrListItems, "Value", "Text").Distinct();
 
-                        List<SelectListItem> statusListItems = list.Select(w => w.Status).Where(g => g!= null).Distinct().Select(g => new SelectListItem { Value = g, Text = g }).ToList();
+                        List<SelectListItem> statusListItems = list.Select(w => w.Status).Where(g => g != null).Distinct().Select(g => new SelectListItem { Value = g, Text = g }).ToList();
                         ViewBag.Statusddl = new SelectList(statusListItems, "Value", "Text").Distinct();
 
                         List<SelectListItem> customerListItems = list.Select(w => w.Customer).Where(c => c != null).Distinct().Select(c => new SelectListItem { Value = c, Text = c }).ToList();
@@ -491,9 +491,18 @@ namespace WebApplication2.Controllers
             {
                 var stratvariable = from s in db.Strategies
                                     select s;
+                
                 stratvar = strat.ToString();
-                stratvariable = stratvariable.Where(s => s.Group.Contains(stratvar));
 
+                string hi = strat.Value.ToString();
+
+                if (stratvar != null)
+                {
+                    ViewBag.Val = strat.Value;
+
+                }
+
+                stratvariable = stratvariable.Where(s => s.Group.Contains(stratvar));
 
                 var options = new List<Strategy>();
 
@@ -504,9 +513,6 @@ namespace WebApplication2.Controllers
                 options.Add(new Strategy() { Status = "Completed", Text = "Completed" });
 
                 ViewBag.Status = options;
-
-
-
 
                 //int id = Int32.Parse(Session["UserId"].ToString()); // Get the user id from the session
                 //String emailacc = db.UserAccounts.Find(id).Email.ToString(); // Use the id to get the associated email address
@@ -553,11 +559,18 @@ namespace WebApplication2.Controllers
                     db.Entry(strat).State = EntityState.Modified;
                     db.SaveChanges();
                     //return View(strat);
-                    return RedirectToAction("Index", new { stratvar = strat.Group });
+                    //return RedirectToAction("Index", new { stratvar = strat.Group });
                 }
+
+                if (stratvar != null && ViewBag.Val != null)
+                {
+                    strat.Value = ViewBag.Val;
+                }
+
                 db.Entry(strat).State = EntityState.Modified;
                 db.SaveChanges();
-                return View(strat);
+                return RedirectToAction("Index", new { stratvar = strat.Group });
+                // return View(strat);
             }
             else
             {

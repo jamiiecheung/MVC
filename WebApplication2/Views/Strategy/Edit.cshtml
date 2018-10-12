@@ -42,6 +42,16 @@
         height: 35px;
     }
 
+    .labelpadding {
+        padding-left: 25px;
+        padding-right: 5px;
+    }
+
+    .paddingtr {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
     textarea {
         width: 1000px;
         height: 200px;
@@ -110,29 +120,33 @@
         <div class="form-group">
             <hr />
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Customer, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-                @Html.EditorFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control nomargin" } })
-                @Html.ValidationMessageFor(model => model.Customer, "", new { @class = "text-danger" })
-            </div>
-            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-1 norightpadding" })
-            <div class="col-md-2">
-                @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.Status, "Status", "Text"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-3">
-                @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-3 noleftpadding" })
-                <div class=" input-group col-md-6 nopadding">
-                    <div class="col-md-12 nopadding">
-                        @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
-                        @*@Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })*@
-                    </div>
-                </div>
-            </div>
+        @*<div class="form-group">
+        @Html.LabelFor(model => model.Customer, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control nomargin" } })
+            @Html.ValidationMessageFor(model => model.Customer, "", new { @class = "text-danger" })
         </div>
+        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-1 norightpadding" })
+        <div class="col-md-2">
+            @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.Status, "Status", "Text"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-3 noleftpadding" })
+            <div class=" input-group col-md-6 nopadding">
+                <div class="col-md-12 nopadding">
+                    @Html.EditorFor(model => model.Value, "{0:C0}", new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
 
-        <div class="form-group">
+
+                    @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                </div>
+                </div>
+                </div>
+                </div>*@
+
+
+        @*<div class="form-group">
             @Html.LabelFor(model => model.EndProduct, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
                 @Html.EditorFor(model => model.EndProduct, new { htmlAttributes = new { @class = "form-control" } })
@@ -167,9 +181,9 @@
                 </div>
 
             </div>
-            <div class="col-md-3 norightpadding">
+            <div class="col-md-5 norightpadding">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.NextAction, htmlAttributes: new { @class = "control-label col-md-4 norightpadding" })
+                    @Html.LabelFor(model => model.NextAction, htmlAttributes: new { @class = "control-label col-md-3 norightpadding" })
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.NextAction, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.NextAction, "", new { @class = "text-danger" })
@@ -177,10 +191,121 @@
                     <div class="col-md-9"></div>
                 </div>
             </div>
-        </div>
+        </div>*@
+
+
+
+
+
+
+
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ManagerComment, htmlAttributes: new { @class = "control-label col-md-2" })
+            <table>
+                <tr style="border-bottom: 10px solid transparent;border-top: 10px solid transparent;">
+                    <td>
+                        @Html.LabelFor(model => model.Customer, htmlAttributes: new { @class = "control-label labelpadding" })
+                    </td>
+                    <td style="width:300px">
+                        @Html.EditorFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Customer, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.LabelFor(model => model.Principal, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </td>
+                    <td style="width:300px">
+                        @Html.EditorFor(model => model.Principal, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Principal, "", new { @class = "text-danger" })
+                    </td>
+                    @*<td>
+                        @Html.LabelFor(model => model.EndProduct, htmlAttributes: new { @class = "control-label labelpadding" })
+                    </td>
+                    <td style="width:300px">
+                        @Html.EditorFor(model => model.EndProduct, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.EndProduct, "", new { @class = "text-danger" })
+                    </td>*@
+                    <td>
+                        @Html.LabelFor(model => model.Product, htmlAttributes: new { @class = "control-label labelpadding" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Product, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Product, "", new { @class = "text-danger" })
+                    </td>
+
+                </tr>
+
+                <tr style="border-bottom: 10px solid transparent;border-top: 10px solid transparent;">
+
+                    <td>
+                        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label labelpadding" })
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.Status, "Status", "Text"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label labelpadding" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.LabelFor(model => model.FollowUpDate, htmlAttributes: new { @class = "control-label labelpadding" })
+                    </td>
+                    <td>
+                        <div>
+                            <div class="input-group date" data-provide="datepicker">
+                                @Html.EditorFor(model => model.FollowUpDate, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                @*<tr>
+                    <td>
+                        @Html.LabelFor(model => model.NextAction, htmlAttributes: new { @class = "control-label labelpadding" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.NextAction, new { htmlAttributes = new { @class = "form-control w-100" } })
+                        @Html.ValidationMessageFor(model => model.NextAction, "", new { @class = "text-danger" })
+                    </td>
+                </tr>*@
+            </table>
+            @*<table>
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.NextAction, htmlAttributes: new { @class = "control-label labelpadding" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.NextAction, new { htmlAttributes = new { @class = "form-control w-100"} })
+                        @Html.ValidationMessageFor(model => model.NextAction, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+            </table>*@
+        </div>
+
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NextAction, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-lg-9">
+                    @Html.EditorFor(model => model.NextAction, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; max-width: 100%;" } })
+                    @Html.ValidationMessageFor(model => model.NextAction, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        
+
+
+
+
+        <div class="form-group">
+            <div>
+                @Html.LabelFor(model => model.ManagerComment, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
             <div class="col-lg-9">
                 @Html.TextAreaFor(model => model.ManagerComment, 100, 50, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
                 @Html.ValidationMessageFor(model => model.ManagerComment, "", new { @class = "text-danger" })
@@ -192,7 +317,7 @@
             </div>
         </div>
 
-        <div class="form-group col-lg-12">
+        @*<div class="form-group col-lg-12">
             <div class="col-lg-3">
                 <input value="Meeting Scheduled" class="btn btn-default" onclick="location.href='@Url.Action("MeetingSch", "Strategy", new {id = Model.StrategyId})'" />
             </div>
@@ -214,7 +339,7 @@
             <div class="col-lg-3">
                 <input value="Need to Confirm CEM location" class="btn btn-default" onclick="location.href='@Url.Action("ConfirmCEM", "Strategy", new {id = Model.StrategyId})'" />
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.History, htmlAttributes: new { @class = "control-label col-md-2" })
