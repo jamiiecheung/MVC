@@ -305,10 +305,12 @@
         <div class="form-group">
             <div>
                 @Html.LabelFor(model => model.ManagerComment, htmlAttributes: new { @class = "control-label col-md-2" })
+                
+                
             </div>
             <div class="col-lg-9">
                 @Html.TextAreaFor(model => model.ManagerComment, 100, 50, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
-                @Html.ValidationMessageFor(model => model.ManagerComment, "", new { @class = "text-danger" })
+                @*@Html.ValidationMessageFor(model => model.ManagerComment, "", new { @class = "text-danger" })*@
                 <div class="col-lg-3">
                     <p style="white-space: pre-line">
                         <input value="New Update" class="btn btn-default" onclick="location.href='@Url.Action("Update", "Strategy", new {id = Model.StrategyId})'" />

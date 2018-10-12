@@ -170,7 +170,7 @@
           <Property Name="CreateDate" Type="DateTime" Precision="0" />
           <Property Name="Updated" Type="DateTime" Precision="0" />
           <Property Name="FollowUpDate" Type="DateTime" Precision="0" />
-          <Property Name="ManagerComment" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ManagerComment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="OSR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Principal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Value" Type="Decimal" Precision="19" Scale="4" />

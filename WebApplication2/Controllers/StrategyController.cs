@@ -13,6 +13,7 @@ using System.Web.UI.WebControls;
 using System.Net.Mail;
 //using Microsoft.Office.Interop.Outlook;
 using Outlook = Microsoft.Office.Interop.Outlook;
+using System.Data.Entity.Validation;
 //using Outlook;
 //using OutLookApp = Outlook.Application;
 
@@ -494,7 +495,7 @@ namespace WebApplication2.Controllers
                 
                 stratvar = strat.ToString();
 
-                string hi = strat.Value.ToString();
+             
 
                 if (stratvar != null)
                 {
@@ -549,11 +550,36 @@ namespace WebApplication2.Controllers
                         db.SaveChanges();
                     }
 
+                    //else if (strat.ManagerComment.Length > 1000)
+                    //{
+                    //    ModelState.AddModelError("", "The Length of manager's comments is too many characters.");
+
+                    //    return View();
+                    //}
+
                     else
                     {
+                        try
+                        {
                         strat.Updated = DateTime.Now;
                         db.Entry(strat).State = EntityState.Modified;
                         db.SaveChanges();
+                        }
+
+                        catch (DbEntityValidationException ex)
+                        {
+                            foreach (var errors in ex.EntityValidationErrors)
+                            {
+                                foreach (var validationError in errors.ValidationErrors)
+                                {
+                                    // get the error message 
+                                    string errorMessage = validationError.ErrorMessage;
+                                }
+                            }
+                        }
+
+
+
                     }
 
                     db.Entry(strat).State = EntityState.Modified;
