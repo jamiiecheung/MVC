@@ -56,6 +56,11 @@
         width: 1000px;
         height: 200px;
     }
+
+    .fontsemilabel {
+        font-size: 10px;
+        text-align: right;
+    }
 </style>
 
 
@@ -69,7 +74,51 @@
     });
 
 
+    //$('#mcomments').keyUp(function () {
+    //    var len = val.value.length;
+    //    var remChars = 1000 - len;
+
+    //    $('#charcount').text(remChars);
+    //});
+
+
+    $(function () {
+        $('#mcomments').keyup(function (e) {
+            var max = 1000;
+            var len = $(this).val().length;
+            var char = max - len;
+            $('#text-counter').html(char);
+        });
+    });
+
+
+
 </script>
+
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+    $(function () {
+        $("#questionInput").keyup(function () {
+            var charsLeft = $(this).attr("maxlength") - $(this).val().length;
+            $("#charsLeft").text(charsLeft + " characters left");
+        });
+    });
+</script>
+
+
+@*<script language="javascript" type="text/javascript">
+        function getCountDown() {
+            //Get the Textbox control
+            var textField = document.getElementById("<%#TextBox1.ClientID %>");
+            //Do the math of chars left and pass the value to the label
+            document.getElementById('<%#Label1.ClientID %>').innerHTML = textField.maxLength - textField.value.length;
+            return false;
+        }
+    </script>*@
+
 
 <br />
 @using (Html.BeginForm())
@@ -121,77 +170,77 @@
             <hr />
         </div>
         @*<div class="form-group">
-        @Html.LabelFor(model => model.Customer, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-3">
-            @Html.EditorFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control nomargin" } })
-            @Html.ValidationMessageFor(model => model.Customer, "", new { @class = "text-danger" })
-        </div>
-        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-1 norightpadding" })
-        <div class="col-md-2">
-            @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.Status, "Status", "Text"), new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-md-3">
-            @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-3 noleftpadding" })
-            <div class=" input-group col-md-6 nopadding">
-                <div class="col-md-12 nopadding">
-                    @Html.EditorFor(model => model.Value, "{0:C0}", new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.LabelFor(model => model.Customer, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control nomargin" } })
+                @Html.ValidationMessageFor(model => model.Customer, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-1 norightpadding" })
+            <div class="col-md-2">
+                @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.Status, "Status", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-3 noleftpadding" })
+                <div class=" input-group col-md-6 nopadding">
+                    <div class="col-md-12 nopadding">
+                        @Html.EditorFor(model => model.Value, "{0:C0}", new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
 
 
-                    @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
-                </div>
-                </div>
-                </div>
-                </div>*@
+                        @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                    </div>
+                    </div>
+                    </div>
+                    </div>*@
 
 
         @*<div class="form-group">
-            @Html.LabelFor(model => model.EndProduct, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-                @Html.EditorFor(model => model.EndProduct, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EndProduct, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.EndProduct, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.EndProduct, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EndProduct, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(model => model.Principal, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.Principal, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Principal, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-9"></div>
             </div>
-            @Html.LabelFor(model => model.Principal, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-                @Html.EditorFor(model => model.Principal, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Principal, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-9"></div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Product, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3 ">
-                @Html.EditorFor(model => model.Product, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Product, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-2 norightpadding">
-                @Html.LabelFor(model => model.FollowUpDate, htmlAttributes: new { @class = "control-label col-md-3 noleftpadding" })
-                <div class=" input-group nopadding col-md-9">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Product, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3 ">
+                    @Html.EditorFor(model => model.Product, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Product, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 norightpadding">
+                    @Html.LabelFor(model => model.FollowUpDate, htmlAttributes: new { @class = "control-label col-md-3 noleftpadding" })
+                    <div class=" input-group nopadding col-md-9">
 
-                    <div>
-                        <div class="input-group date" data-provide="datepicker">
-                            @Html.EditorFor(model => model.FollowUpDate, new { htmlAttributes = new { @class = "form-control" } })
-                            <div class="input-group-addon">
-                                <span class="glyphicon glyphicon-th"></span>
+                        <div>
+                            <div class="input-group date" data-provide="datepicker">
+                                @Html.EditorFor(model => model.FollowUpDate, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-            </div>
-            <div class="col-md-5 norightpadding">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NextAction, htmlAttributes: new { @class = "control-label col-md-3 norightpadding" })
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.NextAction, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.NextAction, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-9"></div>
                 </div>
-            </div>
-        </div>*@
+                <div class="col-md-5 norightpadding">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NextAction, htmlAttributes: new { @class = "control-label col-md-3 norightpadding" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.NextAction, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.NextAction, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-9"></div>
+                    </div>
+                </div>
+            </div>*@
 
 
 
@@ -218,12 +267,12 @@
                         @Html.ValidationMessageFor(model => model.Principal, "", new { @class = "text-danger" })
                     </td>
                     @*<td>
-                        @Html.LabelFor(model => model.EndProduct, htmlAttributes: new { @class = "control-label labelpadding" })
-                    </td>
-                    <td style="width:300px">
-                        @Html.EditorFor(model => model.EndProduct, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.EndProduct, "", new { @class = "text-danger" })
-                    </td>*@
+                            @Html.LabelFor(model => model.EndProduct, htmlAttributes: new { @class = "control-label labelpadding" })
+                        </td>
+                        <td style="width:300px">
+                            @Html.EditorFor(model => model.EndProduct, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.EndProduct, "", new { @class = "text-danger" })
+                        </td>*@
                     <td>
                         @Html.LabelFor(model => model.Product, htmlAttributes: new { @class = "control-label labelpadding" })
                     </td>
@@ -265,52 +314,73 @@
                     </td>
                 </tr>
                 @*<tr>
-                    <td>
-                        @Html.LabelFor(model => model.NextAction, htmlAttributes: new { @class = "control-label labelpadding" })
-                    </td>
-                    <td>
-                        @Html.EditorFor(model => model.NextAction, new { htmlAttributes = new { @class = "form-control w-100" } })
-                        @Html.ValidationMessageFor(model => model.NextAction, "", new { @class = "text-danger" })
-                    </td>
-                </tr>*@
+                        <td>
+                            @Html.LabelFor(model => model.NextAction, htmlAttributes: new { @class = "control-label labelpadding" })
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.NextAction, new { htmlAttributes = new { @class = "form-control w-100" } })
+                            @Html.ValidationMessageFor(model => model.NextAction, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>*@
             </table>
             @*<table>
-                <tr>
-                    <td>
-                        @Html.LabelFor(model => model.NextAction, htmlAttributes: new { @class = "control-label labelpadding" })
-                    </td>
-                    <td>
-                        @Html.EditorFor(model => model.NextAction, new { htmlAttributes = new { @class = "form-control w-100"} })
-                        @Html.ValidationMessageFor(model => model.NextAction, "", new { @class = "text-danger" })
-                    </td>
-                </tr>
-            </table>*@
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.NextAction, htmlAttributes: new { @class = "control-label labelpadding" })
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.NextAction, new { htmlAttributes = new { @class = "form-control w-100"} })
+                            @Html.ValidationMessageFor(model => model.NextAction, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                </table>*@
         </div>
 
 
 
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.NextAction, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-lg-9">
-                    @Html.EditorFor(model => model.NextAction, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; max-width: 100%;" } })
-                    @Html.ValidationMessageFor(model => model.NextAction, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.NextAction, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-lg-9">
+                @Html.EditorFor(model => model.NextAction, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; max-width: 100%;" } })
+                @Html.ValidationMessageFor(model => model.NextAction, "", new { @class = "text-danger" })
             </div>
-        
+        </div>
+
 
 
 
 
         <div class="form-group">
-            <div>
-                @Html.LabelFor(model => model.ManagerComment, htmlAttributes: new { @class = "control-label col-md-2" })
-                
-                
+            <div class="col-md-2">
+                <div class="row">
+                    @Html.LabelFor(model => model.ManagerComment, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="row right">
+                    <input value="Meeting Scheduled" class="btn btn-link  nopadding fontsemilabel" onclick="location.href='@Url.Action("MeetingSch", "Strategy", new {id = Model.StrategyId})'" />
+                </div>
+                <div class="row right">
+                    <input value="Need to schedule visit" class="btn btn-link nopadding fontsemilabel" onclick="location.href='@Url.Action("SchVisit", "Strategy", new {id = Model.StrategyId})'" />
+                </div>
+                <div class="row right">
+                    <input value="Need to schedule eMeeting" class="btn btn-link nopadding fontsemilabel" onclick="location.href='@Url.Action("ScheMeet", "Strategy", new {id = Model.StrategyId})'" />
+                </div>
+                <div class="row right">
+                    <input value="No action at this time, followup planned" class="btn btn-link nopadding fontsemilabel" onclick="location.href='@Url.Action("NoAct", "Strategy", new {id = Model.StrategyId})'" />
+                </div>
+                <div class="row right">
+                    <input value="Samples Requested" class="btn btn-link nopadding fontsemilabel" onclick="location.href='@Url.Action("SampReq", "Strategy", new {id = Model.StrategyId})'" />
+                </div>
+                <div class="row right">
+                    <input value="Evaluating Samples" class="btn btn-link nopadding fontsemilabel" onclick="location.href='@Url.Action("EvalSamp", "Strategy", new {id = Model.StrategyId})'" />
+                </div>
+                <div class="row right">
+                    <input value="Need to Confirm CEM location" class="btn btn-link nopadding fontsemilabel" onclick="location.href='@Url.Action("ConfirmCEM", "Strategy", new {id = Model.StrategyId})'" />
+                </div>
             </div>
             <div class="col-lg-9">
-                @Html.TextAreaFor(model => model.ManagerComment, 100, 50, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
-                @*@Html.ValidationMessageFor(model => model.ManagerComment, "", new { @class = "text-danger" })*@
+                @Html.TextAreaFor(m => m.ManagerComment, 100, 50, new { id = "questionInput", maxlength = 1000, style = "width: 100%; max-width: 100%" })
+                <div id="charsLeft"></div>
                 <div class="col-lg-3">
                     <p style="white-space: pre-line">
                         <input value="New Update" class="btn btn-default" onclick="location.href='@Url.Action("Update", "Strategy", new {id = Model.StrategyId})'" />
@@ -320,28 +390,28 @@
         </div>
 
         @*<div class="form-group col-lg-12">
-            <div class="col-lg-3">
-                <input value="Meeting Scheduled" class="btn btn-default" onclick="location.href='@Url.Action("MeetingSch", "Strategy", new {id = Model.StrategyId})'" />
-            </div>
-            <div class="col-lg-3">
-                <input value="Need to schedule visit" class="btn btn-default" onclick="location.href='@Url.Action("SchVisit", "Strategy", new {id = Model.StrategyId})'" />
-            </div>
-            <div class="col-lg-3">
-                <input value="Need to schedule eMeeting" class="btn btn-default" onclick="location.href='@Url.Action("ScheMeet", "Strategy", new {id = Model.StrategyId})'" />
-            </div>
-            <div class="col-lg-3">
-                <input value="No action at this time, followup planned" class="btn btn-default" onclick="location.href='@Url.Action("NoAct", "Strategy", new {id = Model.StrategyId})'" />
-            </div>
-            <div class="col-lg-3">
-                <input value="Samples Requested" class="btn btn-default" onclick="location.href='@Url.Action("SampReq", "Strategy", new {id = Model.StrategyId})'" />
-            </div>
-            <div class="col-lg-3">
-                <input value="Evaluating Samples" class="btn btn-default" onclick="location.href='@Url.Action("EvalSamp", "Strategy", new {id = Model.StrategyId})'" />
-            </div>
-            <div class="col-lg-3">
-                <input value="Need to Confirm CEM location" class="btn btn-default" onclick="location.href='@Url.Action("ConfirmCEM", "Strategy", new {id = Model.StrategyId})'" />
-            </div>
-        </div>*@
+                <div class="col-lg-3">
+                    <input value="Meeting Scheduled" class="btn btn-default" onclick="location.href='@Url.Action("MeetingSch", "Strategy", new {id = Model.StrategyId})'" />
+                </div>
+                <div class="col-lg-3">
+                    <input value="Need to schedule visit" class="btn btn-default" onclick="location.href='@Url.Action("SchVisit", "Strategy", new {id = Model.StrategyId})'" />
+                </div>
+                <div class="col-lg-3">
+                    <input value="Need to schedule eMeeting" class="btn btn-default" onclick="location.href='@Url.Action("ScheMeet", "Strategy", new {id = Model.StrategyId})'" />
+                </div>
+                <div class="col-lg-3">
+                    <input value="No action at this time, followup planned" class="btn btn-default" onclick="location.href='@Url.Action("NoAct", "Strategy", new {id = Model.StrategyId})'" />
+                </div>
+                <div class="col-lg-3">
+                    <input value="Samples Requested" class="btn btn-default" onclick="location.href='@Url.Action("SampReq", "Strategy", new {id = Model.StrategyId})'" />
+                </div>
+                <div class="col-lg-3">
+                    <input value="Evaluating Samples" class="btn btn-default" onclick="location.href='@Url.Action("EvalSamp", "Strategy", new {id = Model.StrategyId})'" />
+                </div>
+                <div class="col-lg-3">
+                    <input value="Need to Confirm CEM location" class="btn btn-default" onclick="location.href='@Url.Action("ConfirmCEM", "Strategy", new {id = Model.StrategyId})'" />
+                </div>
+            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.History, htmlAttributes: new { @class = "control-label col-md-2" })

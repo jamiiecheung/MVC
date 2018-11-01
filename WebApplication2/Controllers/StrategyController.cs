@@ -492,10 +492,10 @@ namespace WebApplication2.Controllers
             {
                 var stratvariable = from s in db.Strategies
                                     select s;
-                
+
                 stratvar = strat.ToString();
 
-             
+
 
                 if (stratvar != null)
                 {
@@ -559,27 +559,9 @@ namespace WebApplication2.Controllers
 
                     else
                     {
-                        try
-                        {
                         strat.Updated = DateTime.Now;
                         db.Entry(strat).State = EntityState.Modified;
                         db.SaveChanges();
-                        }
-
-                        catch (DbEntityValidationException ex)
-                        {
-                            foreach (var errors in ex.EntityValidationErrors)
-                            {
-                                foreach (var validationError in errors.ValidationErrors)
-                                {
-                                    // get the error message 
-                                    string errorMessage = validationError.ErrorMessage;
-                                }
-                            }
-                        }
-
-
-
                     }
 
                     db.Entry(strat).State = EntityState.Modified;
@@ -696,7 +678,9 @@ namespace WebApplication2.Controllers
             UserAccount emailListItem = db.UserAccounts.First(x => x.Email == em); // Use the email address to get the associated emaillist object which holds the group
 
             Strategy strat = db.Strategies.FirstOrDefault(x => x.StrategyId == id);
-            nextactionold = strat.NextAction;
+
+                nextactionold = strat.NextAction;
+           
             strat.Updated = DateTime.Now;
 
             if (strat.NextAction == null)
